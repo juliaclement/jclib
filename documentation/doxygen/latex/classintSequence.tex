@@ -1,0 +1,60 @@
+\hypertarget{classintSequence}{}\section{int\+Sequence Class Reference}
+\label{classintSequence}\index{int\+Sequence@{int\+Sequence}}
+
+
+Inheritance diagram for int\+Sequence\+:
+% FIG 0
+
+
+Collaboration diagram for int\+Sequence\+:
+% FIG 1
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{classintSequence_ab624bfe357dcb3b34cb7091e4a254d4e}{next} (int \&value, int \&state)
+\item 
+virtual void \hyperlink{classintSequence_a4bf1fa808b4b4e4a5a618325d73df0c6}{ending} (int \&value)
+\item 
+\mbox{\Hypertarget{classintSequence_a9d38989e2d03c5aa79ba815090fe582b}\label{classintSequence_a9d38989e2d03c5aa79ba815090fe582b}} 
+{\bfseries int\+Sequence} (int start, int limit)
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classintSequence_a4bf1fa808b4b4e4a5a618325d73df0c6}\label{classintSequence_a4bf1fa808b4b4e4a5a618325d73df0c6}} 
+\index{int\+Sequence@{int\+Sequence}!ending@{ending}}
+\index{ending@{ending}!int\+Sequence@{int\+Sequence}}
+\subsubsection{\texorpdfstring{ending()}{ending()}}
+{\footnotesize\ttfamily virtual void int\+Sequence\+::ending (\begin{DoxyParamCaption}\item[{int \&}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+Called when state is set to -\/1 (end) either by the user or on return from \hyperlink{classintSequence_ab624bfe357dcb3b34cb7091e4a254d4e}{next()} 
+\begin{DoxyParams}{Parameters}
+{\em value} & that will be returned by $\ast$ iterator. I/O \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from \hyperlink{classjclib_1_1yieldingIteratorHelper_a62f77cf3f5376e5997512907460f2d36}{jclib\+::yielding\+Iterator\+Helper$<$ int $>$}.
+
+\mbox{\Hypertarget{classintSequence_ab624bfe357dcb3b34cb7091e4a254d4e}\label{classintSequence_ab624bfe357dcb3b34cb7091e4a254d4e}} 
+\index{int\+Sequence@{int\+Sequence}!next@{next}}
+\index{next@{next}!int\+Sequence@{int\+Sequence}}
+\subsubsection{\texorpdfstring{next()}{next()}}
+{\footnotesize\ttfamily virtual void int\+Sequence\+::next (\begin{DoxyParamCaption}\item[{int \&}]{value,  }\item[{int \&}]{state }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+Called to advance the iterator to its next state 
+\begin{DoxyParams}{Parameters}
+{\em value} & that will be returned by $\ast$ iterator. I/O \\
+\hline
+{\em state} & used by helper to determine where it is. Setting state to -\/1 signals end() is true \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{classjclib_1_1yieldingIteratorHelper_a620c17e7eb8ed695e3fb9add01da576d}{jclib\+::yielding\+Iterator\+Helper$<$ int $>$}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+tests/Yielding\+Iterators\+Test\+Class.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,37 @@
+\hypertarget{namespacejclib}{}\section{jclib Namespace Reference}
+\label{namespacejclib}\index{jclib@{jclib}}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classjclib_1_1CountedPointer}{Counted\+Pointer}
+\item 
+class \hyperlink{classjclib_1_1CountedPointerSafe}{Counted\+Pointer\+Safe}
+\item 
+class \hyperlink{classjclib_1_1CountedPointerTarget}{Counted\+Pointer\+Target}
+\item 
+class \hyperlink{classjclib_1_1WeakPointer}{Weak\+Pointer}
+\item 
+class \hyperlink{classjclib_1_1WeakPointerBase}{Weak\+Pointer\+Base}
+\item 
+class \hyperlink{classjclib_1_1WeakPointerTarget}{Weak\+Pointer\+Target}
+\item 
+class \hyperlink{classjclib_1_1WeakPointerTargetBase}{Weak\+Pointer\+Target\+Base}
+\item 
+class \hyperlink{classjclib_1_1yieldingContainer}{yielding\+Container}
+\item 
+class \hyperlink{classjclib_1_1yieldingIterator}{yielding\+Iterator}
+\item 
+class \hyperlink{classjclib_1_1yieldingIteratorHelper}{yielding\+Iterator\+Helper}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Implementation of a weak pointer. \hyperlink{classjclib_1_1WeakPointer}{jclib\+::\+Weak\+Pointer} is a smart pointer that holds a non-\/owning (\char`\"{}weak\char`\"{}) reference to an object that is managed by \hyperlink{classjclib_1_1CountedPointer}{jclib\+::\+Counted\+Pointer}. like std\+::weak\+\_\+ptr, \hyperlink{classjclib_1_1WeakPointer}{jclib\+::\+Weak\+Pointer} models temporary ownership\+: when an object needs to be available only if it exists, and it may be deleted at any time by other code. Like std\+::weak\+\_\+ptr, \hyperlink{classjclib_1_1WeakPointer}{jclib\+::\+Weak\+Pointer} is intended to break circular references in pointers..
+
+This is not the same as std\+::weak\+\_\+ptr, details on that class are at \href{http://en.cppreference.com/w/cpp/memory/weak_ptr}{\tt http\+://en.\+cppreference.\+com/w/cpp/memory/weak\+\_\+ptr} Major differences\+:
+\begin{DoxyItemize}
+\item std\+::weak\+\_\+ptr is related to std\+::shared pointer, \hyperlink{classjclib_1_1WeakPointer}{jclib\+::\+Weak\+Pointer} is related to \hyperlink{classjclib_1_1CountedPointer}{jclib\+::\+Counted\+Pointer}
+\item std\+::weak\+\_\+pointer may hold references to any object std\+::shared\+\_\+pointer may hold references to. \hyperlink{classjclib_1_1WeakPointer}{jclib\+::\+Weak\+Pointer} may only hold references to objects that publicly inherit from \hyperlink{classjclib_1_1WeakPointerTargetBase}{jclib\+::\+Weak\+Pointer\+Target\+Base}. Usually something that publicly inherits from Weak\+Pointer\+Target$<$\+T$>$
+\item \hyperlink{classjclib_1_1WeakPointer}{jclib\+::\+Weak\+Pointer} may hold a nullptr or a value returned from Weak\+Pointer\+Target$<$\+T$>$\+::get\+Weak\+Pointer()
+\item std\+::weak\+\_\+ptr must be converted to std\+::shared\+\_\+ptr in order to access the referenced object. \hyperlink{classjclib_1_1WeakPointer}{jclib\+::\+Weak\+Pointer} may be directly dereferenced to a native pointer. That said, unless the pointer is very short lived, converting to a \hyperlink{classjclib_1_1CountedPointer}{Counted\+Pointer} is usually safer. Todo\+: Consider if \hyperlink{classjclib_1_1WeakPointerTargetBase}{Weak\+Pointer\+Target\+Base} should be an interface 
+\end{DoxyItemize}

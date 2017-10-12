@@ -1,0 +1,113 @@
+\hypertarget{classjclib_1_1WeakPointer}{}\section{jclib\+:\+:Weak\+Pointer$<$ T $>$ Class Template Reference}
+\label{classjclib_1_1WeakPointer}\index{jclib\+::\+Weak\+Pointer$<$ T $>$@{jclib\+::\+Weak\+Pointer$<$ T $>$}}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classjclib_1_1WeakPointer_a4405f4f8961dac628e8ab1a9f8a210b9}\label{classjclib_1_1WeakPointer_a4405f4f8961dac628e8ab1a9f8a210b9}} 
+typedef \hyperlink{classjclib_1_1CountedPointer}{Counted\+Pointer}$<$ class \hyperlink{classjclib_1_1WeakPointerBase}{Weak\+Pointer\+Base} $>$ {\bfseries pointer\+\_\+t}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{classjclib_1_1WeakPointer_a5cbfbf27685b4591674fa19e1db8dafa}{isnull} () const
+\item 
+bool \hyperlink{classjclib_1_1WeakPointer_a14f8326fd06df4bbe22e396b18b1a269}{isset} () const
+\item 
+T $\ast$ \hyperlink{classjclib_1_1WeakPointer_adade4f82b6443201e18991fd0d9d4189}{get} () const
+\item 
+T \& \hyperlink{classjclib_1_1WeakPointer_ac315d93be7091e0700f7f692b37edb0c}{operator$\ast$} () const
+\item 
+T $\ast$ \hyperlink{classjclib_1_1WeakPointer_a4b86a3794ba135e7400fbcd64915b68a}{operator-\/$>$} () const
+\item 
+void \hyperlink{classjclib_1_1WeakPointer_a7de963c695578295c0c1b545b664d405}{set} (const \hyperlink{classjclib_1_1WeakPointer}{Weak\+Pointer}$<$ T $>$ \&old)
+\item 
+class \hyperlink{classjclib_1_1WeakPointer}{Weak\+Pointer}$<$ T $>$ \& \hyperlink{classjclib_1_1WeakPointer_a9def3bcb6fee153227e00389cdc8d5b7}{operator=} (const \hyperlink{classjclib_1_1WeakPointer}{Weak\+Pointer}$<$ T $>$ \&ptr)
+\item 
+\mbox{\Hypertarget{classjclib_1_1WeakPointer_a0b8f74c55c8fa75976c7acd81ef2f25e}\label{classjclib_1_1WeakPointer_a0b8f74c55c8fa75976c7acd81ef2f25e}} 
+{\bfseries Weak\+Pointer} (const \hyperlink{classjclib_1_1CountedPointer}{Counted\+Pointer}$<$ class \hyperlink{classjclib_1_1WeakPointerBase}{Weak\+Pointer\+Base} $>$ \&base)
+\item 
+\mbox{\Hypertarget{classjclib_1_1WeakPointer_ae811c41f36032945f78ed2a71322c4a4}\label{classjclib_1_1WeakPointer_ae811c41f36032945f78ed2a71322c4a4}} 
+{\bfseries Weak\+Pointer} (const class \hyperlink{classjclib_1_1WeakPointer}{Weak\+Pointer}$<$ T $>$ \&old)
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classjclib_1_1WeakPointer_adade4f82b6443201e18991fd0d9d4189}\label{classjclib_1_1WeakPointer_adade4f82b6443201e18991fd0d9d4189}} 
+\index{jclib\+::\+Weak\+Pointer@{jclib\+::\+Weak\+Pointer}!get@{get}}
+\index{get@{get}!jclib\+::\+Weak\+Pointer@{jclib\+::\+Weak\+Pointer}}
+\subsubsection{\texorpdfstring{get()}{get()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+T$\ast$ \hyperlink{classjclib_1_1WeakPointer}{jclib\+::\+Weak\+Pointer}$<$ T $>$\+::get (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Obtain a native C++ pointer to the object \begin{DoxyReturn}{Returns}
+the address of the object pointed at 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classjclib_1_1WeakPointer_a5cbfbf27685b4591674fa19e1db8dafa}\label{classjclib_1_1WeakPointer_a5cbfbf27685b4591674fa19e1db8dafa}} 
+\index{jclib\+::\+Weak\+Pointer@{jclib\+::\+Weak\+Pointer}!isnull@{isnull}}
+\index{isnull@{isnull}!jclib\+::\+Weak\+Pointer@{jclib\+::\+Weak\+Pointer}}
+\subsubsection{\texorpdfstring{isnull()}{isnull()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+bool \hyperlink{classjclib_1_1WeakPointer}{jclib\+::\+Weak\+Pointer}$<$ T $>$\+::isnull (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Test if the pointer is set to nullptr \begin{DoxyReturn}{Returns}
+true if either the internal pointer or the \hyperlink{classjclib_1_1WeakPointerBase}{Weak\+Pointer\+Base} is nullptr 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classjclib_1_1WeakPointer_a14f8326fd06df4bbe22e396b18b1a269}\label{classjclib_1_1WeakPointer_a14f8326fd06df4bbe22e396b18b1a269}} 
+\index{jclib\+::\+Weak\+Pointer@{jclib\+::\+Weak\+Pointer}!isset@{isset}}
+\index{isset@{isset}!jclib\+::\+Weak\+Pointer@{jclib\+::\+Weak\+Pointer}}
+\subsubsection{\texorpdfstring{isset()}{isset()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+bool \hyperlink{classjclib_1_1WeakPointer}{jclib\+::\+Weak\+Pointer}$<$ T $>$\+::isset (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Test if the pointer is set to an object
+\begin{DoxyItemize}
+\item \begin{DoxyReturn}{Returns}
+true if neither the internal pointer or the \hyperlink{classjclib_1_1WeakPointerBase}{Weak\+Pointer\+Base} is nullptr 
+\end{DoxyReturn}
+
+\end{DoxyItemize}\mbox{\Hypertarget{classjclib_1_1WeakPointer_ac315d93be7091e0700f7f692b37edb0c}\label{classjclib_1_1WeakPointer_ac315d93be7091e0700f7f692b37edb0c}} 
+\index{jclib\+::\+Weak\+Pointer@{jclib\+::\+Weak\+Pointer}!operator$\ast$@{operator$\ast$}}
+\index{operator$\ast$@{operator$\ast$}!jclib\+::\+Weak\+Pointer@{jclib\+::\+Weak\+Pointer}}
+\subsubsection{\texorpdfstring{operator$\ast$()}{operator*()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+T\& \hyperlink{classjclib_1_1WeakPointer}{jclib\+::\+Weak\+Pointer}$<$ T $>$\+::operator$\ast$ (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+retrieve a reference to the address of the object pointed at \mbox{\Hypertarget{classjclib_1_1WeakPointer_a4b86a3794ba135e7400fbcd64915b68a}\label{classjclib_1_1WeakPointer_a4b86a3794ba135e7400fbcd64915b68a}} 
+\index{jclib\+::\+Weak\+Pointer@{jclib\+::\+Weak\+Pointer}!operator-\/$>$@{operator-\/$>$}}
+\index{operator-\/$>$@{operator-\/$>$}!jclib\+::\+Weak\+Pointer@{jclib\+::\+Weak\+Pointer}}
+\subsubsection{\texorpdfstring{operator-\/$>$()}{operator->()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+T$\ast$ \hyperlink{classjclib_1_1WeakPointer}{jclib\+::\+Weak\+Pointer}$<$ T $>$\+::operator-\/$>$ (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+retrieve a reference to the address of the object pointed at \mbox{\Hypertarget{classjclib_1_1WeakPointer_a9def3bcb6fee153227e00389cdc8d5b7}\label{classjclib_1_1WeakPointer_a9def3bcb6fee153227e00389cdc8d5b7}} 
+\index{jclib\+::\+Weak\+Pointer@{jclib\+::\+Weak\+Pointer}!operator=@{operator=}}
+\index{operator=@{operator=}!jclib\+::\+Weak\+Pointer@{jclib\+::\+Weak\+Pointer}}
+\subsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+class \hyperlink{classjclib_1_1WeakPointer}{Weak\+Pointer}$<$ T $>$\& \hyperlink{classjclib_1_1WeakPointer}{jclib\+::\+Weak\+Pointer}$<$ T $>$\+::operator= (\begin{DoxyParamCaption}\item[{const \hyperlink{classjclib_1_1WeakPointer}{Weak\+Pointer}$<$ T $>$ \&}]{ptr }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Set the internal value. Attaching / Detaching as requried 
+\begin{DoxyParams}{Parameters}
+{\em ptr} & the new value to set \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+ourself 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classjclib_1_1WeakPointer_a7de963c695578295c0c1b545b664d405}\label{classjclib_1_1WeakPointer_a7de963c695578295c0c1b545b664d405}} 
+\index{jclib\+::\+Weak\+Pointer@{jclib\+::\+Weak\+Pointer}!set@{set}}
+\index{set@{set}!jclib\+::\+Weak\+Pointer@{jclib\+::\+Weak\+Pointer}}
+\subsubsection{\texorpdfstring{set()}{set()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void \hyperlink{classjclib_1_1WeakPointer}{jclib\+::\+Weak\+Pointer}$<$ T $>$\+::set (\begin{DoxyParamCaption}\item[{const \hyperlink{classjclib_1_1WeakPointer}{Weak\+Pointer}$<$ T $>$ \&}]{old }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Set to point to a different target. Attaching / Detaching as requried occasionaally useful as a replacement for the assignment operator. 
+\begin{DoxyParams}{Parameters}
+{\em ptr} & the new value to set \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+weak\+Pointer.\+hpp\end{DoxyCompactItemize}
