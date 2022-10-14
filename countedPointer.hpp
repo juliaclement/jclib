@@ -134,7 +134,9 @@ class CountedPointerTarget {
 /**
  * A template child class that permits automatic & static variables to have 
  * counted pointers.
+ * 
  * The user must ensure that all CountedPointers to instances of this class
+ * are deleted before the target.
  * 
  * NB: It is not generally safe to have CountedPointers point at automatic or 
  *     static variables as when the pointer count reaches zero an attempt will

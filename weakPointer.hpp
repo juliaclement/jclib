@@ -196,8 +196,9 @@ protected:
 };
 
 /**
- * All targets of weak pointers should inherit from this template class like
- * class TargetClass : public WeakPointerTarget<TargetClass> ...
+ * All targets of weak pointers should inherit from this template class
+ * using something like:
+ * class TargetClass1 : public WeakPointerTarget<TargetClass0> ...
  */
 template< typename T > class WeakPointerTarget : public WeakPointerTargetBase {
     public:
