@@ -1,40 +1,52 @@
-\hypertarget{classpiChars}{}\section{pi\+Chars Class Reference}
-\label{classpiChars}\index{pi\+Chars@{pi\+Chars}}
+\hypertarget{classpiChars}{}\doxysection{pi\+Chars Class Reference}
+\label{classpiChars}\index{piChars@{piChars}}
 
 
 Inheritance diagram for pi\+Chars\+:
-% FIG 0
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=230pt]{classpiChars__inherit__graph}
+\end{center}
+\end{figure}
 
 
 Collaboration diagram for pi\+Chars\+:
-% FIG 1
-\subsection*{Public Member Functions}
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=230pt]{classpiChars__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-virtual \hyperlink{classpiChars}{pi\+Chars} $\ast$ \hyperlink{classpiChars_a708b2ef6ccf87b9078ee8923f4076ee1}{maybe\+Clone} ()
+virtual \mbox{\hyperlink{classpiChars}{pi\+Chars}} $\ast$ \mbox{\hyperlink{classpiChars_aa00ac4fac7f66690557ae7fc891c34c9}{maybe\+Clone}} ()
 \item 
-virtual void \hyperlink{classpiChars_adc00b73e9ec09756b81d6da657ad5170}{next} (char \&value, int \&state)
+virtual void \mbox{\hyperlink{classpiChars_adc00b73e9ec09756b81d6da657ad5170}{next}} (char \&value, int \&state)
 \end{DoxyCompactItemize}
 
 
-\subsection{Member Function Documentation}
-\mbox{\Hypertarget{classpiChars_a708b2ef6ccf87b9078ee8923f4076ee1}\label{classpiChars_a708b2ef6ccf87b9078ee8923f4076ee1}} 
-\index{pi\+Chars@{pi\+Chars}!maybe\+Clone@{maybe\+Clone}}
-\index{maybe\+Clone@{maybe\+Clone}!pi\+Chars@{pi\+Chars}}
-\subsubsection{\texorpdfstring{maybe\+Clone()}{maybeClone()}}
-{\footnotesize\ttfamily virtual \hyperlink{classpiChars}{pi\+Chars}$\ast$ pi\+Chars\+::maybe\+Clone (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classpiChars_aa00ac4fac7f66690557ae7fc891c34c9}\label{classpiChars_aa00ac4fac7f66690557ae7fc891c34c9}} 
+\index{piChars@{piChars}!maybeClone@{maybeClone}}
+\index{maybeClone@{maybeClone}!piChars@{piChars}}
+\doxysubsubsection{\texorpdfstring{maybeClone()}{maybeClone()}}
+{\footnotesize\ttfamily virtual \mbox{\hyperlink{classpiChars}{pi\+Chars}} $\ast$ pi\+Chars\+::maybe\+Clone (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
 
-Called by the yielding\+Iterator copy constructor. If this object has state stored outside the value and state parameters to \hyperlink{classpiChars_adc00b73e9ec09756b81d6da657ad5170}{next()}, it should return a new object, otherwise it\textquotesingle{}s fine to return ourselves \begin{DoxyReturn}{Returns}
+Called by the yielding\+Iterator copy constructor. If this object has state stored outside the value and state parameters to \mbox{\hyperlink{classpiChars_adc00b73e9ec09756b81d6da657ad5170}{next()}}, it should return a new object, otherwise it\textquotesingle{}s fine to return ourselves \begin{DoxyReturn}{Returns}
 either ourself or a clone of ourself 
 \end{DoxyReturn}
 
 
-Reimplemented from \hyperlink{classjclib_1_1yieldingIteratorHelper_ad3127265c429c4ac282964b7a3b261be}{jclib\+::yielding\+Iterator\+Helper$<$ char $>$}.
+Reimplemented from \mbox{\hyperlink{classjclib_1_1yieldingIteratorHelper_a8f5911d2f94b9ca84b3a737c5d485219}{jclib\+::yielding\+Iterator\+Helper$<$ char $>$}}.
 
 \mbox{\Hypertarget{classpiChars_adc00b73e9ec09756b81d6da657ad5170}\label{classpiChars_adc00b73e9ec09756b81d6da657ad5170}} 
-\index{pi\+Chars@{pi\+Chars}!next@{next}}
-\index{next@{next}!pi\+Chars@{pi\+Chars}}
-\subsubsection{\texorpdfstring{next()}{next()}}
+\index{piChars@{piChars}!next@{next}}
+\index{next@{next}!piChars@{piChars}}
+\doxysubsubsection{\texorpdfstring{next()}{next()}}
 {\footnotesize\ttfamily virtual void pi\+Chars\+::next (\begin{DoxyParamCaption}\item[{char \&}]{value,  }\item[{int \&}]{state }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
 
 Called to advance the iterator to its next state 
@@ -46,7 +58,7 @@ Called to advance the iterator to its next state
 \end{DoxyParams}
 
 
-Implements \hyperlink{classjclib_1_1yieldingIteratorHelper_a620c17e7eb8ed695e3fb9add01da576d}{jclib\+::yielding\+Iterator\+Helper$<$ char $>$}.
+Implements \mbox{\hyperlink{classjclib_1_1yieldingIteratorHelper_a620c17e7eb8ed695e3fb9add01da576d}{jclib\+::yielding\+Iterator\+Helper$<$ char $>$}}.
 
 
 

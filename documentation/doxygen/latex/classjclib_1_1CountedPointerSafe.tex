@@ -1,18 +1,30 @@
-\hypertarget{classjclib_1_1CountedPointerSafe}{}\section{jclib\+:\+:Counted\+Pointer\+Safe$<$ T $>$ Class Template Reference}
-\label{classjclib_1_1CountedPointerSafe}\index{jclib\+::\+Counted\+Pointer\+Safe$<$ T $>$@{jclib\+::\+Counted\+Pointer\+Safe$<$ T $>$}}
+\hypertarget{classjclib_1_1CountedPointerSafe}{}\doxysection{jclib\+::Counted\+Pointer\+Safe\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>} Class Template Reference}
+\label{classjclib_1_1CountedPointerSafe}\index{jclib::CountedPointerSafe$<$ T $>$@{jclib::CountedPointerSafe$<$ T $>$}}
 
 
 {\ttfamily \#include $<$counted\+Pointer.\+hpp$>$}
 
 
 
-Inheritance diagram for jclib\+:\+:Counted\+Pointer\+Safe$<$ T $>$\+:
-% FIG 0
+Inheritance diagram for jclib\+::Counted\+Pointer\+Safe\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>}\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=248pt]{classjclib_1_1CountedPointerSafe__inherit__graph}
+\end{center}
+\end{figure}
 
 
-Collaboration diagram for jclib\+:\+:Counted\+Pointer\+Safe$<$ T $>$\+:
-% FIG 1
-\subsection*{Public Member Functions}
+Collaboration diagram for jclib\+::Counted\+Pointer\+Safe\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>}\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=248pt]{classjclib_1_1CountedPointerSafe__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
 \mbox{\Hypertarget{classjclib_1_1CountedPointerSafe_acc5ed138b4a7b16ef407dfd0b9e0c2e5}\label{classjclib_1_1CountedPointerSafe_acc5ed138b4a7b16ef407dfd0b9e0c2e5}} 
@@ -20,11 +32,12 @@ Collaboration diagram for jclib\+:\+:Counted\+Pointer\+Safe$<$ T $>$\+:
 \end{DoxyCompactItemize}
 
 
-\subsection{Detailed Description}
+\doxysubsection{Detailed Description}
 \subsubsection*{template$<$typename T$>$\newline
 class jclib\+::\+Counted\+Pointer\+Safe$<$ T $>$}
+A template child class that permits automatic \& static variables to have counted pointers.
 
-A template child class that permits automatic \& static variables to have counted pointers. The user must ensure that all Counted\+Pointers to instances of this class
+The user must ensure that all Counted\+Pointers to instances of this class are deleted before the target.
 
 NB\+: It is not generally safe to have Counted\+Pointers point at automatic or static variables as when the pointer count reaches zero an attempt will be made to delete the variable. 
 

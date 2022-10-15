@@ -1,67 +1,72 @@
-\hypertarget{classjclib_1_1yieldingContainer}{}\section{jclib\+:\+:yielding\+Container$<$ T $>$ Class Template Reference}
-\label{classjclib_1_1yieldingContainer}\index{jclib\+::yielding\+Container$<$ T $>$@{jclib\+::yielding\+Container$<$ T $>$}}
+\hypertarget{classjclib_1_1yieldingContainer}{}\doxysection{jclib\+::yielding\+Container\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>} Class Template Reference}
+\label{classjclib_1_1yieldingContainer}\index{jclib::yieldingContainer$<$ T $>$@{jclib::yieldingContainer$<$ T $>$}}
 
 
 {\ttfamily \#include $<$yielding\+Iterator.\+hpp$>$}
 
 
 
-Collaboration diagram for jclib\+:\+:yielding\+Container$<$ T $>$\+:
-% FIG 0
-\subsection*{Public Types}
+Collaboration diagram for jclib\+::yielding\+Container\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>}\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=241pt]{classjclib_1_1yieldingContainer__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Types}
 \begin{DoxyCompactItemize}
 \item 
 \mbox{\Hypertarget{classjclib_1_1yieldingContainer_a751a0001e4d6e026080ad542f38f7870}\label{classjclib_1_1yieldingContainer_a751a0001e4d6e026080ad542f38f7870}} 
-typedef class \hyperlink{classjclib_1_1yieldingIterator}{yielding\+Iterator}$<$ T $>$ {\bfseries iterator\+\_\+T}
+typedef class \mbox{\hyperlink{classjclib_1_1yieldingIterator}{yielding\+Iterator}}$<$ T $>$ {\bfseries iterator\+\_\+T}
 \end{DoxyCompactItemize}
-\subsection*{Public Member Functions}
+\doxysubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-iterator\+\_\+T \hyperlink{classjclib_1_1yieldingContainer_a9cdbb83859db191572b78264821c5d3b}{begin} ()
+iterator\+\_\+T \mbox{\hyperlink{classjclib_1_1yieldingContainer_a9cdbb83859db191572b78264821c5d3b}{begin}} ()
 \item 
-iterator\+\_\+T const  \& \hyperlink{classjclib_1_1yieldingContainer_a19f48736c18c516ad711db0255d1894a}{end} ()
+iterator\+\_\+T const \& \mbox{\hyperlink{classjclib_1_1yieldingContainer_a64c65b30280f9ff9a7a1f46c237d332b}{end}} ()
 \item 
-\hyperlink{classjclib_1_1yieldingContainer_a2be1354629759fbe753a23361ddff48b}{yielding\+Container} (\hyperlink{classjclib_1_1yieldingIteratorHelper}{yielding\+Iterator\+Helper}$<$ T $>$ $\ast$helper)
+\mbox{\hyperlink{classjclib_1_1yieldingContainer_a2be1354629759fbe753a23361ddff48b}{yielding\+Container}} (\mbox{\hyperlink{classjclib_1_1yieldingIteratorHelper}{yielding\+Iterator\+Helper}}$<$ T $>$ $\ast$helper)
 \item 
-\hyperlink{classjclib_1_1yieldingContainer_a63e99537ac3eda23b731bcca7c4ec7a7}{yielding\+Container} (const \hyperlink{classjclib_1_1yieldingContainer}{yielding\+Container}$<$ T $>$ \&old)
+\mbox{\hyperlink{classjclib_1_1yieldingContainer_a63e99537ac3eda23b731bcca7c4ec7a7}{yielding\+Container}} (const \mbox{\hyperlink{classjclib_1_1yieldingContainer}{yielding\+Container}}$<$ T $>$ \&old)
 \item 
-\hyperlink{classjclib_1_1yieldingContainer}{yielding\+Container}$<$ T $>$ \& \hyperlink{classjclib_1_1yieldingContainer_a1c4bd31066ec29559dc7ed6d0801cabe}{operator=} (const \hyperlink{classjclib_1_1yieldingContainer}{yielding\+Container}$<$ T $>$ \&old)
+\mbox{\hyperlink{classjclib_1_1yieldingContainer}{yielding\+Container}}$<$ T $>$ \& \mbox{\hyperlink{classjclib_1_1yieldingContainer_aa4fb2046e3c969038fb5a1797af6fbd0}{operator=}} (const \mbox{\hyperlink{classjclib_1_1yieldingContainer}{yielding\+Container}}$<$ T $>$ \&old)
 \end{DoxyCompactItemize}
-\subsection*{Public Attributes}
+\doxysubsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
 \mbox{\Hypertarget{classjclib_1_1yieldingContainer_afb04032b6ed32789c92a8c2b32c9efc1}\label{classjclib_1_1yieldingContainer_afb04032b6ed32789c92a8c2b32c9efc1}} 
-\hyperlink{classjclib_1_1CountedPointer}{Counted\+Pointer}$<$ \hyperlink{classjclib_1_1yieldingIteratorHelper}{yielding\+Iterator\+Helper}$<$ T $>$ $>$ {\bfseries helper\+\_\+}
+\mbox{\hyperlink{classjclib_1_1CountedPointer}{Counted\+Pointer}}$<$ \mbox{\hyperlink{classjclib_1_1yieldingIteratorHelper}{yielding\+Iterator\+Helper}}$<$ T $>$ $>$ {\bfseries helper\+\_\+}
 \end{DoxyCompactItemize}
 
 
-\subsection{Detailed Description}
+\doxysubsection{Detailed Description}
 \subsubsection*{template$<$typename T$>$\newline
 class jclib\+::yielding\+Container$<$ T $>$}
-
 Emulates a container object providing begin \& end iterators suitable for feeding to for( var \+: container ) 
 
-\subsection{Constructor \& Destructor Documentation}
+\doxysubsection{Constructor \& Destructor Documentation}
 \mbox{\Hypertarget{classjclib_1_1yieldingContainer_a2be1354629759fbe753a23361ddff48b}\label{classjclib_1_1yieldingContainer_a2be1354629759fbe753a23361ddff48b}} 
-\index{jclib\+::yielding\+Container@{jclib\+::yielding\+Container}!yielding\+Container@{yielding\+Container}}
-\index{yielding\+Container@{yielding\+Container}!jclib\+::yielding\+Container@{jclib\+::yielding\+Container}}
-\subsubsection{\texorpdfstring{yielding\+Container()}{yieldingContainer()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+\index{jclib::yieldingContainer$<$ T $>$@{jclib::yieldingContainer$<$ T $>$}!yieldingContainer@{yieldingContainer}}
+\index{yieldingContainer@{yieldingContainer}!jclib::yieldingContainer$<$ T $>$@{jclib::yieldingContainer$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{yieldingContainer()}{yieldingContainer()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
 {\footnotesize\ttfamily template$<$typename T $>$ \\
-\hyperlink{classjclib_1_1yieldingContainer}{jclib\+::yielding\+Container}$<$ T $>$\+::\hyperlink{classjclib_1_1yieldingContainer}{yielding\+Container} (\begin{DoxyParamCaption}\item[{\hyperlink{classjclib_1_1yieldingIteratorHelper}{yielding\+Iterator\+Helper}$<$ T $>$ $\ast$}]{helper }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+\mbox{\hyperlink{classjclib_1_1yieldingContainer}{jclib\+::yielding\+Container}}$<$ T $>$\+::yielding\+Container (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classjclib_1_1yieldingIteratorHelper}{yielding\+Iterator\+Helper}}$<$ T $>$ $\ast$}]{helper }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
 
 Constructor~\newline
  I have deliberately not created a default constructor.~\newline
  Given that instances can be constructed with a nullptr (and a test exercises that) there is no functional reason for not having one, I simply can\textquotesingle{}t see a purpose for it. JC Oct 2017 
 \begin{DoxyParams}{Parameters}
-{\em helper.} & If a nullptr, an assignment must be made before calling \hyperlink{classjclib_1_1yieldingContainer_a9cdbb83859db191572b78264821c5d3b}{begin()} or bad things will happen \\
+{\em helper.} & If a nullptr, an assignment must be made before calling \mbox{\hyperlink{classjclib_1_1yieldingContainer_a9cdbb83859db191572b78264821c5d3b}{begin()}} or bad things will happen \\
 \hline
 \end{DoxyParams}
 \mbox{\Hypertarget{classjclib_1_1yieldingContainer_a63e99537ac3eda23b731bcca7c4ec7a7}\label{classjclib_1_1yieldingContainer_a63e99537ac3eda23b731bcca7c4ec7a7}} 
-\index{jclib\+::yielding\+Container@{jclib\+::yielding\+Container}!yielding\+Container@{yielding\+Container}}
-\index{yielding\+Container@{yielding\+Container}!jclib\+::yielding\+Container@{jclib\+::yielding\+Container}}
-\subsubsection{\texorpdfstring{yielding\+Container()}{yieldingContainer()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+\index{jclib::yieldingContainer$<$ T $>$@{jclib::yieldingContainer$<$ T $>$}!yieldingContainer@{yieldingContainer}}
+\index{yieldingContainer@{yieldingContainer}!jclib::yieldingContainer$<$ T $>$@{jclib::yieldingContainer$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{yieldingContainer()}{yieldingContainer()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
 {\footnotesize\ttfamily template$<$typename T $>$ \\
-\hyperlink{classjclib_1_1yieldingContainer}{jclib\+::yielding\+Container}$<$ T $>$\+::\hyperlink{classjclib_1_1yieldingContainer}{yielding\+Container} (\begin{DoxyParamCaption}\item[{const \hyperlink{classjclib_1_1yieldingContainer}{yielding\+Container}$<$ T $>$ \&}]{old }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+\mbox{\hyperlink{classjclib_1_1yieldingContainer}{jclib\+::yielding\+Container}}$<$ T $>$\+::yielding\+Container (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classjclib_1_1yieldingContainer}{yielding\+Container}}$<$ T $>$ \&}]{old }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
 
 Copy constructor. 
 \begin{DoxyParams}{Parameters}
@@ -70,33 +75,33 @@ Copy constructor.
 \end{DoxyParams}
 
 
-\subsection{Member Function Documentation}
+\doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{classjclib_1_1yieldingContainer_a9cdbb83859db191572b78264821c5d3b}\label{classjclib_1_1yieldingContainer_a9cdbb83859db191572b78264821c5d3b}} 
-\index{jclib\+::yielding\+Container@{jclib\+::yielding\+Container}!begin@{begin}}
-\index{begin@{begin}!jclib\+::yielding\+Container@{jclib\+::yielding\+Container}}
-\subsubsection{\texorpdfstring{begin()}{begin()}}
+\index{jclib::yieldingContainer$<$ T $>$@{jclib::yieldingContainer$<$ T $>$}!begin@{begin}}
+\index{begin@{begin}!jclib::yieldingContainer$<$ T $>$@{jclib::yieldingContainer$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{begin()}{begin()}}
 {\footnotesize\ttfamily template$<$typename T $>$ \\
-iterator\+\_\+T \hyperlink{classjclib_1_1yieldingContainer}{jclib\+::yielding\+Container}$<$ T $>$\+::begin (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+iterator\+\_\+T \mbox{\hyperlink{classjclib_1_1yieldingContainer}{jclib\+::yielding\+Container}}$<$ T $>$\+::begin (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
 
 instantiate and return an iterator set to the start of the range \begin{DoxyReturn}{Returns}
 the iterator 
 \end{DoxyReturn}
-\mbox{\Hypertarget{classjclib_1_1yieldingContainer_a19f48736c18c516ad711db0255d1894a}\label{classjclib_1_1yieldingContainer_a19f48736c18c516ad711db0255d1894a}} 
-\index{jclib\+::yielding\+Container@{jclib\+::yielding\+Container}!end@{end}}
-\index{end@{end}!jclib\+::yielding\+Container@{jclib\+::yielding\+Container}}
-\subsubsection{\texorpdfstring{end()}{end()}}
+\mbox{\Hypertarget{classjclib_1_1yieldingContainer_a64c65b30280f9ff9a7a1f46c237d332b}\label{classjclib_1_1yieldingContainer_a64c65b30280f9ff9a7a1f46c237d332b}} 
+\index{jclib::yieldingContainer$<$ T $>$@{jclib::yieldingContainer$<$ T $>$}!end@{end}}
+\index{end@{end}!jclib::yieldingContainer$<$ T $>$@{jclib::yieldingContainer$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{end()}{end()}}
 {\footnotesize\ttfamily template$<$typename T $>$ \\
-iterator\+\_\+T const\& \hyperlink{classjclib_1_1yieldingContainer}{jclib\+::yielding\+Container}$<$ T $>$\+::end (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+iterator\+\_\+T const  \& \mbox{\hyperlink{classjclib_1_1yieldingContainer}{jclib\+::yielding\+Container}}$<$ T $>$\+::end (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
 
 return an iterator set to the end of the range. Only one iterator per class is actually created \begin{DoxyReturn}{Returns}
 the iterator 
 \end{DoxyReturn}
-\mbox{\Hypertarget{classjclib_1_1yieldingContainer_a1c4bd31066ec29559dc7ed6d0801cabe}\label{classjclib_1_1yieldingContainer_a1c4bd31066ec29559dc7ed6d0801cabe}} 
-\index{jclib\+::yielding\+Container@{jclib\+::yielding\+Container}!operator=@{operator=}}
-\index{operator=@{operator=}!jclib\+::yielding\+Container@{jclib\+::yielding\+Container}}
-\subsubsection{\texorpdfstring{operator=()}{operator=()}}
+\mbox{\Hypertarget{classjclib_1_1yieldingContainer_aa4fb2046e3c969038fb5a1797af6fbd0}\label{classjclib_1_1yieldingContainer_aa4fb2046e3c969038fb5a1797af6fbd0}} 
+\index{jclib::yieldingContainer$<$ T $>$@{jclib::yieldingContainer$<$ T $>$}!operator=@{operator=}}
+\index{operator=@{operator=}!jclib::yieldingContainer$<$ T $>$@{jclib::yieldingContainer$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
 {\footnotesize\ttfamily template$<$typename T $>$ \\
-\hyperlink{classjclib_1_1yieldingContainer}{yielding\+Container}$<$T$>$\& \hyperlink{classjclib_1_1yieldingContainer}{jclib\+::yielding\+Container}$<$ T $>$\+::operator= (\begin{DoxyParamCaption}\item[{const \hyperlink{classjclib_1_1yieldingContainer}{yielding\+Container}$<$ T $>$ \&}]{old }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+\mbox{\hyperlink{classjclib_1_1yieldingContainer}{yielding\+Container}}$<$ T $>$ \& \mbox{\hyperlink{classjclib_1_1yieldingContainer}{jclib\+::yielding\+Container}}$<$ T $>$\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classjclib_1_1yieldingContainer}{yielding\+Container}}$<$ T $>$ \&}]{old }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
 
 Assignment. 
 \begin{DoxyParams}{Parameters}

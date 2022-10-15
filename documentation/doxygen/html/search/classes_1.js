@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['intsequence',['intSequence',['../classintSequence.html',1,'']]]
+  ['intsequence_0',['intSequence',['../classintSequence.html',1,'']]]
 ];

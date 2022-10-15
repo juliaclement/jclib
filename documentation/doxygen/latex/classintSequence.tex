@@ -1,45 +1,57 @@
-\hypertarget{classintSequence}{}\section{int\+Sequence Class Reference}
-\label{classintSequence}\index{int\+Sequence@{int\+Sequence}}
+\hypertarget{classintSequence}{}\doxysection{int\+Sequence Class Reference}
+\label{classintSequence}\index{intSequence@{intSequence}}
 
 
 Inheritance diagram for int\+Sequence\+:
-% FIG 0
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=230pt]{classintSequence__inherit__graph}
+\end{center}
+\end{figure}
 
 
 Collaboration diagram for int\+Sequence\+:
-% FIG 1
-\subsection*{Public Member Functions}
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=230pt]{classintSequence__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-virtual void \hyperlink{classintSequence_ab624bfe357dcb3b34cb7091e4a254d4e}{next} (int \&value, int \&state)
+virtual void \mbox{\hyperlink{classintSequence_ab624bfe357dcb3b34cb7091e4a254d4e}{next}} (int \&value, int \&state)
 \item 
-virtual void \hyperlink{classintSequence_a4bf1fa808b4b4e4a5a618325d73df0c6}{ending} (int \&value)
+virtual void \mbox{\hyperlink{classintSequence_a4bf1fa808b4b4e4a5a618325d73df0c6}{ending}} (int \&value)
 \item 
 \mbox{\Hypertarget{classintSequence_a9d38989e2d03c5aa79ba815090fe582b}\label{classintSequence_a9d38989e2d03c5aa79ba815090fe582b}} 
 {\bfseries int\+Sequence} (int start, int limit)
 \end{DoxyCompactItemize}
 
 
-\subsection{Member Function Documentation}
+\doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{classintSequence_a4bf1fa808b4b4e4a5a618325d73df0c6}\label{classintSequence_a4bf1fa808b4b4e4a5a618325d73df0c6}} 
-\index{int\+Sequence@{int\+Sequence}!ending@{ending}}
-\index{ending@{ending}!int\+Sequence@{int\+Sequence}}
-\subsubsection{\texorpdfstring{ending()}{ending()}}
+\index{intSequence@{intSequence}!ending@{ending}}
+\index{ending@{ending}!intSequence@{intSequence}}
+\doxysubsubsection{\texorpdfstring{ending()}{ending()}}
 {\footnotesize\ttfamily virtual void int\+Sequence\+::ending (\begin{DoxyParamCaption}\item[{int \&}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
 
-Called when state is set to -\/1 (end) either by the user or on return from \hyperlink{classintSequence_ab624bfe357dcb3b34cb7091e4a254d4e}{next()} 
+Called when state is set to -\/1 (end) either by the user or on return from \mbox{\hyperlink{classintSequence_ab624bfe357dcb3b34cb7091e4a254d4e}{next()}} 
 \begin{DoxyParams}{Parameters}
 {\em value} & that will be returned by $\ast$ iterator. I/O \\
 \hline
 \end{DoxyParams}
 
 
-Reimplemented from \hyperlink{classjclib_1_1yieldingIteratorHelper_a62f77cf3f5376e5997512907460f2d36}{jclib\+::yielding\+Iterator\+Helper$<$ int $>$}.
+Reimplemented from \mbox{\hyperlink{classjclib_1_1yieldingIteratorHelper_a62f77cf3f5376e5997512907460f2d36}{jclib\+::yielding\+Iterator\+Helper$<$ int $>$}}.
 
 \mbox{\Hypertarget{classintSequence_ab624bfe357dcb3b34cb7091e4a254d4e}\label{classintSequence_ab624bfe357dcb3b34cb7091e4a254d4e}} 
-\index{int\+Sequence@{int\+Sequence}!next@{next}}
-\index{next@{next}!int\+Sequence@{int\+Sequence}}
-\subsubsection{\texorpdfstring{next()}{next()}}
+\index{intSequence@{intSequence}!next@{next}}
+\index{next@{next}!intSequence@{intSequence}}
+\doxysubsubsection{\texorpdfstring{next()}{next()}}
 {\footnotesize\ttfamily virtual void int\+Sequence\+::next (\begin{DoxyParamCaption}\item[{int \&}]{value,  }\item[{int \&}]{state }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
 
 Called to advance the iterator to its next state 
@@ -51,7 +63,7 @@ Called to advance the iterator to its next state
 \end{DoxyParams}
 
 
-Implements \hyperlink{classjclib_1_1yieldingIteratorHelper_a620c17e7eb8ed695e3fb9add01da576d}{jclib\+::yielding\+Iterator\+Helper$<$ int $>$}.
+Implements \mbox{\hyperlink{classjclib_1_1yieldingIteratorHelper_a620c17e7eb8ed695e3fb9add01da576d}{jclib\+::yielding\+Iterator\+Helper$<$ int $>$}}.
 
 
 
