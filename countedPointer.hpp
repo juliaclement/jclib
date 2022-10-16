@@ -23,6 +23,8 @@ SOFTWARE.
 /* 
  * File:   countedPointer.hpp
  * Author: Julia Clement <Julia at Clement dot nz>
+ * 
+ * Part of the JCLib project https://github.com/juliaclement/jclib
  *
  * Created on 1 October 2017, 9:46 PM
  */

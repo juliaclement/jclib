@@ -23,12 +23,13 @@ SOFTWARE.
 /* 
  * File:   jString.hpp
  * Author: Julia Clement <Julia at Clement dot nz>
+ * 
+ * Part of the JCLib project https://github.com/juliaclement/jclib
  *
  * Created on 15 October 2022, 11:58 AM
  */
 #ifndef jString_HPP
 #define jString_HPP
-#include <cstddef>
 #include <cstring>
 #include <ostream>
 #include "countedPointer.hpp"

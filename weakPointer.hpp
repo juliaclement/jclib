@@ -23,6 +23,8 @@ SOFTWARE.
 /* 
  * File:   weakPointer.hpp
  * Author: Julia Clement <Julia at Clement dot nz>
+ * 
+ * Part of the JCLib project https://github.com/juliaclement/jclib
  *
  * Created on 5 October 2017, 7:07 PM
  */
