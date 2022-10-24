@@ -40,7 +40,6 @@ int main(int argc, char ** argv) {
     jString b(a);
     auto buf="xxxyyy";
     auto c = jString(buf,buf+3);
-    assert( c == jString("xxx"));
     auto d = b+c;
     std::cout << d << "\n";
     auto e = a.substr(5,2);
@@ -48,12 +47,26 @@ int main(int argc, char ** argv) {
     auto f = e.substr(5,2);
     assert( f == jString(""));
     auto g=a.right(6);
+
+    // Check we have the expected values:
+
+    assert( a == jString("This is a string") );
+    assert( b == jString("This is a string") );
+    assert( c == jString("xxx"));
+    assert( d == jString("This is a stringxxx")); // b+c
+    assert( e == jString("is"));
+    assert( f == jString(""));
     assert( g==jString("string"));
 
+    // Check comparison operators
     assert(a==b);
     assert(d<c);
-    assert(d>=c);
+    assert(d<=c);
     assert(d>a);
+    assert(d>b);
+    assert(d>=a);
     assert(a<=d);
     assert(d!=a);
+    std::cout << "OK (0)\n";
+    return 0;
 }

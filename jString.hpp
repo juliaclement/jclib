@@ -236,11 +236,20 @@ namespace jclib {
             bool operator < (const jString &rhs) const {
                 return strcmp(get()->m_data, rhs->m_data) < 0;
             }
+            bool operator <= (const jString &rhs) const {
+                return strcmp(get()->m_data, rhs->m_data) <= 0;
+            }
             bool operator > (const jString &rhs) const {
                 return strcmp(get()->m_data, rhs->m_data) > 0;
             }
+            bool operator >= (const jString &rhs) const {
+                return strcmp(get()->m_data, rhs->m_data) >= 0;
+            }
             bool operator == (const jString &rhs) const {
                 return strcmp(get()->m_data, rhs->m_data) == 0;
+            }
+            bool operator != (const jString &rhs) const {
+                return strcmp(get()->m_data, rhs->m_data) != 0;
             }
             size_t len() const { return get()->len();}
             
