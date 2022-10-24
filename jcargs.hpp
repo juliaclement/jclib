@@ -205,10 +205,6 @@ namespace jclib {
                             break;
                         }
                         std::vector<jString> argarray = jString(argstr+2).split("=",1);
-                        error_log_ << "Split size=" << argarray.size();
-                        for( auto i : argarray)
-                            error_log_ << " " << i <<",";
-                        error_log_ << "\n";
                         jString kw=argarray[0];
                         jString val=argarray[1];
                         if( ! val.isvalid())
