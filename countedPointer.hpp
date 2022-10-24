@@ -43,8 +43,9 @@ template< typename T> class CountedPointer {
 private:
     T * ptr_;
     inline void postAssign() {
-        if( ptr_ != nullptr )
+        if( ptr_ != nullptr ) {
             ptr_->CountedPointerAttach();
+        }
     }
 public:
     /**
@@ -67,6 +68,7 @@ public:
      */
     T & operator *() const { return const_cast< T &>(*ptr_); }
     T * operator ->() const { return const_cast< T *>(ptr_); }
+    operator T *() const { return const_cast< T *>(ptr_); }
     /**
      * Set the internal value. Attaching / Detaching as requried
      * occasionaally useful as a replacement for the assignment operator.

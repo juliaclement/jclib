@@ -30,12 +30,13 @@ SOFTWARE.
  */
 #ifndef jString_HPP
 #define jString_HPP
+#include <limits>
 #include <cstring>
 #include <ostream>
+#include <vector>
 #include "countedPointer.hpp"
 
 namespace jclib {
-
     /**
      * Implementation of a reference counted string
      * This string is lighweight with the string class
@@ -46,25 +47,67 @@ namespace jclib {
      * which will be passing a ridiculous number of strings around.
     */
 
-    class jStringBase: public CountedPointerTarget {
+    // If you get strange crashes, enable this #define
+    // To double the number of heap allocations / frees
+    // but do it safely
+    //#define SAFE_JSTRING 1
+
+    struct jStringBase {
         /**
          * A class to store the string data.
         */
         private:
             friend class jString;
+            friend class CountedPointer<jStringBase>; // = jString's parent class;
             friend std::ostream& operator<<(std::ostream& os, const class jString & string);
-            std::size_t m_len;
-            // Not the most efficient, but portable.
-            char * m_data;
+            // no copy constructor
+            jStringBase( const jStringBase & ) = delete;
             // suppress assignment into the string
-            jStringBase & operator=(const jStringBase &);
+            jStringBase& operator = (const jStringBase&) = delete;
+            // Implement the requirements for CountedPointer
+            int counter_;
+            inline void CountedPointerAttach() { ++counter_; }
+            inline void CountedPointerDetach() { if( !--counter_) delete this;}
             // ctor private so only jString can access it
-            jStringBase( const char * data, std::size_t len ){
-                m_data = new char[len+1];
-                m_len = len;
+            jStringBase( const char * data, std::size_t len )
+            : counter_(0)
+#ifdef SAFE_JSTRING
+            , m_data( new char[len+1])
+#endif
+            , m_len( len )
+            {
                 strncpy(m_data, data, len);
                 m_data[len] = '\0';
             }
+            static jStringBase * create(const char * data, std::size_t len) {
+#ifdef SAFE_JSTRING
+                // Double create on heap
+                return new jStringBase(data, len);
+#else
+                void * new_store = new unsigned char[len + sizeof(jStringBase)];
+                jStringBase * new_object= new (new_store) jStringBase(data, len);
+                return new_object;
+#endif
+            }
+#ifdef SAFE_JSTRING
+            virtual ~jStringBase() {
+                delete m_data;
+            }
+#endif
+            std::size_t m_len;
+#ifdef SAFE_JSTRING
+            // Not the most efficient, but portable.
+            char * m_data;
+#else
+            // **** This MUST be the last data member in the struct as
+            // we deliberately overrun the declared length of the array.
+            //
+            // I don't recall seeing any guarantee that struct members
+            // are laid out in declaration order, but every compiler I
+            // know works that way. 
+            // If you get strange crashes, try defining SAFE_JSTRING
+            char m_data[1];
+#endif
         public:
             operator const char *() const { return m_data;};
             auto len() const { return m_len;}
@@ -78,10 +121,13 @@ namespace jclib {
             static jString get_empty() {
                 static jString empty_base("");
                 return empty_base;
-            }
+            } 
+        public:
             const char * data() const { return get()->m_data;}
             friend std::ostream& operator<<(std::ostream& os, const class jString & string);
-        public:
+            bool isvalid() const {
+                return isset();
+            }
             // create from an existing base
             // shouldn't really happen, but who knows
             // what changes will occur in the future or
@@ -90,26 +136,32 @@ namespace jclib {
             jString( jStringBase *base )
                 : CountedPointer<jStringBase>(base)
              {}
+            // Create empty string
+            jString( ):
+                CountedPointer<jStringBase>(get_empty().get())
+                {}
             // Create from c string
             jString( const char * source ):
-                CountedPointer<jStringBase>(new jStringBase(source, strlen(source)))
+                CountedPointer<jStringBase>(jStringBase::create(source, strlen(source)))
                 {}
             // Create from start of c string
             jString( const char * source, std::size_t len ):
-                CountedPointer<jStringBase>(new jStringBase(source, len))
+                CountedPointer<jStringBase>(jStringBase::create(source, len))
                 {}
             // Create from two pointers to the same buffer
             // NB: This is what re2c gives on a match
             jString( const char * start, const char * end ):
-                CountedPointer<jStringBase>(new jStringBase(start, end-start))
+                CountedPointer<jStringBase>(jStringBase::create(start, end-start))
                 {}
             // string concatenation
             jString operator + (const jString &rhs) {
                 jStringBase * lhs_base = get();
                 if( lhs_base->m_len == 0 )
+                    return rhs;
+                if( rhs.len() == 0 )
                     return *this;
                 auto len = lhs_base->m_len + rhs->m_len;
-                jStringBase * new_base = new jStringBase(lhs_base->m_data,len + 1 );
+                jStringBase * new_base = jStringBase::create(lhs_base->m_data,len );
                 strncpy(new_base->m_data + lhs_base->m_len,rhs->m_data, rhs->m_len );
                 new_base->m_data[len]='\0';
                 return new_base;
@@ -125,14 +177,14 @@ namespace jclib {
                 auto ilen=std::min(len,get()->m_len);
                 if(ilen == get()->m_len)
                     return *this;
-                return new jStringBase(get()->m_data, ilen );
+                return jStringBase::create(get()->m_data, ilen );
             }
             jString right(std::size_t len) const {
                 auto ilen=std::min(len,get()->m_len);
                 if(ilen == get()->m_len)
                     return *this;
                 auto start=get()->m_len-ilen;
-                return new jStringBase(get()->m_data+start, ilen );
+                return jStringBase::create(get()->m_data+start, ilen );
             }
             jString substr(std::size_t start, std::size_t len) const {
                 if( start >= get()->m_len ){
@@ -141,7 +193,45 @@ namespace jclib {
                 auto ilen=std::min(get()->m_len-start, len);
                 if(ilen == get()->m_len)
                     return *this;
-                return new jStringBase(get()->m_data+start,ilen);
+                return jStringBase::create(get()->m_data+start,ilen);
+            }
+
+            jString pad(std::size_t length, char pad_char = ' ' ) const {
+                if( length <= len())
+                    return *this;
+                
+                jStringBase * new_stringBase = jStringBase::create(get()->m_data, length );
+                
+                char * pad_ptr = new_stringBase->m_data + len();
+                for( ; pad_ptr < new_stringBase->m_data + length; ++ pad_ptr ) {
+                    *pad_ptr = pad_char;
+                }
+                *pad_ptr = '\0';
+                return new_stringBase;
+            }
+            
+            std::vector<jString> split(const char * delim, int max_splits=std::numeric_limits<int>::max() ) const {
+                std::vector<jString> answer;
+                const char * buffer = get()->m_data;
+                const char * buffer_end = buffer+len();
+                const int step = strlen(delim);
+                auto position = strstr( buffer, delim );
+                if( position == nullptr ){
+                    answer.push_back(*this);
+                    return answer;
+                }
+                for(    ;
+                        position != nullptr && max_splits != 0;
+                        --max_splits ){
+                    jString chunk(buffer,position);
+                    answer.push_back( chunk );
+                    buffer += chunk.len() + step;
+                    position = (buffer < buffer_end) ? strstr( buffer, delim ) : nullptr;
+                }
+                if( buffer < buffer_end ) {
+                    answer.push_back(jString(buffer));
+                }
+                return answer;
             }
             bool operator < (const jString &rhs) const {
                 return strcmp(get()->m_data, rhs->m_data) < 0;
@@ -152,11 +242,13 @@ namespace jclib {
             bool operator == (const jString &rhs) const {
                 return strcmp(get()->m_data, rhs->m_data) == 0;
             }
+            size_t len() const { return get()->len();}
+            
             operator const char *() const { return (*this)->m_data;};
     };
 
 
-    std::ostream& operator<<(std::ostream& os, const jString & string) {
+    inline std::ostream& operator<<(std::ostream& os, const jString & string) {
         os << string.data();
         return os;
     }
