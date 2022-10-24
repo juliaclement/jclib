@@ -26,191 +26,193 @@
 \DoxyCodeLine{23 \textcolor{comment}{/* }}
 \DoxyCodeLine{24 \textcolor{comment}{ * File:   weakPointer.hpp}}
 \DoxyCodeLine{25 \textcolor{comment}{ * Author: Julia Clement <Julia at Clement dot nz>}}
-\DoxyCodeLine{26 \textcolor{comment}{ *}}
-\DoxyCodeLine{27 \textcolor{comment}{ * Created on 5 October 2017, 7:07 PM}}
-\DoxyCodeLine{28 \textcolor{comment}{ */}}
-\DoxyCodeLine{29 }
-\DoxyCodeLine{30 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{ifndef} \textcolor{preprocessor}{WEAKPOINTER\_HPP}}
-\DoxyCodeLine{31 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{WEAKPOINTER\_HPP}}
-\DoxyCodeLine{32 }
-\DoxyCodeLine{33 \textcolor{comment}{/**}}
-\DoxyCodeLine{34 \textcolor{comment}{ * Implementation of a weak pointer. }}
-\DoxyCodeLine{35 \textcolor{comment}{ * jclib::WeakPointer is a smart pointer that holds a non-\/owning ("{}weak"{}) }}
-\DoxyCodeLine{36 \textcolor{comment}{ * reference to an object that is managed by jclib::CountedPointer. }}
-\DoxyCodeLine{37 \textcolor{comment}{ * like std::weak\_ptr, jclib::WeakPointer models temporary ownership: }}
-\DoxyCodeLine{38 \textcolor{comment}{ * when an object needs to be available only if it exists, and it may be }}
-\DoxyCodeLine{39 \textcolor{comment}{ * deleted at any time by other code.}}
-\DoxyCodeLine{40 \textcolor{comment}{ * Like std::weak\_ptr, jclib::WeakPointer is intended to break circular }}
-\DoxyCodeLine{41 \textcolor{comment}{ * references in pointers..}}
-\DoxyCodeLine{42 \textcolor{comment}{}}
-\DoxyCodeLine{43 \textcolor{comment}{ * This is not the same as std::weak\_ptr, details on that class are at}}
-\DoxyCodeLine{44 \textcolor{comment}{ *  http://en.cppreference.com/w/cpp/memory/weak\_ptr}}
-\DoxyCodeLine{45 \textcolor{comment}{ * Major differences: }}
-\DoxyCodeLine{46 \textcolor{comment}{ * * std::weak\_ptr is related to std::shared pointer, jclib::WeakPointer is}}
-\DoxyCodeLine{47 \textcolor{comment}{ *   related to jclib::CountedPointer}}
-\DoxyCodeLine{48 \textcolor{comment}{ * * std::weak\_pointer may hold references to any object std::shared\_pointer}}
-\DoxyCodeLine{49 \textcolor{comment}{ *   may hold references to. jclib::WeakPointer may only hold references}}
-\DoxyCodeLine{50 \textcolor{comment}{ *   to objects that publicly inherit from jclib::WeakPointerTargetBase. Usually}}
-\DoxyCodeLine{51 \textcolor{comment}{ *   something that publicly inherits from WeakPointerTarget<T>}}
-\DoxyCodeLine{52 \textcolor{comment}{ * * jclib::WeakPointer may hold a nullptr or a value returned from}}
-\DoxyCodeLine{53 \textcolor{comment}{ *   WeakPointerTarget<T>::getWeakPointer()}}
-\DoxyCodeLine{54 \textcolor{comment}{ * * std::weak\_ptr must be converted to std::shared\_ptr in order to access the}}
-\DoxyCodeLine{55 \textcolor{comment}{ *   referenced object. jclib::WeakPointer may be directly dereferenced to a }}
-\DoxyCodeLine{56 \textcolor{comment}{ *   native pointer. That said, unless the pointer is very short lived, }}
-\DoxyCodeLine{57 \textcolor{comment}{ *   converting to a CountedPointer is usually safer.}}
-\DoxyCodeLine{58 \textcolor{comment}{ * Todo: Consider if WeakPointerTargetBase should be an interface}}
-\DoxyCodeLine{59 \textcolor{comment}{ */}}
-\DoxyCodeLine{60 }
-\DoxyCodeLine{61 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{include} \mbox{\hyperlink{countedPointer_8hpp}{"{}countedPointer.hpp"{}}}}
+\DoxyCodeLine{26 \textcolor{comment}{ * }}
+\DoxyCodeLine{27 \textcolor{comment}{ * Part of the JCLib project https://github.com/juliaclement/jclib}}
+\DoxyCodeLine{28 \textcolor{comment}{ *}}
+\DoxyCodeLine{29 \textcolor{comment}{ * Created on 5 October 2017, 7:07 PM}}
+\DoxyCodeLine{30 \textcolor{comment}{ */}}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{ifndef} \textcolor{preprocessor}{WEAKPOINTER\_HPP}}
+\DoxyCodeLine{33 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{WEAKPOINTER\_HPP}}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35 \textcolor{comment}{/**}}
+\DoxyCodeLine{36 \textcolor{comment}{ * Implementation of a weak pointer. }}
+\DoxyCodeLine{37 \textcolor{comment}{ * jclib::WeakPointer is a smart pointer that holds a non-\/owning ("{}weak"{}) }}
+\DoxyCodeLine{38 \textcolor{comment}{ * reference to an object that is managed by jclib::CountedPointer. }}
+\DoxyCodeLine{39 \textcolor{comment}{ * like std::weak\_ptr, jclib::WeakPointer models temporary ownership: }}
+\DoxyCodeLine{40 \textcolor{comment}{ * when an object needs to be available only if it exists, and it may be }}
+\DoxyCodeLine{41 \textcolor{comment}{ * deleted at any time by other code.}}
+\DoxyCodeLine{42 \textcolor{comment}{ * Like std::weak\_ptr, jclib::WeakPointer is intended to break circular }}
+\DoxyCodeLine{43 \textcolor{comment}{ * references in pointers..}}
+\DoxyCodeLine{44 \textcolor{comment}{}}
+\DoxyCodeLine{45 \textcolor{comment}{ * This is not the same as std::weak\_ptr, details on that class are at}}
+\DoxyCodeLine{46 \textcolor{comment}{ *  http://en.cppreference.com/w/cpp/memory/weak\_ptr}}
+\DoxyCodeLine{47 \textcolor{comment}{ * Major differences: }}
+\DoxyCodeLine{48 \textcolor{comment}{ * * std::weak\_ptr is related to std::shared pointer, jclib::WeakPointer is}}
+\DoxyCodeLine{49 \textcolor{comment}{ *   related to jclib::CountedPointer}}
+\DoxyCodeLine{50 \textcolor{comment}{ * * std::weak\_pointer may hold references to any object std::shared\_pointer}}
+\DoxyCodeLine{51 \textcolor{comment}{ *   may hold references to. jclib::WeakPointer may only hold references}}
+\DoxyCodeLine{52 \textcolor{comment}{ *   to objects that publicly inherit from jclib::WeakPointerTargetBase. Usually}}
+\DoxyCodeLine{53 \textcolor{comment}{ *   something that publicly inherits from WeakPointerTarget<T>}}
+\DoxyCodeLine{54 \textcolor{comment}{ * * jclib::WeakPointer may hold a nullptr or a value returned from}}
+\DoxyCodeLine{55 \textcolor{comment}{ *   WeakPointerTarget<T>::getWeakPointer()}}
+\DoxyCodeLine{56 \textcolor{comment}{ * * std::weak\_ptr must be converted to std::shared\_ptr in order to access the}}
+\DoxyCodeLine{57 \textcolor{comment}{ *   referenced object. jclib::WeakPointer may be directly dereferenced to a }}
+\DoxyCodeLine{58 \textcolor{comment}{ *   native pointer. That said, unless the pointer is very short lived, }}
+\DoxyCodeLine{59 \textcolor{comment}{ *   converting to a CountedPointer is usually safer.}}
+\DoxyCodeLine{60 \textcolor{comment}{ * Todo: Consider if WeakPointerTargetBase should be an interface}}
+\DoxyCodeLine{61 \textcolor{comment}{ */}}
 \DoxyCodeLine{62 }
-\DoxyCodeLine{63 \textcolor{keyword}{namespace} \mbox{\hyperlink{namespacejclib}{jclib}} \{}
-\DoxyCodeLine{64 \textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1WeakPointerTargetBase}{WeakPointerTargetBase}};}
-\DoxyCodeLine{65 }
-\DoxyCodeLine{66 \textcolor{comment}{/**}}
-\DoxyCodeLine{67 \textcolor{comment}{ * All jclib::WeakPointers are CountedPointers of this class.}}
-\DoxyCodeLine{68 \textcolor{comment}{ * It is created, initialised and ultimately cleared by the target}}
-\DoxyCodeLine{69 \textcolor{comment}{ */}}
-\DoxyCodeLine{70 \textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1WeakPointerBase}{WeakPointerBase}} \{}
-\DoxyCodeLine{71 \textcolor{keyword}{private}:}
-\DoxyCodeLine{72     \textcolor{keywordtype}{int} countedPointers\_;}
-\DoxyCodeLine{73 \textcolor{keyword}{public}:}
-\DoxyCodeLine{74     \mbox{\hyperlink{classjclib_1_1WeakPointerTargetBase}{WeakPointerTargetBase}} * wtb\_target\_;}
-\DoxyCodeLine{75 }
-\DoxyCodeLine{76     \textcolor{keyword}{inline} \textcolor{keywordtype}{void} CountedPointerAttach() \{ ++countedPointers\_; \}}
-\DoxyCodeLine{77     \textcolor{keyword}{inline} \textcolor{keywordtype}{void} CountedPointerDetach() \{ \textcolor{keywordflow}{if}( !-\/-\/countedPointers\_ ) \textcolor{keyword}{delete} \textcolor{keyword}{this};\}}
-\DoxyCodeLine{78     WeakPointerBase( \mbox{\hyperlink{classjclib_1_1WeakPointerTargetBase}{WeakPointerTargetBase}} * target) : countedPointers\_( 0 ), wtb\_target\_(target) \{\}}
-\DoxyCodeLine{79     \textcolor{comment}{// copy constructor. Not required, but included as failsafe }}
-\DoxyCodeLine{80     WeakPointerBase( \mbox{\hyperlink{classjclib_1_1WeakPointerBase}{WeakPointerBase}} \textcolor{keyword}{const} \&) : countedPointers\_( 0 ) \{\}}
-\DoxyCodeLine{81 \};}
-\DoxyCodeLine{82 }
-\DoxyCodeLine{83 \textcolor{comment}{/**}}
-\DoxyCodeLine{84 \textcolor{comment}{ */}}
-\DoxyCodeLine{85 \textcolor{keyword}{template}< \textcolor{keyword}{typename} T> \textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1WeakPointer}{WeakPointer}} \{}
-\DoxyCodeLine{86     \textcolor{keyword}{public}:}
-\DoxyCodeLine{87     \textcolor{keyword}{typedef} \mbox{\hyperlink{classjclib_1_1CountedPointer}{CountedPointer}}< \textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1WeakPointerBase}{WeakPointerBase}} > pointer\_t;}
-\DoxyCodeLine{88     \textcolor{keyword}{private}:}
-\DoxyCodeLine{89         pointer\_t basePointer\_;}
-\DoxyCodeLine{90     \textcolor{keyword}{public}:}
-\DoxyCodeLine{91     \textcolor{comment}{/**}}
-\DoxyCodeLine{92 \textcolor{comment}{     * Test if the pointer is set to nullptr}}
-\DoxyCodeLine{93 \textcolor{comment}{     * @return true if either the internal pointer or the WeakPointerBase is nullptr}}
-\DoxyCodeLine{94 \textcolor{comment}{    **/}}
-\DoxyCodeLine{95     \textcolor{keywordtype}{bool} \mbox{\hyperlink{classjclib_1_1WeakPointer_a5cbfbf27685b4591674fa19e1db8dafa}{isnull}}() \textcolor{keyword}{const} \{}
-\DoxyCodeLine{96         \textcolor{keywordflow}{return} basePointer\_\mbox{\hyperlink{classjclib_1_1CountedPointer_a45787c3b235590582aad6103d7bdc5d0}{.}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a45787c3b235590582aad6103d7bdc5d0}{isnull}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a45787c3b235590582aad6103d7bdc5d0}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a45787c3b235590582aad6103d7bdc5d0}{)}} ||}
-\DoxyCodeLine{97                basePointer\_-\/>wtb\_target\_ == \textcolor{keywordtype}{nullptr};}
-\DoxyCodeLine{98     \}}
-\DoxyCodeLine{99     \textcolor{comment}{/**}}
-\DoxyCodeLine{100 \textcolor{comment}{     * Test if the pointer is set to an object}}
-\DoxyCodeLine{101 \textcolor{comment}{     * * @return true if neither the internal pointer or the WeakPointerBase is nullptr}}
-\DoxyCodeLine{102 \textcolor{comment}{    **/}}
-\DoxyCodeLine{103     \textcolor{keywordtype}{bool} \mbox{\hyperlink{classjclib_1_1WeakPointer_a14f8326fd06df4bbe22e396b18b1a269}{isset}}() \textcolor{keyword}{const} \{}
-\DoxyCodeLine{104         \textcolor{keywordflow}{return}  basePointer\_\mbox{\hyperlink{classjclib_1_1CountedPointer_aba4799319512576d8873edd9239d7073}{.}}\mbox{\hyperlink{classjclib_1_1CountedPointer_aba4799319512576d8873edd9239d7073}{isset}}\mbox{\hyperlink{classjclib_1_1CountedPointer_aba4799319512576d8873edd9239d7073}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_aba4799319512576d8873edd9239d7073}{)}} \&\&}
-\DoxyCodeLine{105                 basePointer\_-\/>wtb\_target\_ != \textcolor{keywordtype}{nullptr};}
-\DoxyCodeLine{106     \}}
-\DoxyCodeLine{107 }
-\DoxyCodeLine{108     \textcolor{comment}{/**}}
-\DoxyCodeLine{109 \textcolor{comment}{     * Obtain a native C++ pointer to the object}}
-\DoxyCodeLine{110 \textcolor{comment}{     * @return the address of the object pointed at}}
-\DoxyCodeLine{111 \textcolor{comment}{     */}}
-\DoxyCodeLine{112     T * \mbox{\hyperlink{classjclib_1_1WeakPointer_a6456a00c963addf6c2d691f9018e962d}{get}}() \textcolor{keyword}{const} \{}
-\DoxyCodeLine{113         \textcolor{keywordflow}{return}}
-\DoxyCodeLine{114             \mbox{\hyperlink{classjclib_1_1WeakPointer_a5cbfbf27685b4591674fa19e1db8dafa}{isnull}}\mbox{\hyperlink{classjclib_1_1WeakPointer_a5cbfbf27685b4591674fa19e1db8dafa}{(}}\mbox{\hyperlink{classjclib_1_1WeakPointer_a5cbfbf27685b4591674fa19e1db8dafa}{)}}}
-\DoxyCodeLine{115             ? \textcolor{keywordtype}{nullptr}}
-\DoxyCodeLine{116             : \textcolor{keyword}{static\_cast}<T*> ( \textcolor{keyword}{const\_cast}<\textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1WeakPointerTargetBase}{WeakPointerTargetBase}} *>(basePointer\_-\/>wtb\_target\_) ); \} \textcolor{comment}{//const\_cast< T *>((T*)(basePointer\_.get())); \}}}
-\DoxyCodeLine{117     \textcolor{comment}{/**}}
-\DoxyCodeLine{118 \textcolor{comment}{     * retrieve a reference to the address of the object pointed at}}
-\DoxyCodeLine{119 \textcolor{comment}{     */}}
-\DoxyCodeLine{120     T \& \mbox{\hyperlink{classjclib_1_1WeakPointer_ab8b56be03e941fbfd7fdc845abcb49b4}{operator}} *() \textcolor{keyword}{const} \{}
-\DoxyCodeLine{121         \textcolor{keywordflow}{return} *\mbox{\hyperlink{classjclib_1_1WeakPointer_a6456a00c963addf6c2d691f9018e962d}{get}}\mbox{\hyperlink{classjclib_1_1WeakPointer_a6456a00c963addf6c2d691f9018e962d}{(}}\mbox{\hyperlink{classjclib_1_1WeakPointer_a6456a00c963addf6c2d691f9018e962d}{)}};\textcolor{comment}{//* const\_cast< T *>((T*)(basePointer\_-\/>target\_));}}
-\DoxyCodeLine{122     \}}
-\DoxyCodeLine{123     \textcolor{comment}{/**}}
-\DoxyCodeLine{124 \textcolor{comment}{     * retrieve a reference to the address of the object pointed at}}
-\DoxyCodeLine{125 \textcolor{comment}{     */}}
-\DoxyCodeLine{126     T * \mbox{\hyperlink{classjclib_1_1WeakPointer_ad0801509c2683663ca06f99cc59771bc}{operator}} -\/>() \textcolor{keyword}{const} \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classjclib_1_1WeakPointer_a6456a00c963addf6c2d691f9018e962d}{get}}\mbox{\hyperlink{classjclib_1_1WeakPointer_a6456a00c963addf6c2d691f9018e962d}{(}}\mbox{\hyperlink{classjclib_1_1WeakPointer_a6456a00c963addf6c2d691f9018e962d}{)}}; \} \textcolor{comment}{//return const\_cast< T *>((T*)(basePointer\_-\/>target\_)); \}}}
-\DoxyCodeLine{127     \textcolor{comment}{/**}}
-\DoxyCodeLine{128 \textcolor{comment}{     * Set to point to a different target. Attaching / Detaching as requried}}
-\DoxyCodeLine{129 \textcolor{comment}{     * occasionaally useful as a replacement for the assignment operator.}}
-\DoxyCodeLine{130 \textcolor{comment}{     * @param ptr the new value to set}}
-\DoxyCodeLine{131 \textcolor{comment}{     */}}
-\DoxyCodeLine{132     \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classjclib_1_1WeakPointer_a7de963c695578295c0c1b545b664d405}{set}}( \textcolor{keyword}{const} \mbox{\hyperlink{classjclib_1_1WeakPointer}{WeakPointer}}<T> \& old) \{}
-\DoxyCodeLine{133        basePointer\_.set(old.basePointer\_);}
-\DoxyCodeLine{134     \}}
-\DoxyCodeLine{135     \textcolor{comment}{/**}}
-\DoxyCodeLine{136 \textcolor{comment}{     * Set the internal value. Attaching / Detaching as requried}}
-\DoxyCodeLine{137 \textcolor{comment}{     * @param ptr the new value to set}}
-\DoxyCodeLine{138 \textcolor{comment}{     * @return ourself}}
-\DoxyCodeLine{139 \textcolor{comment}{     */}}
-\DoxyCodeLine{140     \textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1WeakPointer}{WeakPointer}}<T> \& \mbox{\hyperlink{classjclib_1_1WeakPointer_a033882ff5448b187fa2c4435ba2c272e}{operator}} =( \textcolor{keyword}{const} \mbox{\hyperlink{classjclib_1_1WeakPointer}{WeakPointer}}<T> \& ptr ) \{}
-\DoxyCodeLine{141         basePointer\_ = ptr.basePointer\_;}
-\DoxyCodeLine{142         \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
-\DoxyCodeLine{143     \}}
-\DoxyCodeLine{144     WeakPointer( )}
-\DoxyCodeLine{145     : basePointer\_( \textcolor{keywordtype}{nullptr} ) \{ \}}
-\DoxyCodeLine{146     WeakPointer( \textcolor{keyword}{const} \mbox{\hyperlink{classjclib_1_1CountedPointer}{CountedPointer}}< \textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1WeakPointerBase}{WeakPointerBase}} > \& base )}
-\DoxyCodeLine{147     : basePointer\_( base ) \{ \}}
-\DoxyCodeLine{148     \textcolor{comment}{/*}}
-\DoxyCodeLine{149 \textcolor{comment}{    WeakPointer( class WeakPointerBase * base )}}
-\DoxyCodeLine{150 \textcolor{comment}{    : basePointer\_( base ) \{}}
-\DoxyCodeLine{151 \textcolor{comment}{    \}}}
-\DoxyCodeLine{152 \textcolor{comment}{     */}}
-\DoxyCodeLine{153     WeakPointer( \textcolor{keyword}{const} \textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1WeakPointer}{WeakPointer}}<T>\& old )}
-\DoxyCodeLine{154     : basePointer\_( old.basePointer\_) \{}
-\DoxyCodeLine{155     \}}
-\DoxyCodeLine{156     \textcolor{keyword}{virtual} \string~WeakPointer( ) \{}
-\DoxyCodeLine{157         basePointer\_ \mbox{\hyperlink{classjclib_1_1CountedPointer_a723e34d68ef31f93cf7730301c0938a5}{=}} \textcolor{keywordtype}{nullptr}; \}}
-\DoxyCodeLine{158 \};}
-\DoxyCodeLine{159 }
-\DoxyCodeLine{160 \textcolor{comment}{/**}}
-\DoxyCodeLine{161 \textcolor{comment}{ * }}
-\DoxyCodeLine{162 \textcolor{comment}{ */}}
-\DoxyCodeLine{163 \textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1WeakPointerTargetBase}{WeakPointerTargetBase}} \{}
-\DoxyCodeLine{164 \textcolor{keyword}{public}:}
-\DoxyCodeLine{165     \textcolor{keyword}{typedef} \mbox{\hyperlink{classjclib_1_1CountedPointer}{CountedPointer}}< \textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1WeakPointerBase}{WeakPointerBase}} > pointer\_t;}
-\DoxyCodeLine{166 \textcolor{keyword}{private}:}
-\DoxyCodeLine{167     pointer\_t basePointer\_;}
-\DoxyCodeLine{168 \textcolor{keyword}{protected}:}
-\DoxyCodeLine{169     \textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1WeakPointerBase}{WeakPointerBase}} * getBasePointer() \textcolor{keyword}{const} \{}
-\DoxyCodeLine{170         \textcolor{keywordflow}{return} (\textcolor{keyword}{const\_cast}< \mbox{\hyperlink{classjclib_1_1WeakPointerTargetBase}{WeakPointerTargetBase}} *>(\textcolor{keyword}{this})-\/>basePointer\_)\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{.}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{)}};}
-\DoxyCodeLine{171     \}}
-\DoxyCodeLine{172     WeakPointerTargetBase( )}
-\DoxyCodeLine{173     : basePointer\_ ( \textcolor{keyword}{new} \mbox{\hyperlink{classjclib_1_1WeakPointerBase}{WeakPointerBase}}( \textcolor{keyword}{this} ) )}
-\DoxyCodeLine{174     \{}
-\DoxyCodeLine{175     \}}
-\DoxyCodeLine{176     \textcolor{comment}{/*}}
-\DoxyCodeLine{177 \textcolor{comment}{    WeakPointerTargetBase( void * container )}}
-\DoxyCodeLine{178 \textcolor{comment}{    : basePointer\_( new WeakPointerBase( container ) )}}
-\DoxyCodeLine{179 \textcolor{comment}{    \{}}
-\DoxyCodeLine{180 \textcolor{comment}{    \}}}
-\DoxyCodeLine{181 \textcolor{comment}{     */}}
-\DoxyCodeLine{182     \textcolor{comment}{/**}}
-\DoxyCodeLine{183 \textcolor{comment}{     * Copy constructor. This should only be used when the owning }}
-\DoxyCodeLine{184 \textcolor{comment}{     * class single inherits from WeakPointerTargetBase}}
-\DoxyCodeLine{185 \textcolor{comment}{     * @param ignored as we create our own pointer\_t we don't use }}
-\DoxyCodeLine{186 \textcolor{comment}{     *        any data from the old object }}
-\DoxyCodeLine{187 \textcolor{comment}{     */}}
-\DoxyCodeLine{188     \mbox{\hyperlink{classjclib_1_1WeakPointerTargetBase_a1d0c5ff379afcd448a59795579c8b050}{WeakPointerTargetBase}}( \mbox{\hyperlink{classjclib_1_1WeakPointerTargetBase}{WeakPointerTargetBase}} \textcolor{keyword}{const} \& ignored )}
-\DoxyCodeLine{189     : basePointer\_( \textcolor{keyword}{new} \mbox{\hyperlink{classjclib_1_1WeakPointerBase}{WeakPointerBase}}( \textcolor{keyword}{this} ) )}
-\DoxyCodeLine{190     \{}
-\DoxyCodeLine{191     \}}
-\DoxyCodeLine{192     \textcolor{keyword}{virtual} \string~WeakPointerTargetBase( ) \{}
-\DoxyCodeLine{193         \textcolor{comment}{// reset the pointer }}
-\DoxyCodeLine{194         basePointer\_-\/>wtb\_target\_ = \textcolor{keywordtype}{nullptr};}
-\DoxyCodeLine{195     \}}
-\DoxyCodeLine{196 \};}
-\DoxyCodeLine{197 }
-\DoxyCodeLine{198 \textcolor{comment}{/**}}
-\DoxyCodeLine{199 \textcolor{comment}{ * All targets of weak pointers should inherit from this template class}}
-\DoxyCodeLine{200 \textcolor{comment}{ * using something like:}}
-\DoxyCodeLine{201 \textcolor{comment}{ * class TargetClass1 : public WeakPointerTarget<TargetClass0> ...}}
-\DoxyCodeLine{202 \textcolor{comment}{ */}}
-\DoxyCodeLine{203 \textcolor{keyword}{template}< \textcolor{keyword}{typename} T > \textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1WeakPointerTarget}{WeakPointerTarget}} : \textcolor{keyword}{public} \mbox{\hyperlink{classjclib_1_1WeakPointerTargetBase}{WeakPointerTargetBase}} \{}
-\DoxyCodeLine{204     \textcolor{keyword}{public}:}
-\DoxyCodeLine{205         \mbox{\hyperlink{classjclib_1_1WeakPointer}{WeakPointer}}<T> getWeakPointer() \textcolor{keyword}{const} \{}
-\DoxyCodeLine{206             \textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1WeakPointerBase}{WeakPointerBase}} * answer = getBasePointer();}
-\DoxyCodeLine{207             \textcolor{keywordflow}{return} \mbox{\hyperlink{classjclib_1_1WeakPointer}{WeakPointer}}<T>( answer );}
-\DoxyCodeLine{208         \}}
-\DoxyCodeLine{209 \};}
-\DoxyCodeLine{210 \}}
-\DoxyCodeLine{211 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{endif} \textcolor{comment}{/* WEAKPOINTER\_HPP */}}
+\DoxyCodeLine{63 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{include} \mbox{\hyperlink{countedPointer_8hpp}{"{}countedPointer.hpp"{}}}}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65 \textcolor{keyword}{namespace} \mbox{\hyperlink{namespacejclib}{jclib}} \{}
+\DoxyCodeLine{66 \textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1WeakPointerTargetBase}{WeakPointerTargetBase}};}
+\DoxyCodeLine{67 }
+\DoxyCodeLine{68 \textcolor{comment}{/**}}
+\DoxyCodeLine{69 \textcolor{comment}{ * All jclib::WeakPointers are CountedPointers of this class.}}
+\DoxyCodeLine{70 \textcolor{comment}{ * It is created, initialised and ultimately cleared by the target}}
+\DoxyCodeLine{71 \textcolor{comment}{ */}}
+\DoxyCodeLine{72 \textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1WeakPointerBase}{WeakPointerBase}} \{}
+\DoxyCodeLine{73 \textcolor{keyword}{private}:}
+\DoxyCodeLine{74     \textcolor{keywordtype}{int} countedPointers\_;}
+\DoxyCodeLine{75 \textcolor{keyword}{public}:}
+\DoxyCodeLine{76     \mbox{\hyperlink{classjclib_1_1WeakPointerTargetBase}{WeakPointerTargetBase}} * wtb\_target\_;}
+\DoxyCodeLine{77 }
+\DoxyCodeLine{78     \textcolor{keyword}{inline} \textcolor{keywordtype}{void} CountedPointerAttach() \{ ++countedPointers\_; \}}
+\DoxyCodeLine{79     \textcolor{keyword}{inline} \textcolor{keywordtype}{void} CountedPointerDetach() \{ \textcolor{keywordflow}{if}( !-\/-\/countedPointers\_ ) \textcolor{keyword}{delete} \textcolor{keyword}{this};\}}
+\DoxyCodeLine{80     WeakPointerBase( \mbox{\hyperlink{classjclib_1_1WeakPointerTargetBase}{WeakPointerTargetBase}} * target) : countedPointers\_( 0 ), wtb\_target\_(target) \{\}}
+\DoxyCodeLine{81     \textcolor{comment}{// copy constructor. Not required, but included as failsafe }}
+\DoxyCodeLine{82     WeakPointerBase( \mbox{\hyperlink{classjclib_1_1WeakPointerBase}{WeakPointerBase}} \textcolor{keyword}{const} \&) : countedPointers\_( 0 ) \{\}}
+\DoxyCodeLine{83 \};}
+\DoxyCodeLine{84 }
+\DoxyCodeLine{85 \textcolor{comment}{/**}}
+\DoxyCodeLine{86 \textcolor{comment}{ */}}
+\DoxyCodeLine{87 \textcolor{keyword}{template}< \textcolor{keyword}{typename} T> \textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1WeakPointer}{WeakPointer}} \{}
+\DoxyCodeLine{88     \textcolor{keyword}{public}:}
+\DoxyCodeLine{89     \textcolor{keyword}{typedef} \mbox{\hyperlink{classjclib_1_1CountedPointer}{CountedPointer}}< \textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1WeakPointerBase}{WeakPointerBase}} > pointer\_t;}
+\DoxyCodeLine{90     \textcolor{keyword}{private}:}
+\DoxyCodeLine{91         pointer\_t basePointer\_;}
+\DoxyCodeLine{92     \textcolor{keyword}{public}:}
+\DoxyCodeLine{93     \textcolor{comment}{/**}}
+\DoxyCodeLine{94 \textcolor{comment}{     * Test if the pointer is set to nullptr}}
+\DoxyCodeLine{95 \textcolor{comment}{     * @return true if either the internal pointer or the WeakPointerBase is nullptr}}
+\DoxyCodeLine{96 \textcolor{comment}{    **/}}
+\DoxyCodeLine{97     \textcolor{keywordtype}{bool} \mbox{\hyperlink{classjclib_1_1WeakPointer_a5cbfbf27685b4591674fa19e1db8dafa}{isnull}}() \textcolor{keyword}{const} \{}
+\DoxyCodeLine{98         \textcolor{keywordflow}{return} basePointer\_\mbox{\hyperlink{classjclib_1_1CountedPointer_a45787c3b235590582aad6103d7bdc5d0}{.}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a45787c3b235590582aad6103d7bdc5d0}{isnull}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a45787c3b235590582aad6103d7bdc5d0}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a45787c3b235590582aad6103d7bdc5d0}{)}} ||}
+\DoxyCodeLine{99                basePointer\_-\/>wtb\_target\_ == \textcolor{keywordtype}{nullptr};}
+\DoxyCodeLine{100     \}}
+\DoxyCodeLine{101     \textcolor{comment}{/**}}
+\DoxyCodeLine{102 \textcolor{comment}{     * Test if the pointer is set to an object}}
+\DoxyCodeLine{103 \textcolor{comment}{     * * @return true if neither the internal pointer or the WeakPointerBase is nullptr}}
+\DoxyCodeLine{104 \textcolor{comment}{    **/}}
+\DoxyCodeLine{105     \textcolor{keywordtype}{bool} \mbox{\hyperlink{classjclib_1_1WeakPointer_a14f8326fd06df4bbe22e396b18b1a269}{isset}}() \textcolor{keyword}{const} \{}
+\DoxyCodeLine{106         \textcolor{keywordflow}{return}  basePointer\_\mbox{\hyperlink{classjclib_1_1CountedPointer_aba4799319512576d8873edd9239d7073}{.}}\mbox{\hyperlink{classjclib_1_1CountedPointer_aba4799319512576d8873edd9239d7073}{isset}}\mbox{\hyperlink{classjclib_1_1CountedPointer_aba4799319512576d8873edd9239d7073}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_aba4799319512576d8873edd9239d7073}{)}} \&\&}
+\DoxyCodeLine{107                 basePointer\_-\/>wtb\_target\_ != \textcolor{keywordtype}{nullptr};}
+\DoxyCodeLine{108     \}}
+\DoxyCodeLine{109 }
+\DoxyCodeLine{110     \textcolor{comment}{/**}}
+\DoxyCodeLine{111 \textcolor{comment}{     * Obtain a native C++ pointer to the object}}
+\DoxyCodeLine{112 \textcolor{comment}{     * @return the address of the object pointed at}}
+\DoxyCodeLine{113 \textcolor{comment}{     */}}
+\DoxyCodeLine{114     T * \mbox{\hyperlink{classjclib_1_1WeakPointer_a6456a00c963addf6c2d691f9018e962d}{get}}() \textcolor{keyword}{const} \{}
+\DoxyCodeLine{115         \textcolor{keywordflow}{return}}
+\DoxyCodeLine{116             \mbox{\hyperlink{classjclib_1_1WeakPointer_a5cbfbf27685b4591674fa19e1db8dafa}{isnull}}\mbox{\hyperlink{classjclib_1_1WeakPointer_a5cbfbf27685b4591674fa19e1db8dafa}{(}}\mbox{\hyperlink{classjclib_1_1WeakPointer_a5cbfbf27685b4591674fa19e1db8dafa}{)}}}
+\DoxyCodeLine{117             ? \textcolor{keywordtype}{nullptr}}
+\DoxyCodeLine{118             : \textcolor{keyword}{static\_cast}<T*> ( \textcolor{keyword}{const\_cast}<\textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1WeakPointerTargetBase}{WeakPointerTargetBase}} *>(basePointer\_-\/>wtb\_target\_) ); \} \textcolor{comment}{//const\_cast< T *>((T*)(basePointer\_.get())); \}}}
+\DoxyCodeLine{119     \textcolor{comment}{/**}}
+\DoxyCodeLine{120 \textcolor{comment}{     * retrieve a reference to the address of the object pointed at}}
+\DoxyCodeLine{121 \textcolor{comment}{     */}}
+\DoxyCodeLine{122     T \& \mbox{\hyperlink{classjclib_1_1WeakPointer_ab8b56be03e941fbfd7fdc845abcb49b4}{operator}} *() \textcolor{keyword}{const} \{}
+\DoxyCodeLine{123         \textcolor{keywordflow}{return} *\mbox{\hyperlink{classjclib_1_1WeakPointer_a6456a00c963addf6c2d691f9018e962d}{get}}\mbox{\hyperlink{classjclib_1_1WeakPointer_a6456a00c963addf6c2d691f9018e962d}{(}}\mbox{\hyperlink{classjclib_1_1WeakPointer_a6456a00c963addf6c2d691f9018e962d}{)}};\textcolor{comment}{//* const\_cast< T *>((T*)(basePointer\_-\/>target\_));}}
+\DoxyCodeLine{124     \}}
+\DoxyCodeLine{125     \textcolor{comment}{/**}}
+\DoxyCodeLine{126 \textcolor{comment}{     * retrieve a reference to the address of the object pointed at}}
+\DoxyCodeLine{127 \textcolor{comment}{     */}}
+\DoxyCodeLine{128     T * \mbox{\hyperlink{classjclib_1_1WeakPointer_ad0801509c2683663ca06f99cc59771bc}{operator}} -\/>() \textcolor{keyword}{const} \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classjclib_1_1WeakPointer_a6456a00c963addf6c2d691f9018e962d}{get}}\mbox{\hyperlink{classjclib_1_1WeakPointer_a6456a00c963addf6c2d691f9018e962d}{(}}\mbox{\hyperlink{classjclib_1_1WeakPointer_a6456a00c963addf6c2d691f9018e962d}{)}}; \} \textcolor{comment}{//return const\_cast< T *>((T*)(basePointer\_-\/>target\_)); \}}}
+\DoxyCodeLine{129     \textcolor{comment}{/**}}
+\DoxyCodeLine{130 \textcolor{comment}{     * Set to point to a different target. Attaching / Detaching as requried}}
+\DoxyCodeLine{131 \textcolor{comment}{     * occasionaally useful as a replacement for the assignment operator.}}
+\DoxyCodeLine{132 \textcolor{comment}{     * @param ptr the new value to set}}
+\DoxyCodeLine{133 \textcolor{comment}{     */}}
+\DoxyCodeLine{134     \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classjclib_1_1WeakPointer_a7de963c695578295c0c1b545b664d405}{set}}( \textcolor{keyword}{const} \mbox{\hyperlink{classjclib_1_1WeakPointer}{WeakPointer}}<T> \& old) \{}
+\DoxyCodeLine{135        basePointer\_.set(old.basePointer\_);}
+\DoxyCodeLine{136     \}}
+\DoxyCodeLine{137     \textcolor{comment}{/**}}
+\DoxyCodeLine{138 \textcolor{comment}{     * Set the internal value. Attaching / Detaching as requried}}
+\DoxyCodeLine{139 \textcolor{comment}{     * @param ptr the new value to set}}
+\DoxyCodeLine{140 \textcolor{comment}{     * @return ourself}}
+\DoxyCodeLine{141 \textcolor{comment}{     */}}
+\DoxyCodeLine{142     \textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1WeakPointer}{WeakPointer}}<T> \& \mbox{\hyperlink{classjclib_1_1WeakPointer_a033882ff5448b187fa2c4435ba2c272e}{operator}} =( \textcolor{keyword}{const} \mbox{\hyperlink{classjclib_1_1WeakPointer}{WeakPointer}}<T> \& ptr ) \{}
+\DoxyCodeLine{143         basePointer\_ = ptr.basePointer\_;}
+\DoxyCodeLine{144         \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
+\DoxyCodeLine{145     \}}
+\DoxyCodeLine{146     WeakPointer( )}
+\DoxyCodeLine{147     : basePointer\_( \textcolor{keywordtype}{nullptr} ) \{ \}}
+\DoxyCodeLine{148     WeakPointer( \textcolor{keyword}{const} \mbox{\hyperlink{classjclib_1_1CountedPointer}{CountedPointer}}< \textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1WeakPointerBase}{WeakPointerBase}} > \& base )}
+\DoxyCodeLine{149     : basePointer\_( base ) \{ \}}
+\DoxyCodeLine{150     \textcolor{comment}{/*}}
+\DoxyCodeLine{151 \textcolor{comment}{    WeakPointer( class WeakPointerBase * base )}}
+\DoxyCodeLine{152 \textcolor{comment}{    : basePointer\_( base ) \{}}
+\DoxyCodeLine{153 \textcolor{comment}{    \}}}
+\DoxyCodeLine{154 \textcolor{comment}{     */}}
+\DoxyCodeLine{155     WeakPointer( \textcolor{keyword}{const} \textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1WeakPointer}{WeakPointer}}<T>\& old )}
+\DoxyCodeLine{156     : basePointer\_( old.basePointer\_) \{}
+\DoxyCodeLine{157     \}}
+\DoxyCodeLine{158     \textcolor{keyword}{virtual} \string~WeakPointer( ) \{}
+\DoxyCodeLine{159         basePointer\_ \mbox{\hyperlink{classjclib_1_1CountedPointer_a723e34d68ef31f93cf7730301c0938a5}{=}} \textcolor{keywordtype}{nullptr}; \}}
+\DoxyCodeLine{160 \};}
+\DoxyCodeLine{161 }
+\DoxyCodeLine{162 \textcolor{comment}{/**}}
+\DoxyCodeLine{163 \textcolor{comment}{ * }}
+\DoxyCodeLine{164 \textcolor{comment}{ */}}
+\DoxyCodeLine{165 \textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1WeakPointerTargetBase}{WeakPointerTargetBase}} \{}
+\DoxyCodeLine{166 \textcolor{keyword}{public}:}
+\DoxyCodeLine{167     \textcolor{keyword}{typedef} \mbox{\hyperlink{classjclib_1_1CountedPointer}{CountedPointer}}< \textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1WeakPointerBase}{WeakPointerBase}} > pointer\_t;}
+\DoxyCodeLine{168 \textcolor{keyword}{private}:}
+\DoxyCodeLine{169     pointer\_t basePointer\_;}
+\DoxyCodeLine{170 \textcolor{keyword}{protected}:}
+\DoxyCodeLine{171     \textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1WeakPointerBase}{WeakPointerBase}} * getBasePointer() \textcolor{keyword}{const} \{}
+\DoxyCodeLine{172         \textcolor{keywordflow}{return} (\textcolor{keyword}{const\_cast}< \mbox{\hyperlink{classjclib_1_1WeakPointerTargetBase}{WeakPointerTargetBase}} *>(\textcolor{keyword}{this})-\/>basePointer\_)\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{.}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{)}};}
+\DoxyCodeLine{173     \}}
+\DoxyCodeLine{174     WeakPointerTargetBase( )}
+\DoxyCodeLine{175     : basePointer\_ ( \textcolor{keyword}{new} \mbox{\hyperlink{classjclib_1_1WeakPointerBase}{WeakPointerBase}}( \textcolor{keyword}{this} ) )}
+\DoxyCodeLine{176     \{}
+\DoxyCodeLine{177     \}}
+\DoxyCodeLine{178     \textcolor{comment}{/*}}
+\DoxyCodeLine{179 \textcolor{comment}{    WeakPointerTargetBase( void * container )}}
+\DoxyCodeLine{180 \textcolor{comment}{    : basePointer\_( new WeakPointerBase( container ) )}}
+\DoxyCodeLine{181 \textcolor{comment}{    \{}}
+\DoxyCodeLine{182 \textcolor{comment}{    \}}}
+\DoxyCodeLine{183 \textcolor{comment}{     */}}
+\DoxyCodeLine{184     \textcolor{comment}{/**}}
+\DoxyCodeLine{185 \textcolor{comment}{     * Copy constructor. This should only be used when the owning }}
+\DoxyCodeLine{186 \textcolor{comment}{     * class single inherits from WeakPointerTargetBase}}
+\DoxyCodeLine{187 \textcolor{comment}{     * @param ignored as we create our own pointer\_t we don't use }}
+\DoxyCodeLine{188 \textcolor{comment}{     *        any data from the old object }}
+\DoxyCodeLine{189 \textcolor{comment}{     */}}
+\DoxyCodeLine{190     \mbox{\hyperlink{classjclib_1_1WeakPointerTargetBase_a1d0c5ff379afcd448a59795579c8b050}{WeakPointerTargetBase}}( \mbox{\hyperlink{classjclib_1_1WeakPointerTargetBase}{WeakPointerTargetBase}} \textcolor{keyword}{const} \& ignored )}
+\DoxyCodeLine{191     : basePointer\_( \textcolor{keyword}{new} \mbox{\hyperlink{classjclib_1_1WeakPointerBase}{WeakPointerBase}}( \textcolor{keyword}{this} ) )}
+\DoxyCodeLine{192     \{}
+\DoxyCodeLine{193     \}}
+\DoxyCodeLine{194     \textcolor{keyword}{virtual} \string~WeakPointerTargetBase( ) \{}
+\DoxyCodeLine{195         \textcolor{comment}{// reset the pointer }}
+\DoxyCodeLine{196         basePointer\_-\/>wtb\_target\_ = \textcolor{keywordtype}{nullptr};}
+\DoxyCodeLine{197     \}}
+\DoxyCodeLine{198 \};}
+\DoxyCodeLine{199 }
+\DoxyCodeLine{200 \textcolor{comment}{/**}}
+\DoxyCodeLine{201 \textcolor{comment}{ * All targets of weak pointers should inherit from this template class}}
+\DoxyCodeLine{202 \textcolor{comment}{ * using something like:}}
+\DoxyCodeLine{203 \textcolor{comment}{ * class TargetClass1 : public WeakPointerTarget<TargetClass0> ...}}
+\DoxyCodeLine{204 \textcolor{comment}{ */}}
+\DoxyCodeLine{205 \textcolor{keyword}{template}< \textcolor{keyword}{typename} T > \textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1WeakPointerTarget}{WeakPointerTarget}} : \textcolor{keyword}{public} \mbox{\hyperlink{classjclib_1_1WeakPointerTargetBase}{WeakPointerTargetBase}} \{}
+\DoxyCodeLine{206     \textcolor{keyword}{public}:}
+\DoxyCodeLine{207         \mbox{\hyperlink{classjclib_1_1WeakPointer}{WeakPointer}}<T> getWeakPointer() \textcolor{keyword}{const} \{}
+\DoxyCodeLine{208             \textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1WeakPointerBase}{WeakPointerBase}} * answer = getBasePointer();}
+\DoxyCodeLine{209             \textcolor{keywordflow}{return} \mbox{\hyperlink{classjclib_1_1WeakPointer}{WeakPointer}}<T>( answer );}
+\DoxyCodeLine{210         \}}
+\DoxyCodeLine{211 \};}
+\DoxyCodeLine{212 \}}
+\DoxyCodeLine{213 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{endif} \textcolor{comment}{/* WEAKPOINTER\_HPP */}}
 
 \end{DoxyCode}

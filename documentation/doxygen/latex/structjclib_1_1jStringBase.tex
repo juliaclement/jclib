@@ -1,0 +1,45 @@
+\hypertarget{structjclib_1_1jStringBase}{}\doxysection{jclib\+::j\+String\+Base Struct Reference}
+\label{structjclib_1_1jStringBase}\index{jclib::jStringBase@{jclib::jStringBase}}
+
+
+{\ttfamily \#include $<$j\+String.\+hpp$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{structjclib_1_1jStringBase_a9103ea367e905aa66f05b06782e1be2e}\label{structjclib_1_1jStringBase_a9103ea367e905aa66f05b06782e1be2e}} 
+{\bfseries operator const char $\ast$} () const
+\item 
+\mbox{\Hypertarget{structjclib_1_1jStringBase_ab7d26d3df186417be8bcc489861d9d8f}\label{structjclib_1_1jStringBase_ab7d26d3df186417be8bcc489861d9d8f}} 
+auto {\bfseries len} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{structjclib_1_1jStringBase_a3c106bc48b18eeee90084150ae662bad}{j\+String}}
+\item 
+\mbox{\Hypertarget{structjclib_1_1jStringBase_acab2709fed83f4e45068a6393bdd0f9e}\label{structjclib_1_1jStringBase_acab2709fed83f4e45068a6393bdd0f9e}} 
+class {\bfseries Counted\+Pointer$<$ j\+String\+Base $>$}
+\item 
+\mbox{\Hypertarget{structjclib_1_1jStringBase_a6e279e5e99d32c2c82223caeae101d85}\label{structjclib_1_1jStringBase_a6e279e5e99d32c2c82223caeae101d85}} 
+std\+::ostream \& {\bfseries operator$<$$<$} (std\+::ostream \&os, const class \mbox{\hyperlink{classjclib_1_1jString}{j\+String}} \&string)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Implementation of a reference counted string This string is lighweight with the string class itself being little more than a slightly smart pointer.
+
+Primarily created to satisfy a need I have for dynamic invariant strings in a re2cc/lemon based project which will be passing a ridiculous number of strings around. 
+
+\doxysubsection{Friends And Related Function Documentation}
+\mbox{\Hypertarget{structjclib_1_1jStringBase_a3c106bc48b18eeee90084150ae662bad}\label{structjclib_1_1jStringBase_a3c106bc48b18eeee90084150ae662bad}} 
+\index{jclib::jStringBase@{jclib::jStringBase}!jString@{jString}}
+\index{jString@{jString}!jclib::jStringBase@{jclib::jStringBase}}
+\doxysubsubsection{\texorpdfstring{jString}{jString}}
+{\footnotesize\ttfamily friend class \mbox{\hyperlink{classjclib_1_1jString}{j\+String}}\hspace{0.3cm}{\ttfamily [friend]}}
+
+A class to store the string data. 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+j\+String.\+hpp\end{DoxyCompactItemize}

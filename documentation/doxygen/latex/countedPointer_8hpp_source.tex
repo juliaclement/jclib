@@ -26,134 +26,138 @@
 \DoxyCodeLine{23 \textcolor{comment}{/* }}
 \DoxyCodeLine{24 \textcolor{comment}{ * File:   countedPointer.hpp}}
 \DoxyCodeLine{25 \textcolor{comment}{ * Author: Julia Clement <Julia at Clement dot nz>}}
-\DoxyCodeLine{26 \textcolor{comment}{ *}}
-\DoxyCodeLine{27 \textcolor{comment}{ * Created on 1 October 2017, 9:46 PM}}
-\DoxyCodeLine{28 \textcolor{comment}{ */}}
-\DoxyCodeLine{29 }
-\DoxyCodeLine{30 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{ifndef} \textcolor{preprocessor}{COUNTINGPOINTER\_HPP}}
-\DoxyCodeLine{31 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{COUNTINGPOINTER\_HPP}}
-\DoxyCodeLine{32 }
-\DoxyCodeLine{33 \textcolor{keyword}{namespace} \mbox{\hyperlink{namespacejclib}{jclib}} \{}
-\DoxyCodeLine{34 \textcolor{comment}{/**}}
-\DoxyCodeLine{35 \textcolor{comment}{ * This is an implementation of an intrusive counted pointed.}}
-\DoxyCodeLine{36 \textcolor{comment}{ * The typename T must expose two public methods CountedPointerAtttach and}}
-\DoxyCodeLine{37 \textcolor{comment}{ * CountedPointerDetach. The expected behaviour is that these will maintain}}
-\DoxyCodeLine{38 \textcolor{comment}{ * a count of attached pointers and self delete when the counter reaches zero }}
-\DoxyCodeLine{39 \textcolor{comment}{**/}}
-\DoxyCodeLine{40 \textcolor{keyword}{template}< \textcolor{keyword}{typename} T> \textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1CountedPointer}{CountedPointer}} \{}
-\DoxyCodeLine{41 \textcolor{keyword}{private}:}
-\DoxyCodeLine{42     T * ptr\_;}
-\DoxyCodeLine{43     \textcolor{keyword}{inline} \textcolor{keywordtype}{void} postAssign() \{}
-\DoxyCodeLine{44         \textcolor{keywordflow}{if}( ptr\_ != \textcolor{keywordtype}{nullptr} )}
-\DoxyCodeLine{45             ptr\_-\/>CountedPointerAttach();}
-\DoxyCodeLine{46     \}}
-\DoxyCodeLine{47 \textcolor{keyword}{public}:}
-\DoxyCodeLine{48     \textcolor{comment}{/**}}
-\DoxyCodeLine{49 \textcolor{comment}{     * Test if the pointer is set to nullptr}}
-\DoxyCodeLine{50 \textcolor{comment}{     * @return true if the internal pointer is nullptr}}
-\DoxyCodeLine{51 \textcolor{comment}{    **/}}
-\DoxyCodeLine{52     \textcolor{keywordtype}{bool} \mbox{\hyperlink{classjclib_1_1CountedPointer_a45787c3b235590582aad6103d7bdc5d0}{isnull}}() \textcolor{keyword}{const} \{ \textcolor{keywordflow}{return} ptr\_ == \textcolor{keywordtype}{nullptr}; \}}
-\DoxyCodeLine{53     \textcolor{comment}{/**}}
-\DoxyCodeLine{54 \textcolor{comment}{     * Test if the pointer is set to an object}}
-\DoxyCodeLine{55 \textcolor{comment}{     * @return true if the internal pointer is not nullptr}}
-\DoxyCodeLine{56 \textcolor{comment}{    **/}}
-\DoxyCodeLine{57     \textcolor{keywordtype}{bool} \mbox{\hyperlink{classjclib_1_1CountedPointer_aba4799319512576d8873edd9239d7073}{isset}}() \textcolor{keyword}{const} \{ \textcolor{keywordflow}{return} ptr\_ != \textcolor{keywordtype}{nullptr}; \}}
-\DoxyCodeLine{58 }
-\DoxyCodeLine{59     \textcolor{comment}{/**}}
-\DoxyCodeLine{60 \textcolor{comment}{     * @return the address of the object pointed at}}
-\DoxyCodeLine{61 \textcolor{comment}{     */}}
-\DoxyCodeLine{62     T * \mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}() \textcolor{keyword}{const} \{ \textcolor{keywordflow}{return} \textcolor{keyword}{const\_cast}< T *>(ptr\_); \}}
-\DoxyCodeLine{63     \textcolor{comment}{/**}}
-\DoxyCodeLine{64 \textcolor{comment}{     * retrieve a reference to the address of the object pointed at}}
-\DoxyCodeLine{65 \textcolor{comment}{     */}}
-\DoxyCodeLine{66     T \& \mbox{\hyperlink{classjclib_1_1CountedPointer_a8c5ecd6ea25507d0eff36724dd1bb99a}{operator}} *() \textcolor{keyword}{const} \{ \textcolor{keywordflow}{return} \textcolor{keyword}{const\_cast}< T \&>(*ptr\_); \}}
-\DoxyCodeLine{67     T * operator -\/>() \textcolor{keyword}{const} \{ \textcolor{keywordflow}{return} \textcolor{keyword}{const\_cast}< T *>(ptr\_); \}}
-\DoxyCodeLine{68     \textcolor{comment}{/**}}
-\DoxyCodeLine{69 \textcolor{comment}{     * Set the internal value. Attaching / Detaching as requried}}
-\DoxyCodeLine{70 \textcolor{comment}{     * occasionaally useful as a replacement for the assignment operator.}}
-\DoxyCodeLine{71 \textcolor{comment}{     * @param ptr the new value to set}}
-\DoxyCodeLine{72 \textcolor{comment}{     */}}
-\DoxyCodeLine{73     \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classjclib_1_1CountedPointer_a11f97ba1153ce2caabe2e44990b54807}{set}}( T * \textcolor{keyword}{const} ptr) \{}
-\DoxyCodeLine{74         \textcolor{comment}{// Note: We Attach before Detach so A=A (with attach count==1)}}
-\DoxyCodeLine{75         \textcolor{comment}{// doesn't cause the attach count to temporarily zero and have}}
-\DoxyCodeLine{76         \textcolor{comment}{// the target delete itself;}}
-\DoxyCodeLine{77         T * tmp\_ptr=ptr\_;}
-\DoxyCodeLine{78         ptr\_ = \textcolor{keyword}{const\_cast}< T*>(ptr);}
-\DoxyCodeLine{79         postAssign();}
-\DoxyCodeLine{80         \textcolor{keywordflow}{if}( tmp\_ptr != \textcolor{keywordtype}{nullptr} ) \{}
-\DoxyCodeLine{81             tmp\_ptr-\/>CountedPointerDetach();}
-\DoxyCodeLine{82         \}}
-\DoxyCodeLine{83     \}}
-\DoxyCodeLine{84     \textcolor{comment}{/**}}
-\DoxyCodeLine{85 \textcolor{comment}{     * Set the internal value. Attaching / Detaching as requried}}
-\DoxyCodeLine{86 \textcolor{comment}{     * occasionaally useful as a replacement for the assignment operator.}}
-\DoxyCodeLine{87 \textcolor{comment}{     * @param ptr the new value to set}}
-\DoxyCodeLine{88 \textcolor{comment}{     */}}
-\DoxyCodeLine{89     \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classjclib_1_1CountedPointer_a93e060e76df8f3ac8d20478b128d4514}{set}}( \textcolor{keyword}{const} \mbox{\hyperlink{classjclib_1_1CountedPointer}{CountedPointer}}<T> \& old ) \{}
-\DoxyCodeLine{90         set( old.ptr\_);}
-\DoxyCodeLine{91     \}}
-\DoxyCodeLine{92     \textcolor{comment}{/**}}
-\DoxyCodeLine{93 \textcolor{comment}{     * Set the internal value. Attaching / Detaching as requried}}
-\DoxyCodeLine{94 \textcolor{comment}{     * @param ptr the new value to set}}
-\DoxyCodeLine{95 \textcolor{comment}{     * @return ourself}}
-\DoxyCodeLine{96 \textcolor{comment}{     */}}
-\DoxyCodeLine{97     \textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1CountedPointer}{CountedPointer}}<T> \& \mbox{\hyperlink{classjclib_1_1CountedPointer_a723e34d68ef31f93cf7730301c0938a5}{operator}} =( T * \textcolor{keyword}{const} ptr ) \{}
-\DoxyCodeLine{98         set( ptr );}
-\DoxyCodeLine{99         \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
-\DoxyCodeLine{100     \}}
-\DoxyCodeLine{101     \textcolor{comment}{/**}}
-\DoxyCodeLine{102 \textcolor{comment}{     * Set the internal value. Attaching / Detaching as requried}}
-\DoxyCodeLine{103 \textcolor{comment}{     * @param ptr the new value to set}}
-\DoxyCodeLine{104 \textcolor{comment}{     * @return ourself}}
-\DoxyCodeLine{105 \textcolor{comment}{     */}}
-\DoxyCodeLine{106     \textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1CountedPointer}{CountedPointer}}<T> \& \mbox{\hyperlink{classjclib_1_1CountedPointer_aadb8af90c4b0a7e095bf923dde4cf028}{operator}} =( \textcolor{keyword}{const} \mbox{\hyperlink{classjclib_1_1CountedPointer}{CountedPointer}}<T> \& ptr ) \{}
-\DoxyCodeLine{107         set( ptr.ptr\_ );}
-\DoxyCodeLine{108         \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
-\DoxyCodeLine{109     \}}
-\DoxyCodeLine{110     CountedPointer( ) : ptr\_( \textcolor{keywordtype}{nullptr}) \{ postAssign(); \}}
-\DoxyCodeLine{111     CountedPointer( T * ptr ) : ptr\_( ptr) \{ postAssign(); \}}
-\DoxyCodeLine{112     CountedPointer( \textcolor{keyword}{const} \textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1CountedPointer}{CountedPointer}}<T>\& old ) : ptr\_( old.ptr\_) \{ postAssign(); \}}
-\DoxyCodeLine{113     \string~CountedPointer() \{ \textcolor{keywordflow}{if}( ptr\_ != \textcolor{keywordtype}{nullptr} ) ptr\_-\/>CountedPointerDetach(); ptr\_=\textcolor{keywordtype}{nullptr}; \}}
-\DoxyCodeLine{114 \};}
-\DoxyCodeLine{115 }
-\DoxyCodeLine{116 \textcolor{comment}{/**}}
-\DoxyCodeLine{117 \textcolor{comment}{ * A simple class that satisfies requirements for targets of CountedPointer}}
-\DoxyCodeLine{118 \textcolor{comment}{ * }}
-\DoxyCodeLine{119 \textcolor{comment}{ */}}
-\DoxyCodeLine{120 }
-\DoxyCodeLine{121 \textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1CountedPointerTarget}{CountedPointerTarget}} \{}
-\DoxyCodeLine{122     \textcolor{keyword}{private}:}
-\DoxyCodeLine{123         \textcolor{keywordtype}{int} counter\_;}
-\DoxyCodeLine{124     \textcolor{keyword}{public}:}
-\DoxyCodeLine{125         \textcolor{keyword}{inline} \textcolor{keywordtype}{void} CountedPointerAttach() \{ ++counter\_; \}}
-\DoxyCodeLine{126         \textcolor{keyword}{inline} \textcolor{keywordtype}{void} CountedPointerDetach() \{ \textcolor{keywordflow}{if}( !-\/-\/counter\_) \textcolor{keyword}{delete} \textcolor{keyword}{this};\}}
-\DoxyCodeLine{127         \textcolor{keyword}{inline} \textcolor{keywordtype}{int}  CountedPointersAttached() \textcolor{keyword}{const} \{ \textcolor{keywordflow}{return} counter\_; \}}
-\DoxyCodeLine{128         CountedPointerTarget() : counter\_(0) \{\}}
-\DoxyCodeLine{129         CountedPointerTarget(\textcolor{keyword}{const} \mbox{\hyperlink{classjclib_1_1CountedPointerTarget}{CountedPointerTarget}} \&) : counter\_(0) \{\}}
-\DoxyCodeLine{130         \textcolor{comment}{// virtual destructor to ensure derrived classes are destroyed properly}}
-\DoxyCodeLine{131         \textcolor{keyword}{virtual} \string~CountedPointerTarget() \{\}}
-\DoxyCodeLine{132 \};}
-\DoxyCodeLine{133 }
-\DoxyCodeLine{134 \textcolor{comment}{/**}}
-\DoxyCodeLine{135 \textcolor{comment}{ * A template child class that permits automatic \& static variables to have }}
-\DoxyCodeLine{136 \textcolor{comment}{ * counted pointers.}}
-\DoxyCodeLine{137 \textcolor{comment}{ * }}
-\DoxyCodeLine{138 \textcolor{comment}{ * The user must ensure that all CountedPointers to instances of this class}}
-\DoxyCodeLine{139 \textcolor{comment}{ * are deleted before the target.}}
-\DoxyCodeLine{140 \textcolor{comment}{ * }}
-\DoxyCodeLine{141 \textcolor{comment}{ * NB: It is not generally safe to have CountedPointers point at automatic or }}
-\DoxyCodeLine{142 \textcolor{comment}{ *     static variables as when the pointer count reaches zero an attempt will}}
-\DoxyCodeLine{143 \textcolor{comment}{ *     be made to delete the variable.}}
-\DoxyCodeLine{144 \textcolor{comment}{ */}}
-\DoxyCodeLine{145 \textcolor{keyword}{template}<\textcolor{keyword}{typename} T> \textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1CountedPointerSafe}{CountedPointerSafe}} : \textcolor{keyword}{public} T \{}
-\DoxyCodeLine{146     \textcolor{keyword}{public}:}
-\DoxyCodeLine{147     \textcolor{keyword}{template}< \textcolor{keyword}{typename} ... Types > CountedPointerSafe( \textcolor{keyword}{const} Types\&...args )}
-\DoxyCodeLine{148     : T(args...)}
-\DoxyCodeLine{149     \{ T::CountedPointerAttach(); \}}
-\DoxyCodeLine{150 \};}
-\DoxyCodeLine{151 }
-\DoxyCodeLine{152 \};}
-\DoxyCodeLine{153 }
-\DoxyCodeLine{154 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{endif} \textcolor{comment}{/* COUNTINGPOINTER\_HPP */}}
+\DoxyCodeLine{26 \textcolor{comment}{ * }}
+\DoxyCodeLine{27 \textcolor{comment}{ * Part of the JCLib project https://github.com/juliaclement/jclib}}
+\DoxyCodeLine{28 \textcolor{comment}{ *}}
+\DoxyCodeLine{29 \textcolor{comment}{ * Created on 1 October 2017, 9:46 PM}}
+\DoxyCodeLine{30 \textcolor{comment}{ */}}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{ifndef} \textcolor{preprocessor}{COUNTINGPOINTER\_HPP}}
+\DoxyCodeLine{33 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{COUNTINGPOINTER\_HPP}}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35 \textcolor{keyword}{namespace} \mbox{\hyperlink{namespacejclib}{jclib}} \{}
+\DoxyCodeLine{36 \textcolor{comment}{/**}}
+\DoxyCodeLine{37 \textcolor{comment}{ * This is an implementation of an intrusive counted pointed.}}
+\DoxyCodeLine{38 \textcolor{comment}{ * The typename T must expose two public methods CountedPointerAtttach and}}
+\DoxyCodeLine{39 \textcolor{comment}{ * CountedPointerDetach. The expected behaviour is that these will maintain}}
+\DoxyCodeLine{40 \textcolor{comment}{ * a count of attached pointers and self delete when the counter reaches zero }}
+\DoxyCodeLine{41 \textcolor{comment}{**/}}
+\DoxyCodeLine{42 \textcolor{keyword}{template}< \textcolor{keyword}{typename} T> \textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1CountedPointer}{CountedPointer}} \{}
+\DoxyCodeLine{43 \textcolor{keyword}{private}:}
+\DoxyCodeLine{44     T * ptr\_;}
+\DoxyCodeLine{45     \textcolor{keyword}{inline} \textcolor{keywordtype}{void} postAssign() \{}
+\DoxyCodeLine{46         \textcolor{keywordflow}{if}( ptr\_ != \textcolor{keywordtype}{nullptr} ) \{}
+\DoxyCodeLine{47             ptr\_-\/>CountedPointerAttach();}
+\DoxyCodeLine{48         \}}
+\DoxyCodeLine{49     \}}
+\DoxyCodeLine{50 \textcolor{keyword}{public}:}
+\DoxyCodeLine{51     \textcolor{comment}{/**}}
+\DoxyCodeLine{52 \textcolor{comment}{     * Test if the pointer is set to nullptr}}
+\DoxyCodeLine{53 \textcolor{comment}{     * @return true if the internal pointer is nullptr}}
+\DoxyCodeLine{54 \textcolor{comment}{    **/}}
+\DoxyCodeLine{55     \textcolor{keywordtype}{bool} \mbox{\hyperlink{classjclib_1_1CountedPointer_a45787c3b235590582aad6103d7bdc5d0}{isnull}}() \textcolor{keyword}{const} \{ \textcolor{keywordflow}{return} ptr\_ == \textcolor{keywordtype}{nullptr}; \}}
+\DoxyCodeLine{56     \textcolor{comment}{/**}}
+\DoxyCodeLine{57 \textcolor{comment}{     * Test if the pointer is set to an object}}
+\DoxyCodeLine{58 \textcolor{comment}{     * @return true if the internal pointer is not nullptr}}
+\DoxyCodeLine{59 \textcolor{comment}{    **/}}
+\DoxyCodeLine{60     \textcolor{keywordtype}{bool} \mbox{\hyperlink{classjclib_1_1CountedPointer_aba4799319512576d8873edd9239d7073}{isset}}() \textcolor{keyword}{const} \{ \textcolor{keywordflow}{return} ptr\_ != \textcolor{keywordtype}{nullptr}; \}}
+\DoxyCodeLine{61 }
+\DoxyCodeLine{62     \textcolor{comment}{/**}}
+\DoxyCodeLine{63 \textcolor{comment}{     * @return the address of the object pointed at}}
+\DoxyCodeLine{64 \textcolor{comment}{     */}}
+\DoxyCodeLine{65     T * \mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}() \textcolor{keyword}{const} \{ \textcolor{keywordflow}{return} \textcolor{keyword}{const\_cast}< T *>(ptr\_); \}}
+\DoxyCodeLine{66     \textcolor{comment}{/**}}
+\DoxyCodeLine{67 \textcolor{comment}{     * retrieve a reference to the address of the object pointed at}}
+\DoxyCodeLine{68 \textcolor{comment}{     */}}
+\DoxyCodeLine{69     T \& \mbox{\hyperlink{classjclib_1_1CountedPointer_a8c5ecd6ea25507d0eff36724dd1bb99a}{operator}} *() \textcolor{keyword}{const} \{ \textcolor{keywordflow}{return} \textcolor{keyword}{const\_cast}< T \&>(*ptr\_); \}}
+\DoxyCodeLine{70     T * operator -\/>() \textcolor{keyword}{const} \{ \textcolor{keywordflow}{return} \textcolor{keyword}{const\_cast}< T *>(ptr\_); \}}
+\DoxyCodeLine{71     operator T *() \textcolor{keyword}{const} \{ \textcolor{keywordflow}{return} \textcolor{keyword}{const\_cast}< T *>(ptr\_); \}}
+\DoxyCodeLine{72     \textcolor{comment}{/**}}
+\DoxyCodeLine{73 \textcolor{comment}{     * Set the internal value. Attaching / Detaching as requried}}
+\DoxyCodeLine{74 \textcolor{comment}{     * occasionaally useful as a replacement for the assignment operator.}}
+\DoxyCodeLine{75 \textcolor{comment}{     * @param ptr the new value to set}}
+\DoxyCodeLine{76 \textcolor{comment}{     */}}
+\DoxyCodeLine{77     \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classjclib_1_1CountedPointer_a11f97ba1153ce2caabe2e44990b54807}{set}}( T * \textcolor{keyword}{const} ptr) \{}
+\DoxyCodeLine{78         \textcolor{comment}{// Note: We Attach before Detach so A=A (with attach count==1)}}
+\DoxyCodeLine{79         \textcolor{comment}{// doesn't cause the attach count to temporarily zero and have}}
+\DoxyCodeLine{80         \textcolor{comment}{// the target delete itself;}}
+\DoxyCodeLine{81         T * tmp\_ptr=ptr\_;}
+\DoxyCodeLine{82         ptr\_ = \textcolor{keyword}{const\_cast}< T*>(ptr);}
+\DoxyCodeLine{83         postAssign();}
+\DoxyCodeLine{84         \textcolor{keywordflow}{if}( tmp\_ptr != \textcolor{keywordtype}{nullptr} ) \{}
+\DoxyCodeLine{85             tmp\_ptr-\/>CountedPointerDetach();}
+\DoxyCodeLine{86         \}}
+\DoxyCodeLine{87     \}}
+\DoxyCodeLine{88     \textcolor{comment}{/**}}
+\DoxyCodeLine{89 \textcolor{comment}{     * Set the internal value. Attaching / Detaching as requried}}
+\DoxyCodeLine{90 \textcolor{comment}{     * occasionaally useful as a replacement for the assignment operator.}}
+\DoxyCodeLine{91 \textcolor{comment}{     * @param ptr the new value to set}}
+\DoxyCodeLine{92 \textcolor{comment}{     */}}
+\DoxyCodeLine{93     \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classjclib_1_1CountedPointer_a93e060e76df8f3ac8d20478b128d4514}{set}}( \textcolor{keyword}{const} \mbox{\hyperlink{classjclib_1_1CountedPointer}{CountedPointer}}<T> \& old ) \{}
+\DoxyCodeLine{94         set( old.ptr\_);}
+\DoxyCodeLine{95     \}}
+\DoxyCodeLine{96     \textcolor{comment}{/**}}
+\DoxyCodeLine{97 \textcolor{comment}{     * Set the internal value. Attaching / Detaching as requried}}
+\DoxyCodeLine{98 \textcolor{comment}{     * @param ptr the new value to set}}
+\DoxyCodeLine{99 \textcolor{comment}{     * @return ourself}}
+\DoxyCodeLine{100 \textcolor{comment}{     */}}
+\DoxyCodeLine{101     \textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1CountedPointer}{CountedPointer}}<T> \& \mbox{\hyperlink{classjclib_1_1CountedPointer_a723e34d68ef31f93cf7730301c0938a5}{operator}} =( T * \textcolor{keyword}{const} ptr ) \{}
+\DoxyCodeLine{102         set( ptr );}
+\DoxyCodeLine{103         \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
+\DoxyCodeLine{104     \}}
+\DoxyCodeLine{105     \textcolor{comment}{/**}}
+\DoxyCodeLine{106 \textcolor{comment}{     * Set the internal value. Attaching / Detaching as requried}}
+\DoxyCodeLine{107 \textcolor{comment}{     * @param ptr the new value to set}}
+\DoxyCodeLine{108 \textcolor{comment}{     * @return ourself}}
+\DoxyCodeLine{109 \textcolor{comment}{     */}}
+\DoxyCodeLine{110     \textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1CountedPointer}{CountedPointer}}<T> \& \mbox{\hyperlink{classjclib_1_1CountedPointer_aadb8af90c4b0a7e095bf923dde4cf028}{operator}} =( \textcolor{keyword}{const} \mbox{\hyperlink{classjclib_1_1CountedPointer}{CountedPointer}}<T> \& ptr ) \{}
+\DoxyCodeLine{111         set( ptr.ptr\_ );}
+\DoxyCodeLine{112         \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
+\DoxyCodeLine{113     \}}
+\DoxyCodeLine{114     CountedPointer( ) : ptr\_( \textcolor{keywordtype}{nullptr}) \{ postAssign(); \}}
+\DoxyCodeLine{115     CountedPointer( T * ptr ) : ptr\_( ptr) \{ postAssign(); \}}
+\DoxyCodeLine{116     CountedPointer( \textcolor{keyword}{const} \textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1CountedPointer}{CountedPointer}}<T>\& old ) : ptr\_( old.ptr\_) \{ postAssign(); \}}
+\DoxyCodeLine{117     \string~CountedPointer() \{ \textcolor{keywordflow}{if}( ptr\_ != \textcolor{keywordtype}{nullptr} ) ptr\_-\/>CountedPointerDetach(); ptr\_=\textcolor{keywordtype}{nullptr}; \}}
+\DoxyCodeLine{118 \};}
+\DoxyCodeLine{119 }
+\DoxyCodeLine{120 \textcolor{comment}{/**}}
+\DoxyCodeLine{121 \textcolor{comment}{ * A simple class that satisfies requirements for targets of CountedPointer}}
+\DoxyCodeLine{122 \textcolor{comment}{ * }}
+\DoxyCodeLine{123 \textcolor{comment}{ */}}
+\DoxyCodeLine{124 }
+\DoxyCodeLine{125 \textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1CountedPointerTarget}{CountedPointerTarget}} \{}
+\DoxyCodeLine{126     \textcolor{keyword}{private}:}
+\DoxyCodeLine{127         \textcolor{keywordtype}{int} counter\_;}
+\DoxyCodeLine{128     \textcolor{keyword}{public}:}
+\DoxyCodeLine{129         \textcolor{keyword}{inline} \textcolor{keywordtype}{void} CountedPointerAttach() \{ ++counter\_; \}}
+\DoxyCodeLine{130         \textcolor{keyword}{inline} \textcolor{keywordtype}{void} CountedPointerDetach() \{ \textcolor{keywordflow}{if}( !-\/-\/counter\_) \textcolor{keyword}{delete} \textcolor{keyword}{this};\}}
+\DoxyCodeLine{131         \textcolor{keyword}{inline} \textcolor{keywordtype}{int}  CountedPointersAttached() \textcolor{keyword}{const} \{ \textcolor{keywordflow}{return} counter\_; \}}
+\DoxyCodeLine{132         CountedPointerTarget() : counter\_(0) \{\}}
+\DoxyCodeLine{133         CountedPointerTarget(\textcolor{keyword}{const} \mbox{\hyperlink{classjclib_1_1CountedPointerTarget}{CountedPointerTarget}} \&) : counter\_(0) \{\}}
+\DoxyCodeLine{134         \textcolor{comment}{// virtual destructor to ensure derrived classes are destroyed properly}}
+\DoxyCodeLine{135         \textcolor{keyword}{virtual} \string~CountedPointerTarget() \{\}}
+\DoxyCodeLine{136 \};}
+\DoxyCodeLine{137 }
+\DoxyCodeLine{138 \textcolor{comment}{/**}}
+\DoxyCodeLine{139 \textcolor{comment}{ * A template child class that permits automatic \& static variables to have }}
+\DoxyCodeLine{140 \textcolor{comment}{ * counted pointers.}}
+\DoxyCodeLine{141 \textcolor{comment}{ * }}
+\DoxyCodeLine{142 \textcolor{comment}{ * The user must ensure that all CountedPointers to instances of this class}}
+\DoxyCodeLine{143 \textcolor{comment}{ * are deleted before the target.}}
+\DoxyCodeLine{144 \textcolor{comment}{ * }}
+\DoxyCodeLine{145 \textcolor{comment}{ * NB: It is not generally safe to have CountedPointers point at automatic or }}
+\DoxyCodeLine{146 \textcolor{comment}{ *     static variables as when the pointer count reaches zero an attempt will}}
+\DoxyCodeLine{147 \textcolor{comment}{ *     be made to delete the variable.}}
+\DoxyCodeLine{148 \textcolor{comment}{ */}}
+\DoxyCodeLine{149 \textcolor{keyword}{template}<\textcolor{keyword}{typename} T> \textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1CountedPointerSafe}{CountedPointerSafe}} : \textcolor{keyword}{public} T \{}
+\DoxyCodeLine{150     \textcolor{keyword}{public}:}
+\DoxyCodeLine{151     \textcolor{keyword}{template}< \textcolor{keyword}{typename} ... Types > CountedPointerSafe( \textcolor{keyword}{const} Types\&...args )}
+\DoxyCodeLine{152     : T(args...)}
+\DoxyCodeLine{153     \{ T::CountedPointerAttach(); \}}
+\DoxyCodeLine{154 \};}
+\DoxyCodeLine{155 }
+\DoxyCodeLine{156 \};}
+\DoxyCodeLine{157 }
+\DoxyCodeLine{158 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{endif} \textcolor{comment}{/* COUNTINGPOINTER\_HPP */}}
 
 \end{DoxyCode}

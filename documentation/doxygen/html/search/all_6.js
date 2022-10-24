@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['maotest_0',['maoTest',['../structmaoTest.html',1,'']]],
-  ['maotestiteratoryielder_1',['maoTestIteratorYielder',['../classmaoTestIteratorYielder.html',1,'']]],
-  ['maybeclone_2',['maybeClone',['../classpiChars.html#aa00ac4fac7f66690557ae7fc891c34c9',1,'piChars::maybeClone()'],['../classmaoTestIteratorYielder.html#a4b91ce0d2a4d2ec28b0459b149bce2b0',1,'maoTestIteratorYielder::maybeClone()'],['../classjclib_1_1yieldingIteratorHelper.html#a8f5911d2f94b9ca84b3a737c5d485219',1,'jclib::yieldingIteratorHelper::maybeClone()']]]
+  ['jclib_0',['jclib',['../namespacejclib.html',1,'jclib'],['../md_README.html',1,'(Global Namespace)']]],
+  ['jstring_1',['jString',['../classjclib_1_1jString.html',1,'jclib::jString'],['../structjclib_1_1jStringBase.html#a3c106bc48b18eeee90084150ae662bad',1,'jclib::jStringBase::jString()']]],
+  ['jstringbase_2',['jStringBase',['../structjclib_1_1jStringBase.html',1,'jclib']]]
 ];

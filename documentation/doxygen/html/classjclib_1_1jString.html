@@ -95,8 +95,14 @@ Collaboration diagram for jclib::jString:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a872eaaec620afdc377791d522f7619bc"><td class="memItemLeft" align="right" valign="top"><a id="a872eaaec620afdc377791d522f7619bc" name="a872eaaec620afdc377791d522f7619bc"></a>
+const char *&#160;</td><td class="memItemRight" valign="bottom"><b>data</b> () const</td></tr>
+<tr class="separator:a872eaaec620afdc377791d522f7619bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42af2a62d5f94d50df0a6fea9d04e8bd"><td class="memItemLeft" align="right" valign="top"><a id="a42af2a62d5f94d50df0a6fea9d04e8bd" name="a42af2a62d5f94d50df0a6fea9d04e8bd"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>isvalid</b> () const</td></tr>
+<tr class="separator:a42af2a62d5f94d50df0a6fea9d04e8bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9119fb7fb6274ba8e7a9ecdbea65d466"><td class="memItemLeft" align="right" valign="top"><a id="a9119fb7fb6274ba8e7a9ecdbea65d466" name="a9119fb7fb6274ba8e7a9ecdbea65d466"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>jString</b> (<a class="el" href="classjclib_1_1jStringBase.html">jStringBase</a> *base)</td></tr>
+&#160;</td><td class="memItemRight" valign="bottom"><b>jString</b> (<a class="el" href="structjclib_1_1jStringBase.html">jStringBase</a> *base)</td></tr>
 <tr class="separator:a9119fb7fb6274ba8e7a9ecdbea65d466"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9efb9cf7ac496cbbe11a993190c54b8a"><td class="memItemLeft" align="right" valign="top"><a id="a9efb9cf7ac496cbbe11a993190c54b8a" name="a9efb9cf7ac496cbbe11a993190c54b8a"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>jString</b> (const char *source)</td></tr>
@@ -119,15 +125,33 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:af55dcdfaf5f18b7cd5d0df12bf9c5bd2"><td class="memItemLeft" align="right" valign="top"><a id="af55dcdfaf5f18b7cd5d0df12bf9c5bd2" name="af55dcdfaf5f18b7cd5d0df12bf9c5bd2"></a>
 <a class="el" href="classjclib_1_1jString.html">jString</a>&#160;</td><td class="memItemRight" valign="bottom"><b>substr</b> (std::size_t start, std::size_t len) const</td></tr>
 <tr class="separator:af55dcdfaf5f18b7cd5d0df12bf9c5bd2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b4a0652b1d629fcb69bb171d8691efc"><td class="memItemLeft" align="right" valign="top"><a id="a7b4a0652b1d629fcb69bb171d8691efc" name="a7b4a0652b1d629fcb69bb171d8691efc"></a>
+<a class="el" href="classjclib_1_1jString.html">jString</a>&#160;</td><td class="memItemRight" valign="bottom"><b>pad</b> (std::size_t length, char pad_char=' ') const</td></tr>
+<tr class="separator:a7b4a0652b1d629fcb69bb171d8691efc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace3b1ad453717614ca476b0f1d205c91"><td class="memItemLeft" align="right" valign="top"><a id="ace3b1ad453717614ca476b0f1d205c91" name="ace3b1ad453717614ca476b0f1d205c91"></a>
+std::vector&lt; <a class="el" href="classjclib_1_1jString.html">jString</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>split</b> (const char *delim, int max_splits=std::numeric_limits&lt; int &gt;::max()) const</td></tr>
+<tr class="separator:ace3b1ad453717614ca476b0f1d205c91"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aac1073792f5fb0c9dd6bd3366532a727"><td class="memItemLeft" align="right" valign="top"><a id="aac1073792f5fb0c9dd6bd3366532a727" name="aac1073792f5fb0c9dd6bd3366532a727"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator&lt;</b> (const <a class="el" href="classjclib_1_1jString.html">jString</a> &amp;rhs) const</td></tr>
 <tr class="separator:aac1073792f5fb0c9dd6bd3366532a727"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a36cc278ea8ef66ea01e2663cafffda2c"><td class="memItemLeft" align="right" valign="top"><a id="a36cc278ea8ef66ea01e2663cafffda2c" name="a36cc278ea8ef66ea01e2663cafffda2c"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator&lt;=</b> (const <a class="el" href="classjclib_1_1jString.html">jString</a> &amp;rhs) const</td></tr>
+<tr class="separator:a36cc278ea8ef66ea01e2663cafffda2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8d4304413e788be0d8081635dde02f5c"><td class="memItemLeft" align="right" valign="top"><a id="a8d4304413e788be0d8081635dde02f5c" name="a8d4304413e788be0d8081635dde02f5c"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator&gt;</b> (const <a class="el" href="classjclib_1_1jString.html">jString</a> &amp;rhs) const</td></tr>
 <tr class="separator:a8d4304413e788be0d8081635dde02f5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c9a25ba8153918cf2a1add7af1327e0"><td class="memItemLeft" align="right" valign="top"><a id="a2c9a25ba8153918cf2a1add7af1327e0" name="a2c9a25ba8153918cf2a1add7af1327e0"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator&gt;=</b> (const <a class="el" href="classjclib_1_1jString.html">jString</a> &amp;rhs) const</td></tr>
+<tr class="separator:a2c9a25ba8153918cf2a1add7af1327e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a957678d937d3aee8e19a1d7c0043d108"><td class="memItemLeft" align="right" valign="top"><a id="a957678d937d3aee8e19a1d7c0043d108" name="a957678d937d3aee8e19a1d7c0043d108"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator==</b> (const <a class="el" href="classjclib_1_1jString.html">jString</a> &amp;rhs) const</td></tr>
 <tr class="separator:a957678d937d3aee8e19a1d7c0043d108"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:affec74e67b0f1f6d7ee519344352d063"><td class="memItemLeft" align="right" valign="top"><a id="affec74e67b0f1f6d7ee519344352d063" name="affec74e67b0f1f6d7ee519344352d063"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator!=</b> (const <a class="el" href="classjclib_1_1jString.html">jString</a> &amp;rhs) const</td></tr>
+<tr class="separator:affec74e67b0f1f6d7ee519344352d063"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f2213068b23fbcd585eb6d54a3fef55"><td class="memItemLeft" align="right" valign="top"><a id="a4f2213068b23fbcd585eb6d54a3fef55" name="a4f2213068b23fbcd585eb6d54a3fef55"></a>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><b>len</b> () const</td></tr>
+<tr class="separator:a4f2213068b23fbcd585eb6d54a3fef55"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3a08821324c65bb40e6ad0319c7f2638"><td class="memItemLeft" align="right" valign="top"><a id="a3a08821324c65bb40e6ad0319c7f2638" name="a3a08821324c65bb40e6ad0319c7f2638"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>operator const char *</b> () const</td></tr>
 <tr class="separator:a3a08821324c65bb40e6ad0319c7f2638"><td class="memSeparator" colspan="2">&#160;</td></tr>

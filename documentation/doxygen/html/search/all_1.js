@@ -1,11 +1,4 @@
 var searchData=
 [
-  ['countedpointer_0',['CountedPointer',['../classjclib_1_1CountedPointer.html',1,'jclib']]],
-  ['countedpointer_3c_20class_20weakpointerbase_20_3e_1',['CountedPointer&lt; class WeakPointerBase &gt;',['../classjclib_1_1CountedPointer.html',1,'jclib']]],
-  ['countedpointer_3c_20jclib_3a_3ayieldingiteratorhelper_3c_20t_20_3e_20_3e_2',['CountedPointer&lt; jclib::yieldingIteratorHelper&lt; T &gt; &gt;',['../classjclib_1_1CountedPointer.html',1,'jclib']]],
-  ['countedpointer_3c_20jstringbase_20_3e_3',['CountedPointer&lt; jStringBase &gt;',['../classjclib_1_1CountedPointer.html',1,'jclib']]],
-  ['countedpointersafe_4',['CountedPointerSafe',['../classjclib_1_1CountedPointerSafe.html',1,'jclib']]],
-  ['countedpointertarget_5',['CountedPointerTarget',['../classjclib_1_1CountedPointerTarget.html',1,'jclib']]],
-  ['countedpointertestclass_6',['CountedPointerTestClass',['../classCountedPointerTestClass.html',1,'']]],
-  ['countedpointertestdata_7',['CountedPointerTestData',['../classCountedPointerTestData.html',1,'']]]
+  ['begin_0',['begin',['../classjclib_1_1yieldingIteratorHelper.html#ada548ffa73fd843e1d1ebf8e0a78f5c8',1,'jclib::yieldingIteratorHelper::begin()'],['../classjclib_1_1yieldingContainer.html#a9cdbb83859db191572b78264821c5d3b',1,'jclib::yieldingContainer::begin()']]]
 ];

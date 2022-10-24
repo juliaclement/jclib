@@ -2,8 +2,7 @@
 \label{classjclib_1_1jString}\index{jclib::jString@{jclib::jString}}
 
 
-Inheritance diagram for jclib\+::j\+String\+:
-\nopagebreak
+Inheritance diagram for jclib\+::j\+String\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -12,8 +11,7 @@ Inheritance diagram for jclib\+::j\+String\+:
 \end{figure}
 
 
-Collaboration diagram for jclib\+::j\+String\+:
-\nopagebreak
+Collaboration diagram for jclib\+::j\+String\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -23,8 +21,14 @@ Collaboration diagram for jclib\+::j\+String\+:
 \doxysubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
+\mbox{\Hypertarget{classjclib_1_1jString_a872eaaec620afdc377791d522f7619bc}\label{classjclib_1_1jString_a872eaaec620afdc377791d522f7619bc}} 
+const char $\ast$ {\bfseries data} () const
+\item 
+\mbox{\Hypertarget{classjclib_1_1jString_a42af2a62d5f94d50df0a6fea9d04e8bd}\label{classjclib_1_1jString_a42af2a62d5f94d50df0a6fea9d04e8bd}} 
+bool {\bfseries isvalid} () const
+\item 
 \mbox{\Hypertarget{classjclib_1_1jString_a9119fb7fb6274ba8e7a9ecdbea65d466}\label{classjclib_1_1jString_a9119fb7fb6274ba8e7a9ecdbea65d466}} 
-{\bfseries j\+String} (\mbox{\hyperlink{classjclib_1_1jStringBase}{j\+String\+Base}} $\ast$base)
+{\bfseries j\+String} (\mbox{\hyperlink{structjclib_1_1jStringBase}{j\+String\+Base}} $\ast$base)
 \item 
 \mbox{\Hypertarget{classjclib_1_1jString_a9efb9cf7ac496cbbe11a993190c54b8a}\label{classjclib_1_1jString_a9efb9cf7ac496cbbe11a993190c54b8a}} 
 {\bfseries j\+String} (const char $\ast$source)
@@ -47,14 +51,32 @@ Collaboration diagram for jclib\+::j\+String\+:
 \mbox{\Hypertarget{classjclib_1_1jString_af55dcdfaf5f18b7cd5d0df12bf9c5bd2}\label{classjclib_1_1jString_af55dcdfaf5f18b7cd5d0df12bf9c5bd2}} 
 \mbox{\hyperlink{classjclib_1_1jString}{j\+String}} {\bfseries substr} (std\+::size\+\_\+t start, std\+::size\+\_\+t len) const
 \item 
+\mbox{\Hypertarget{classjclib_1_1jString_a7b4a0652b1d629fcb69bb171d8691efc}\label{classjclib_1_1jString_a7b4a0652b1d629fcb69bb171d8691efc}} 
+\mbox{\hyperlink{classjclib_1_1jString}{j\+String}} {\bfseries pad} (std\+::size\+\_\+t length, char pad\+\_\+char=\textquotesingle{} \textquotesingle{}) const
+\item 
+\mbox{\Hypertarget{classjclib_1_1jString_ace3b1ad453717614ca476b0f1d205c91}\label{classjclib_1_1jString_ace3b1ad453717614ca476b0f1d205c91}} 
+std\+::vector$<$ \mbox{\hyperlink{classjclib_1_1jString}{j\+String}} $>$ {\bfseries split} (const char $\ast$delim, int max\+\_\+splits=std\+::numeric\+\_\+limits$<$ int $>$\+::max()) const
+\item 
 \mbox{\Hypertarget{classjclib_1_1jString_aac1073792f5fb0c9dd6bd3366532a727}\label{classjclib_1_1jString_aac1073792f5fb0c9dd6bd3366532a727}} 
 bool {\bfseries operator$<$} (const \mbox{\hyperlink{classjclib_1_1jString}{j\+String}} \&rhs) const
+\item 
+\mbox{\Hypertarget{classjclib_1_1jString_a36cc278ea8ef66ea01e2663cafffda2c}\label{classjclib_1_1jString_a36cc278ea8ef66ea01e2663cafffda2c}} 
+bool {\bfseries operator$<$=} (const \mbox{\hyperlink{classjclib_1_1jString}{j\+String}} \&rhs) const
 \item 
 \mbox{\Hypertarget{classjclib_1_1jString_a8d4304413e788be0d8081635dde02f5c}\label{classjclib_1_1jString_a8d4304413e788be0d8081635dde02f5c}} 
 bool {\bfseries operator$>$} (const \mbox{\hyperlink{classjclib_1_1jString}{j\+String}} \&rhs) const
 \item 
+\mbox{\Hypertarget{classjclib_1_1jString_a2c9a25ba8153918cf2a1add7af1327e0}\label{classjclib_1_1jString_a2c9a25ba8153918cf2a1add7af1327e0}} 
+bool {\bfseries operator$>$=} (const \mbox{\hyperlink{classjclib_1_1jString}{j\+String}} \&rhs) const
+\item 
 \mbox{\Hypertarget{classjclib_1_1jString_a957678d937d3aee8e19a1d7c0043d108}\label{classjclib_1_1jString_a957678d937d3aee8e19a1d7c0043d108}} 
 bool {\bfseries operator==} (const \mbox{\hyperlink{classjclib_1_1jString}{j\+String}} \&rhs) const
+\item 
+\mbox{\Hypertarget{classjclib_1_1jString_affec74e67b0f1f6d7ee519344352d063}\label{classjclib_1_1jString_affec74e67b0f1f6d7ee519344352d063}} 
+bool {\bfseries operator!=} (const \mbox{\hyperlink{classjclib_1_1jString}{j\+String}} \&rhs) const
+\item 
+\mbox{\Hypertarget{classjclib_1_1jString_a4f2213068b23fbcd585eb6d54a3fef55}\label{classjclib_1_1jString_a4f2213068b23fbcd585eb6d54a3fef55}} 
+size\+\_\+t {\bfseries len} () const
 \item 
 \mbox{\Hypertarget{classjclib_1_1jString_a3a08821324c65bb40e6ad0319c7f2638}\label{classjclib_1_1jString_a3a08821324c65bb40e6ad0319c7f2638}} 
 {\bfseries operator const char $\ast$} () const

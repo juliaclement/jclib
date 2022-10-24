@@ -26,278 +26,280 @@
 \DoxyCodeLine{23 \textcolor{comment}{/* }}
 \DoxyCodeLine{24 \textcolor{comment}{ * File:   yieldingIterator.hpp}}
 \DoxyCodeLine{25 \textcolor{comment}{ * Author: Julia Clement <Julia at Clement dot nz>}}
-\DoxyCodeLine{26 \textcolor{comment}{ *}}
-\DoxyCodeLine{27 \textcolor{comment}{ * Created on 6 October 2017, 12:50 PM}}
-\DoxyCodeLine{28 \textcolor{comment}{ */}}
-\DoxyCodeLine{29 }
-\DoxyCodeLine{30 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{ifndef} \textcolor{preprocessor}{YIELDINGITERATOR\_HPP}}
-\DoxyCodeLine{31 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{YIELDINGITERATOR\_HPP}}
-\DoxyCodeLine{32 }
-\DoxyCodeLine{33 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{include} \textcolor{preprocessor}{<}\textcolor{preprocessor}{iterator}\textcolor{preprocessor}{>}}
-\DoxyCodeLine{34 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{include} \mbox{\hyperlink{countedPointer_8hpp}{"{}countedPointer.hpp"{}}}}
-\DoxyCodeLine{35 }
-\DoxyCodeLine{36 \textcolor{keyword}{namespace} \mbox{\hyperlink{namespacejclib}{jclib}} \{}
-\DoxyCodeLine{37 \textcolor{preprocessor}{\#}   \textcolor{preprocessor}{define} \textcolor{preprocessor}{YielderBegin} \textcolor{preprocessor}{\{} \textcolor{keywordflow}{switch}\textcolor{preprocessor}{(}\textcolor{preprocessor}{state}\textcolor{preprocessor}{)} \textcolor{preprocessor}{\{} \textcolor{keywordflow}{do} \textcolor{preprocessor}{\{}\textcolor{keywordflow}{default}\textcolor{preprocessor}{:} \textcolor{keywordflow}{throw} \textcolor{preprocessor}{(}\textcolor{keywordtype}{int}\textcolor{preprocessor}{)}\textcolor{preprocessor}{-\/}314159\textcolor{preprocessor}{;} \textcolor{keywordflow}{case} 0\textcolor{preprocessor}{:}\textcolor{preprocessor}{;} \textcolor{preprocessor}{\}} \textcolor{keywordflow}{while}\textcolor{preprocessor}{(}0\textcolor{preprocessor}{)}}
-\DoxyCodeLine{38     \textcolor{comment}{/**}}
-\DoxyCodeLine{39 \textcolor{comment}{     * Copy retval to value then return.}}
-\DoxyCodeLine{40 \textcolor{comment}{     * Processing resumes with the next statement on next call}}
-\DoxyCodeLine{41 \textcolor{comment}{     */}}
-\DoxyCodeLine{42 \textcolor{preprocessor}{\#}   \textcolor{preprocessor}{define} \textcolor{preprocessor}{YieldReturn}\textcolor{preprocessor}{(}\textcolor{preprocessor}{retvalue}\textcolor{preprocessor}{)} \textcolor{keywordflow}{do} \textcolor{preprocessor}{\{} \textcolor{preprocessor}{value} \textcolor{preprocessor}{=} \textcolor{preprocessor}{(}\textcolor{preprocessor}{retvalue}\textcolor{preprocessor}{)}\textcolor{preprocessor}{;} \textcolor{preprocessor}{state} \textcolor{preprocessor}{=} \textcolor{preprocessor}{\_\_LINE\_\_}\textcolor{preprocessor}{;} \textcolor{keywordflow}{return}\textcolor{preprocessor}{;} \textcolor{keywordflow}{case} \textcolor{preprocessor}{\_\_LINE\_\_}\textcolor{preprocessor}{:}\textcolor{preprocessor}{;} \textcolor{preprocessor}{\}} \textcolor{keywordflow}{while}\textcolor{preprocessor}{(}0\textcolor{preprocessor}{)}}
-\DoxyCodeLine{43     \textcolor{comment}{/**}}
-\DoxyCodeLine{44 \textcolor{comment}{     * Yield Return with the value already set in parameter value}}
-\DoxyCodeLine{45 \textcolor{comment}{     * Processing resumes with the next statement on next call}}
-\DoxyCodeLine{46 \textcolor{comment}{     */}}
-\DoxyCodeLine{47 \textcolor{preprocessor}{\#}   \textcolor{preprocessor}{define} \textcolor{preprocessor}{YieldReturnAnswer}\textcolor{preprocessor}{(}\textcolor{preprocessor}{)} \textcolor{keywordflow}{do} \textcolor{preprocessor}{\{} \textcolor{preprocessor}{state} \textcolor{preprocessor}{=} \textcolor{preprocessor}{\_\_LINE\_\_}\textcolor{preprocessor}{;} \textcolor{keywordflow}{return}\textcolor{preprocessor}{;} \textcolor{keywordflow}{case} \textcolor{preprocessor}{\_\_LINE\_\_}\textcolor{preprocessor}{:}\textcolor{preprocessor}{;} \textcolor{preprocessor}{\}} \textcolor{keywordflow}{while}\textcolor{preprocessor}{(}0\textcolor{preprocessor}{)}}
-\DoxyCodeLine{48 \textcolor{preprocessor}{\#}   \textcolor{preprocessor}{define} \textcolor{preprocessor}{YeildingFinished} \textcolor{keywordflow}{do} \textcolor{preprocessor}{\{} \textcolor{preprocessor}{state} \textcolor{preprocessor}{=} \textcolor{preprocessor}{-\/}1\textcolor{preprocessor}{;} \textcolor{keywordflow}{return}\textcolor{preprocessor}{;} \textcolor{preprocessor}{\}} \textcolor{keywordflow}{while}\textcolor{preprocessor}{(}0\textcolor{preprocessor}{)}}
-\DoxyCodeLine{49 \textcolor{preprocessor}{\#}   \textcolor{preprocessor}{define} \textcolor{preprocessor}{YielderEnd} \textcolor{preprocessor}{\}} \mbox{\hyperlink{yieldingIterator_8hpp_a3dfc1acc57a2722d1c35ba4afa035a81}{YeildingFinished}}\textcolor{preprocessor}{;} \textcolor{preprocessor}{\}}}
-\DoxyCodeLine{50     \textcolor{keyword}{template}<\textcolor{keyword}{typename} T> \textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1yieldingIteratorHelper}{yieldingIteratorHelper}} : \textcolor{keyword}{public} \mbox{\hyperlink{classjclib_1_1CountedPointerTarget}{CountedPointerTarget}} \{}
-\DoxyCodeLine{51         \textcolor{keyword}{public}:}
-\DoxyCodeLine{52             \textcolor{comment}{/**}}
-\DoxyCodeLine{53 \textcolor{comment}{             * Called to advance the iterator to its next state}}
-\DoxyCodeLine{54 \textcolor{comment}{             * @param value that will be returned by * iterator. I/O}}
-\DoxyCodeLine{55 \textcolor{comment}{             * @param state used by helper to determine where it is. Setting}}
-\DoxyCodeLine{56 \textcolor{comment}{             *        state to -\/1 signals end() is true}}
-\DoxyCodeLine{57 \textcolor{comment}{             */}}
-\DoxyCodeLine{58             \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classjclib_1_1yieldingIteratorHelper_a620c17e7eb8ed695e3fb9add01da576d}{next}}( T \& value, \textcolor{keywordtype}{int} \& state ) = 0;}
-\DoxyCodeLine{59             \textcolor{comment}{/**}}
-\DoxyCodeLine{60 \textcolor{comment}{             * Called when iterator is created to set initial state}}
-\DoxyCodeLine{61 \textcolor{comment}{             * Optional: Default action is to call next() with state = 0;}}
-\DoxyCodeLine{62 \textcolor{comment}{             * @param value that will be returned by * iterator. I/O}}
-\DoxyCodeLine{63 \textcolor{comment}{             * @param state used by helper to determine where it is. }}
-\DoxyCodeLine{64 \textcolor{comment}{             * There are two special values:<ul><li>-\/1: End of range encountered</li>}}
-\DoxyCodeLine{65 \textcolor{comment}{             * <li>0 beginning of sequence required. Either the iterator is}}
-\DoxyCodeLine{66 \textcolor{comment}{             * new or has been reset</li></ul>}}
-\DoxyCodeLine{67 \textcolor{comment}{             */}}
-\DoxyCodeLine{68             \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classjclib_1_1yieldingIteratorHelper_ada548ffa73fd843e1d1ebf8e0a78f5c8}{begin}}( T \& value, \textcolor{keywordtype}{int} \& state ) \{}
-\DoxyCodeLine{69                 state = 0;}
-\DoxyCodeLine{70                 \mbox{\hyperlink{classjclib_1_1yieldingIteratorHelper_a620c17e7eb8ed695e3fb9add01da576d}{next}}\mbox{\hyperlink{classjclib_1_1yieldingIteratorHelper_a620c17e7eb8ed695e3fb9add01da576d}{(}} value\mbox{\hyperlink{classjclib_1_1yieldingIteratorHelper_a620c17e7eb8ed695e3fb9add01da576d}{,}} state \mbox{\hyperlink{classjclib_1_1yieldingIteratorHelper_a620c17e7eb8ed695e3fb9add01da576d}{)}};}
-\DoxyCodeLine{71             \}}
-\DoxyCodeLine{72             \textcolor{comment}{/**}}
-\DoxyCodeLine{73 \textcolor{comment}{             * Called when state is set to -\/1 (end) either by the user}}
-\DoxyCodeLine{74 \textcolor{comment}{             * or on return from next()}}
-\DoxyCodeLine{75 \textcolor{comment}{             * @param value that will be returned by * iterator. I/O}}
-\DoxyCodeLine{76 \textcolor{comment}{             */}}
-\DoxyCodeLine{77             \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classjclib_1_1yieldingIteratorHelper_a62f77cf3f5376e5997512907460f2d36}{ending}}( T \& value ) \{}
-\DoxyCodeLine{78             \}}
-\DoxyCodeLine{79             \textcolor{comment}{/**}}
-\DoxyCodeLine{80 \textcolor{comment}{             * Called by the yieldingIterator copy constructor. If }}
-\DoxyCodeLine{81 \textcolor{comment}{             * this object has state stored outside the value and state}}
-\DoxyCodeLine{82 \textcolor{comment}{             * parameters to next(), it should return a new object, otherwise}}
-\DoxyCodeLine{83 \textcolor{comment}{             * it's fine to return ourselves}}
-\DoxyCodeLine{84 \textcolor{comment}{             * @return either ourself or a clone of ourself}}
-\DoxyCodeLine{85 \textcolor{comment}{             */}}
-\DoxyCodeLine{86             \textcolor{keyword}{virtual} \mbox{\hyperlink{classjclib_1_1yieldingIteratorHelper}{yieldingIteratorHelper}}<T> * \mbox{\hyperlink{classjclib_1_1yieldingIteratorHelper_a8f5911d2f94b9ca84b3a737c5d485219}{maybeClone}}() \{ \textcolor{keywordflow}{return} \textcolor{keyword}{this}; \}}
-\DoxyCodeLine{87     \};}
-\DoxyCodeLine{88 }
-\DoxyCodeLine{89     \textcolor{comment}{/**}}
-\DoxyCodeLine{90 \textcolor{comment}{     * This is the user accessible class that uses a helper to provide }}
-\DoxyCodeLine{91 \textcolor{comment}{     * a set of calculated values.}}
-\DoxyCodeLine{92 \textcolor{comment}{     */}}
-\DoxyCodeLine{93     \textcolor{keyword}{template}<\textcolor{keyword}{typename} T> \textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1yieldingIterator}{yieldingIterator}}}
-\DoxyCodeLine{94                          : \textcolor{keyword}{public} std::iterator<std::forward\_iterator\_tag,}
-\DoxyCodeLine{95                                            T,}
-\DoxyCodeLine{96                                            ptrdiff\_t,}
-\DoxyCodeLine{97                                            T*,}
-\DoxyCodeLine{98                                            T\&> \{}
-\DoxyCodeLine{99         \textcolor{keyword}{public}:}
-\DoxyCodeLine{100             \textcolor{keyword}{enum} \{ yiEof = -\/1, yiBegin = 0 \};}
-\DoxyCodeLine{101         \textcolor{keyword}{protected}:}
-\DoxyCodeLine{102             \textcolor{comment}{// don't change the order of these members, }}
-\DoxyCodeLine{103             \textcolor{comment}{// helper\_ must be constructed before state\_}}
-\DoxyCodeLine{104             \mbox{\hyperlink{classjclib_1_1CountedPointer}{CountedPointer}}< \mbox{\hyperlink{classjclib_1_1yieldingIteratorHelper}{yieldingIteratorHelper}}<T> > helper\_;}
-\DoxyCodeLine{105             \textcolor{keywordtype}{int} state\_;}
-\DoxyCodeLine{106             T value\_;}
-\DoxyCodeLine{107         \textcolor{keyword}{public}:}
-\DoxyCodeLine{108             \mbox{\hyperlink{classjclib_1_1yieldingIterator}{yieldingIterator}}<T> operator++(\textcolor{keywordtype}{int} postfix) \{}
-\DoxyCodeLine{109                 \mbox{\hyperlink{classjclib_1_1yieldingIterator}{yieldingIterator}}<T> answer = *\textcolor{keyword}{this};}
-\DoxyCodeLine{110                 helper\_-\/>next(value\_, state\_);}
-\DoxyCodeLine{111                 \textcolor{keywordflow}{return} answer;}
-\DoxyCodeLine{112             \}}
-\DoxyCodeLine{113             \mbox{\hyperlink{classjclib_1_1yieldingIterator}{yieldingIterator}}<T> \& operator++() \{}
-\DoxyCodeLine{114                 helper\_-\/>next(value\_, state\_);}
-\DoxyCodeLine{115                 \textcolor{keywordflow}{if}( state\_ == yiEof)}
-\DoxyCodeLine{116                     helper\_-\/>ending(value\_);}
-\DoxyCodeLine{117                 \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
-\DoxyCodeLine{118             \}}
-\DoxyCodeLine{119             T \& operator*() \textcolor{keyword}{const} \{ \textcolor{keywordflow}{return} \textcolor{keyword}{const\_cast}<T\&>(value\_); \}}
-\DoxyCodeLine{120             T * operator-\/>() \textcolor{keyword}{const} \{ \textcolor{keywordflow}{return} \&\textcolor{keyword}{const\_cast}<T\&>(value\_); \}}
-\DoxyCodeLine{121 }
-\DoxyCodeLine{122             \textcolor{comment}{/**}}
-\DoxyCodeLine{123 \textcolor{comment}{             * Reset the iterator to the beginning of its sequence}}
-\DoxyCodeLine{124 \textcolor{comment}{             * requires the helper to act appropriately to the begin() call}}
-\DoxyCodeLine{125 \textcolor{comment}{             */}}
-\DoxyCodeLine{126             \textcolor{keywordtype}{void} \mbox{\hyperlink{classjclib_1_1yieldingIterator_af6051397c336c96df0a31895b2f125ab}{set\_begin}}() \{}
-\DoxyCodeLine{127                 \textcolor{keywordflow}{if}( helper\_.isset()) \{}
-\DoxyCodeLine{128                     state\_ = yiBegin;}
-\DoxyCodeLine{129                     helper\_-\/>begin(value\_, state\_);}
-\DoxyCodeLine{130                 \} \textcolor{keywordflow}{else} \{}
-\DoxyCodeLine{131                     state\_ = yiEof;}
-\DoxyCodeLine{132                 \}}
-\DoxyCodeLine{133             \}}
-\DoxyCodeLine{134 }
-\DoxyCodeLine{135             \textcolor{comment}{/**}}
-\DoxyCodeLine{136 \textcolor{comment}{             * Checks if the iterator is at the end of its range<br/>}}
-\DoxyCodeLine{137 \textcolor{comment}{             * Quick test for when container.end() isn't accessible.<br/>}}
-\DoxyCodeLine{138 \textcolor{comment}{             * Once end is set, helper\_-\/>next() won't be called until the}}
-\DoxyCodeLine{139 \textcolor{comment}{             * iterator is reset by a call to set\_begin() or an assignment.}}
-\DoxyCodeLine{140 \textcolor{comment}{             * @return boolean}}
-\DoxyCodeLine{141 \textcolor{comment}{             */}}
-\DoxyCodeLine{142             \textcolor{keyword}{inline} \textcolor{keywordtype}{bool} \mbox{\hyperlink{classjclib_1_1yieldingIterator_a2a80f65927659a1e913a9ed318113756}{is\_end}}() \textcolor{keyword}{const} \{ \textcolor{keywordflow}{return} state\_ == yiEof; \}}
-\DoxyCodeLine{143 }
-\DoxyCodeLine{144             \textcolor{comment}{/**}}
-\DoxyCodeLine{145 \textcolor{comment}{             * Sets the internal state to end of sequence<br/>}}
-\DoxyCodeLine{146 \textcolor{comment}{             * Once end is set, helper\_-\/>next() won't be called until the}}
-\DoxyCodeLine{147 \textcolor{comment}{             * iterator is reset by a call to set\_begin() or an assignment.}}
-\DoxyCodeLine{148 \textcolor{comment}{             */}}
-\DoxyCodeLine{149             \textcolor{keywordtype}{void} \mbox{\hyperlink{classjclib_1_1yieldingIterator_ab824de9cf3585fe0e24d4efef9eb78d6}{set\_end}}() \{}
-\DoxyCodeLine{150                 state\_ = yiEof;}
-\DoxyCodeLine{151                 \textcolor{keywordflow}{if}( helper\_.isset())}
-\DoxyCodeLine{152                     helper\_-\/>ending( value\_ );}
-\DoxyCodeLine{153             \}}
-\DoxyCodeLine{154 }
-\DoxyCodeLine{155             \textcolor{keyword}{inline} \textcolor{keywordtype}{bool} operator==( \textcolor{keyword}{const} \mbox{\hyperlink{classjclib_1_1yieldingIterator}{yieldingIterator}} \& rhs ) \textcolor{keyword}{const} \{}
-\DoxyCodeLine{156                 \textcolor{keywordflow}{return} state\_ == rhs.state\_ \&\&}
-\DoxyCodeLine{157                       (state\_ < 1 || value\_ == rhs.value\_);}
-\DoxyCodeLine{158             \}}
-\DoxyCodeLine{159 }
-\DoxyCodeLine{160             \textcolor{keyword}{inline} \textcolor{keywordtype}{bool} operator!=( \textcolor{keyword}{const} \mbox{\hyperlink{classjclib_1_1yieldingIterator}{yieldingIterator}} \& rhs ) \textcolor{keyword}{const} \{}
-\DoxyCodeLine{161                 \textcolor{keywordflow}{return} ! ( * \textcolor{keyword}{this} == rhs );}
-\DoxyCodeLine{162             \}}
-\DoxyCodeLine{163 }
-\DoxyCodeLine{164             \textcolor{comment}{/** Variadic constructor relies on the helper being able to }}
-\DoxyCodeLine{165 \textcolor{comment}{             * accept const \& arguments in all positions. If this ever turns}}
-\DoxyCodeLine{166 \textcolor{comment}{             * out to be not so we may need to subclass or even split this class}}
-\DoxyCodeLine{167 \textcolor{comment}{             * }}
-\DoxyCodeLine{168 \textcolor{comment}{             * @param helper }}
-\DoxyCodeLine{169 \textcolor{comment}{             * @param args for the constructor of type T}}
-\DoxyCodeLine{170 \textcolor{comment}{             */}}
-\DoxyCodeLine{171             \textcolor{keyword}{template}< \textcolor{keyword}{typename} ... Types >}
-\DoxyCodeLine{172                 \mbox{\hyperlink{classjclib_1_1yieldingIterator_a0dbcbd34a94bcce3144d2318fd7d8c09}{yieldingIterator}}( \textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1yieldingIteratorHelper}{yieldingIteratorHelper}}<T> * helper,}
-\DoxyCodeLine{173                                   \textcolor{keyword}{const} Types\&...args )}
-\DoxyCodeLine{174                 : helper\_( helper )}
-\DoxyCodeLine{175                 , state\_( yiBegin)}
-\DoxyCodeLine{176                 , value\_(args...)}
-\DoxyCodeLine{177                 \{}
-\DoxyCodeLine{178                     \textcolor{keywordflow}{if}( helper\_.isset() ) \{}
-\DoxyCodeLine{179                         helper\_-\/>begin( value\_, state\_);}
-\DoxyCodeLine{180                     \} \textcolor{keywordflow}{else} \{}
-\DoxyCodeLine{181                         state\_ = yiEof;}
-\DoxyCodeLine{182                         \textcolor{comment}{// No helper so can't call ending())}}
-\DoxyCodeLine{183                     \}}
-\DoxyCodeLine{184                 \}}
-\DoxyCodeLine{185 }
-\DoxyCodeLine{186             \textcolor{comment}{/**}}
-\DoxyCodeLine{187 \textcolor{comment}{             * Constructor to satisfy the default constructable requirement }}
-\DoxyCodeLine{188 \textcolor{comment}{             * for iterators.}}
-\DoxyCodeLine{189 \textcolor{comment}{             */}}
-\DoxyCodeLine{190             \mbox{\hyperlink{classjclib_1_1yieldingIterator_a2dc7307fa736746412ad507c2acbd963}{yieldingIterator}}( )}
-\DoxyCodeLine{191             : helper\_(  \textcolor{keywordtype}{nullptr} )}
-\DoxyCodeLine{192             , state\_( yiEof )}
-\DoxyCodeLine{193             , value\_( )}
-\DoxyCodeLine{194             \{}
-\DoxyCodeLine{195             \}}
-\DoxyCodeLine{196 }
-\DoxyCodeLine{197             \textcolor{comment}{/**}}
-\DoxyCodeLine{198 \textcolor{comment}{             * Copy constructor. NB: If the source iterator has ended, the}}
-\DoxyCodeLine{199 \textcolor{comment}{             * ending() method will be called. This means it is possible for}}
-\DoxyCodeLine{200 \textcolor{comment}{             * an iterator that never had a begin() to end().}}
-\DoxyCodeLine{201 \textcolor{comment}{             * @param old cource of copy.}}
-\DoxyCodeLine{202 \textcolor{comment}{             */}}
-\DoxyCodeLine{203             \mbox{\hyperlink{classjclib_1_1yieldingIterator_a8aaf76517fb120bca9cae336eff64458}{yieldingIterator}}( \textcolor{keyword}{const} \mbox{\hyperlink{classjclib_1_1yieldingIterator}{yieldingIterator}}<T> \& old )}
-\DoxyCodeLine{204             : helper\_( old.helper\_.isnull() ? \textcolor{keywordtype}{nullptr} : old.helper\_-\/>maybeClone() )}
-\DoxyCodeLine{205             , state\_( old.helper\_.isnull() ? yiEof : old.state\_ )}
-\DoxyCodeLine{206             , value\_( old.value\_)}
-\DoxyCodeLine{207             \{}
-\DoxyCodeLine{208                 \textcolor{keywordflow}{if}( helper\_.isset() \&\& state\_ == yiEof )}
-\DoxyCodeLine{209                     helper\_-\/>ending(value\_);}
-\DoxyCodeLine{210             \}}
-\DoxyCodeLine{211 }
-\DoxyCodeLine{212             \textcolor{comment}{/**}}
-\DoxyCodeLine{213 \textcolor{comment}{             * Assignment operator. NB: If the source iterator has ended, the}}
-\DoxyCodeLine{214 \textcolor{comment}{             * ending() method will be called. This means it is possible for}}
-\DoxyCodeLine{215 \textcolor{comment}{             * an iterator that never had a begin() to end().}}
-\DoxyCodeLine{216 \textcolor{comment}{             * @param old cource of copy.}}
-\DoxyCodeLine{217 \textcolor{comment}{             */}}
-\DoxyCodeLine{218             \mbox{\hyperlink{classjclib_1_1yieldingIterator}{yieldingIterator}}<T> \& \mbox{\hyperlink{classjclib_1_1yieldingIterator_a6c5013cbb0700beacee6a3bd63dd4a1a}{operator}}=( \textcolor{keyword}{const} \mbox{\hyperlink{classjclib_1_1yieldingIterator}{yieldingIterator}}<T> \& old ) \{}
-\DoxyCodeLine{219                 helper\_ = old.helper\_.isnull() ? \textcolor{keywordtype}{nullptr} : old.helper\_-\/>maybeClone();}
-\DoxyCodeLine{220                 state\_ = old.helper\_.isnull() ? yiEof : old.state\_;}
-\DoxyCodeLine{221                 value\_ = old.value\_;}
-\DoxyCodeLine{222                 \textcolor{keywordflow}{if}( helper\_.isset() \&\& state\_ == yiEof )}
-\DoxyCodeLine{223                     helper\_-\/>ending(value\_);}
-\DoxyCodeLine{224                 \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
-\DoxyCodeLine{225             \}}
-\DoxyCodeLine{226     \};}
-\DoxyCodeLine{227 }
-\DoxyCodeLine{228     \textcolor{comment}{/**}}
-\DoxyCodeLine{229 \textcolor{comment}{     * Emulates a container object providing begin \& end iterators}}
-\DoxyCodeLine{230 \textcolor{comment}{     * suitable for feeding to for( var : container )}}
-\DoxyCodeLine{231 \textcolor{comment}{     */}}
-\DoxyCodeLine{232     \textcolor{keyword}{template}<\textcolor{keyword}{typename} T> \textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1yieldingContainer}{yieldingContainer}} \{}
-\DoxyCodeLine{233         \textcolor{keyword}{public}:}
-\DoxyCodeLine{234             \mbox{\hyperlink{classjclib_1_1CountedPointer}{CountedPointer}}< \mbox{\hyperlink{classjclib_1_1yieldingIteratorHelper}{yieldingIteratorHelper}}< T > > helper\_;}
-\DoxyCodeLine{235             \textcolor{keyword}{typedef} \textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1yieldingIterator}{yieldingIterator}}<T> iterator\_T;}
-\DoxyCodeLine{236         \textcolor{keyword}{public}:}
-\DoxyCodeLine{237             \textcolor{comment}{/**}}
-\DoxyCodeLine{238 \textcolor{comment}{             * instantiate and return an iterator set to the start of the range}}
-\DoxyCodeLine{239 \textcolor{comment}{             * @return the iterator}}
-\DoxyCodeLine{240 \textcolor{comment}{             */}}
-\DoxyCodeLine{241             iterator\_T \mbox{\hyperlink{classjclib_1_1yieldingContainer_a9cdbb83859db191572b78264821c5d3b}{begin}}() \{}
-\DoxyCodeLine{242                 iterator\_T answer( helper\_.isnull() ? \textcolor{keywordtype}{nullptr} : helper\_-\/>maybeClone() );}
-\DoxyCodeLine{243                 answer.set\_begin();}
-\DoxyCodeLine{244                 \textcolor{keywordflow}{return} answer;}
-\DoxyCodeLine{245             \}}
-\DoxyCodeLine{246             \textcolor{comment}{/**}}
-\DoxyCodeLine{247 \textcolor{comment}{             * return an iterator set to the end of the range. Only one iterator}}
-\DoxyCodeLine{248 \textcolor{comment}{             * per class is actually created}}
-\DoxyCodeLine{249 \textcolor{comment}{             * @return the iterator}}
-\DoxyCodeLine{250 \textcolor{comment}{             */}}
-\DoxyCodeLine{251             iterator\_T \textcolor{keyword}{const} \& \mbox{\hyperlink{classjclib_1_1yieldingContainer_a64c65b30280f9ff9a7a1f46c237d332b}{end}}() \{}
-\DoxyCodeLine{252                 \textcolor{comment}{// Being able to use a static end\_ relies on the }}
-\DoxyCodeLine{253                 \textcolor{comment}{// == operator considering only state\_ when it is yiEof.}}
-\DoxyCodeLine{254                 \textcolor{keyword}{static} iterator\_T end\_(\textcolor{keywordtype}{nullptr});}
-\DoxyCodeLine{255                 \textcolor{keywordflow}{return} end\_;}
-\DoxyCodeLine{256             \}}
-\DoxyCodeLine{257             \textcolor{comment}{/**}}
-\DoxyCodeLine{258 \textcolor{comment}{             * Constructor<br/>}}
-\DoxyCodeLine{259 \textcolor{comment}{             * I have deliberately not created a default constructor.<br/>}}
-\DoxyCodeLine{260 \textcolor{comment}{             * Given that instances can be constructed with a nullptr (and a}}
-\DoxyCodeLine{261 \textcolor{comment}{             * test exercises that) there is no functional reason for not}}
-\DoxyCodeLine{262 \textcolor{comment}{             * having one, I simply can't see a purpose for it. JC Oct 2017}}
-\DoxyCodeLine{263 \textcolor{comment}{             * @param helper. If a nullptr, an assignment must be made before}}
-\DoxyCodeLine{264 \textcolor{comment}{             * calling begin() or bad things will happen}}
-\DoxyCodeLine{265 \textcolor{comment}{             */}}
-\DoxyCodeLine{266             \mbox{\hyperlink{classjclib_1_1yieldingContainer_a2be1354629759fbe753a23361ddff48b}{yieldingContainer}} ( \mbox{\hyperlink{classjclib_1_1yieldingIteratorHelper}{yieldingIteratorHelper}}< T > * helper )}
-\DoxyCodeLine{267             : helper\_( helper )}
-\DoxyCodeLine{268             \{}
-\DoxyCodeLine{269             \}}
-\DoxyCodeLine{270 }
-\DoxyCodeLine{271 }
-\DoxyCodeLine{272             \textcolor{comment}{/**}}
-\DoxyCodeLine{273 \textcolor{comment}{             * Copy constructor.}}
-\DoxyCodeLine{274 \textcolor{comment}{             * @param source object}}
-\DoxyCodeLine{275 \textcolor{comment}{             */}}
-\DoxyCodeLine{276             \mbox{\hyperlink{classjclib_1_1yieldingContainer_a63e99537ac3eda23b731bcca7c4ec7a7}{yieldingContainer}} ( \textcolor{keyword}{const} \mbox{\hyperlink{classjclib_1_1yieldingContainer}{yieldingContainer}}< T > \& old )}
-\DoxyCodeLine{277              \textcolor{comment}{// I'm not sure if a maybeClone is required I believe not as it}}
-\DoxyCodeLine{278              \textcolor{comment}{// should happen for every iterator created through begin() }}
-\DoxyCodeLine{279             : helper\_( old.helper\_ )}
-\DoxyCodeLine{280             \{\}}
-\DoxyCodeLine{281 }
-\DoxyCodeLine{282             \textcolor{keyword}{virtual} \string~yieldingContainer() \{}
-\DoxyCodeLine{283             \}}
-\DoxyCodeLine{284 }
-\DoxyCodeLine{285             \textcolor{comment}{/**}}
-\DoxyCodeLine{286 \textcolor{comment}{             * Assignment.}}
-\DoxyCodeLine{287 \textcolor{comment}{             * @param source object}}
-\DoxyCodeLine{288 \textcolor{comment}{             */}}
-\DoxyCodeLine{289             \mbox{\hyperlink{classjclib_1_1yieldingContainer}{yieldingContainer}}<T> \& \mbox{\hyperlink{classjclib_1_1yieldingContainer_aa4fb2046e3c969038fb5a1797af6fbd0}{operator}} = ( \textcolor{keyword}{const} \mbox{\hyperlink{classjclib_1_1yieldingContainer}{yieldingContainer}}< T > \& old ) \{}
-\DoxyCodeLine{290              \textcolor{comment}{// see note on maybeClone in the copy constructor}}
-\DoxyCodeLine{291                 helper\_ = old.helper\_;}
-\DoxyCodeLine{292                 \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
-\DoxyCodeLine{293             \}}
-\DoxyCodeLine{294     \};}
-\DoxyCodeLine{295 \}}
-\DoxyCodeLine{296 }
-\DoxyCodeLine{297 }
-\DoxyCodeLine{298 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{endif} \textcolor{comment}{/* YIELDINGITERATOR\_HPP */}}
+\DoxyCodeLine{26 \textcolor{comment}{ * }}
+\DoxyCodeLine{27 \textcolor{comment}{ * Part of the JCLib project https://github.com/juliaclement/jclib}}
+\DoxyCodeLine{28 \textcolor{comment}{ *}}
+\DoxyCodeLine{29 \textcolor{comment}{ * Created on 6 October 2017, 12:50 PM}}
+\DoxyCodeLine{30 \textcolor{comment}{ */}}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{ifndef} \textcolor{preprocessor}{YIELDINGITERATOR\_HPP}}
+\DoxyCodeLine{33 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{YIELDINGITERATOR\_HPP}}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{include} \textcolor{preprocessor}{<}\textcolor{preprocessor}{iterator}\textcolor{preprocessor}{>}}
+\DoxyCodeLine{36 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{include} \mbox{\hyperlink{countedPointer_8hpp}{"{}countedPointer.hpp"{}}}}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38 \textcolor{keyword}{namespace} \mbox{\hyperlink{namespacejclib}{jclib}} \{}
+\DoxyCodeLine{39 \textcolor{preprocessor}{\#}   \textcolor{preprocessor}{define} \textcolor{preprocessor}{YielderBegin} \textcolor{preprocessor}{\{} \textcolor{keywordflow}{switch}\textcolor{preprocessor}{(}\textcolor{preprocessor}{state}\textcolor{preprocessor}{)} \textcolor{preprocessor}{\{} \textcolor{keywordflow}{do} \textcolor{preprocessor}{\{}\textcolor{keywordflow}{default}\textcolor{preprocessor}{:} \textcolor{keywordflow}{throw} \textcolor{preprocessor}{(}\textcolor{keywordtype}{int}\textcolor{preprocessor}{)}\textcolor{preprocessor}{-\/}314159\textcolor{preprocessor}{;} \textcolor{keywordflow}{case} 0\textcolor{preprocessor}{:}\textcolor{preprocessor}{;} \textcolor{preprocessor}{\}} \textcolor{keywordflow}{while}\textcolor{preprocessor}{(}0\textcolor{preprocessor}{)}}
+\DoxyCodeLine{40     \textcolor{comment}{/**}}
+\DoxyCodeLine{41 \textcolor{comment}{     * Copy retval to value then return.}}
+\DoxyCodeLine{42 \textcolor{comment}{     * Processing resumes with the next statement on next call}}
+\DoxyCodeLine{43 \textcolor{comment}{     */}}
+\DoxyCodeLine{44 \textcolor{preprocessor}{\#}   \textcolor{preprocessor}{define} \textcolor{preprocessor}{YieldReturn}\textcolor{preprocessor}{(}\textcolor{preprocessor}{retvalue}\textcolor{preprocessor}{)} \textcolor{keywordflow}{do} \textcolor{preprocessor}{\{} \textcolor{preprocessor}{value} \textcolor{preprocessor}{=} \textcolor{preprocessor}{(}\textcolor{preprocessor}{retvalue}\textcolor{preprocessor}{)}\textcolor{preprocessor}{;} \textcolor{preprocessor}{state} \textcolor{preprocessor}{=} \textcolor{preprocessor}{\_\_LINE\_\_}\textcolor{preprocessor}{;} \textcolor{keywordflow}{return}\textcolor{preprocessor}{;} \textcolor{keywordflow}{case} \textcolor{preprocessor}{\_\_LINE\_\_}\textcolor{preprocessor}{:}\textcolor{preprocessor}{;} \textcolor{preprocessor}{\}} \textcolor{keywordflow}{while}\textcolor{preprocessor}{(}0\textcolor{preprocessor}{)}}
+\DoxyCodeLine{45     \textcolor{comment}{/**}}
+\DoxyCodeLine{46 \textcolor{comment}{     * Yield Return with the value already set in parameter value}}
+\DoxyCodeLine{47 \textcolor{comment}{     * Processing resumes with the next statement on next call}}
+\DoxyCodeLine{48 \textcolor{comment}{     */}}
+\DoxyCodeLine{49 \textcolor{preprocessor}{\#}   \textcolor{preprocessor}{define} \textcolor{preprocessor}{YieldReturnAnswer}\textcolor{preprocessor}{(}\textcolor{preprocessor}{)} \textcolor{keywordflow}{do} \textcolor{preprocessor}{\{} \textcolor{preprocessor}{state} \textcolor{preprocessor}{=} \textcolor{preprocessor}{\_\_LINE\_\_}\textcolor{preprocessor}{;} \textcolor{keywordflow}{return}\textcolor{preprocessor}{;} \textcolor{keywordflow}{case} \textcolor{preprocessor}{\_\_LINE\_\_}\textcolor{preprocessor}{:}\textcolor{preprocessor}{;} \textcolor{preprocessor}{\}} \textcolor{keywordflow}{while}\textcolor{preprocessor}{(}0\textcolor{preprocessor}{)}}
+\DoxyCodeLine{50 \textcolor{preprocessor}{\#}   \textcolor{preprocessor}{define} \textcolor{preprocessor}{YeildingFinished} \textcolor{keywordflow}{do} \textcolor{preprocessor}{\{} \textcolor{preprocessor}{state} \textcolor{preprocessor}{=} \textcolor{preprocessor}{-\/}1\textcolor{preprocessor}{;} \textcolor{keywordflow}{return}\textcolor{preprocessor}{;} \textcolor{preprocessor}{\}} \textcolor{keywordflow}{while}\textcolor{preprocessor}{(}0\textcolor{preprocessor}{)}}
+\DoxyCodeLine{51 \textcolor{preprocessor}{\#}   \textcolor{preprocessor}{define} \textcolor{preprocessor}{YielderEnd} \textcolor{preprocessor}{\}} \mbox{\hyperlink{yieldingIterator_8hpp_a3dfc1acc57a2722d1c35ba4afa035a81}{YeildingFinished}}\textcolor{preprocessor}{;} \textcolor{preprocessor}{\}}}
+\DoxyCodeLine{52     \textcolor{keyword}{template}<\textcolor{keyword}{typename} T> \textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1yieldingIteratorHelper}{yieldingIteratorHelper}} : \textcolor{keyword}{public} \mbox{\hyperlink{classjclib_1_1CountedPointerTarget}{CountedPointerTarget}} \{}
+\DoxyCodeLine{53         \textcolor{keyword}{public}:}
+\DoxyCodeLine{54             \textcolor{comment}{/**}}
+\DoxyCodeLine{55 \textcolor{comment}{             * Called to advance the iterator to its next state}}
+\DoxyCodeLine{56 \textcolor{comment}{             * @param value that will be returned by * iterator. I/O}}
+\DoxyCodeLine{57 \textcolor{comment}{             * @param state used by helper to determine where it is. Setting}}
+\DoxyCodeLine{58 \textcolor{comment}{             *        state to -\/1 signals end() is true}}
+\DoxyCodeLine{59 \textcolor{comment}{             */}}
+\DoxyCodeLine{60             \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classjclib_1_1yieldingIteratorHelper_a620c17e7eb8ed695e3fb9add01da576d}{next}}( T \& value, \textcolor{keywordtype}{int} \& state ) = 0;}
+\DoxyCodeLine{61             \textcolor{comment}{/**}}
+\DoxyCodeLine{62 \textcolor{comment}{             * Called when iterator is created to set initial state}}
+\DoxyCodeLine{63 \textcolor{comment}{             * Optional: Default action is to call next() with state = 0;}}
+\DoxyCodeLine{64 \textcolor{comment}{             * @param value that will be returned by * iterator. I/O}}
+\DoxyCodeLine{65 \textcolor{comment}{             * @param state used by helper to determine where it is. }}
+\DoxyCodeLine{66 \textcolor{comment}{             * There are two special values:<ul><li>-\/1: End of range encountered</li>}}
+\DoxyCodeLine{67 \textcolor{comment}{             * <li>0 beginning of sequence required. Either the iterator is}}
+\DoxyCodeLine{68 \textcolor{comment}{             * new or has been reset</li></ul>}}
+\DoxyCodeLine{69 \textcolor{comment}{             */}}
+\DoxyCodeLine{70             \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classjclib_1_1yieldingIteratorHelper_ada548ffa73fd843e1d1ebf8e0a78f5c8}{begin}}( T \& value, \textcolor{keywordtype}{int} \& state ) \{}
+\DoxyCodeLine{71                 state = 0;}
+\DoxyCodeLine{72                 \mbox{\hyperlink{classjclib_1_1yieldingIteratorHelper_a620c17e7eb8ed695e3fb9add01da576d}{next}}\mbox{\hyperlink{classjclib_1_1yieldingIteratorHelper_a620c17e7eb8ed695e3fb9add01da576d}{(}} value\mbox{\hyperlink{classjclib_1_1yieldingIteratorHelper_a620c17e7eb8ed695e3fb9add01da576d}{,}} state \mbox{\hyperlink{classjclib_1_1yieldingIteratorHelper_a620c17e7eb8ed695e3fb9add01da576d}{)}};}
+\DoxyCodeLine{73             \}}
+\DoxyCodeLine{74             \textcolor{comment}{/**}}
+\DoxyCodeLine{75 \textcolor{comment}{             * Called when state is set to -\/1 (end) either by the user}}
+\DoxyCodeLine{76 \textcolor{comment}{             * or on return from next()}}
+\DoxyCodeLine{77 \textcolor{comment}{             * @param value that will be returned by * iterator. I/O}}
+\DoxyCodeLine{78 \textcolor{comment}{             */}}
+\DoxyCodeLine{79             \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classjclib_1_1yieldingIteratorHelper_a62f77cf3f5376e5997512907460f2d36}{ending}}( T \& value ) \{}
+\DoxyCodeLine{80             \}}
+\DoxyCodeLine{81             \textcolor{comment}{/**}}
+\DoxyCodeLine{82 \textcolor{comment}{             * Called by the yieldingIterator copy constructor. If }}
+\DoxyCodeLine{83 \textcolor{comment}{             * this object has state stored outside the value and state}}
+\DoxyCodeLine{84 \textcolor{comment}{             * parameters to next(), it should return a new object, otherwise}}
+\DoxyCodeLine{85 \textcolor{comment}{             * it's fine to return ourselves}}
+\DoxyCodeLine{86 \textcolor{comment}{             * @return either ourself or a clone of ourself}}
+\DoxyCodeLine{87 \textcolor{comment}{             */}}
+\DoxyCodeLine{88             \textcolor{keyword}{virtual} \mbox{\hyperlink{classjclib_1_1yieldingIteratorHelper}{yieldingIteratorHelper}}<T> * \mbox{\hyperlink{classjclib_1_1yieldingIteratorHelper_a8f5911d2f94b9ca84b3a737c5d485219}{maybeClone}}() \{ \textcolor{keywordflow}{return} \textcolor{keyword}{this}; \}}
+\DoxyCodeLine{89     \};}
+\DoxyCodeLine{90 }
+\DoxyCodeLine{91     \textcolor{comment}{/**}}
+\DoxyCodeLine{92 \textcolor{comment}{     * This is the user accessible class that uses a helper to provide }}
+\DoxyCodeLine{93 \textcolor{comment}{     * a set of calculated values.}}
+\DoxyCodeLine{94 \textcolor{comment}{     */}}
+\DoxyCodeLine{95     \textcolor{keyword}{template}<\textcolor{keyword}{typename} T> \textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1yieldingIterator}{yieldingIterator}}}
+\DoxyCodeLine{96                          : \textcolor{keyword}{public} std::iterator<std::forward\_iterator\_tag,}
+\DoxyCodeLine{97                                            T,}
+\DoxyCodeLine{98                                            ptrdiff\_t,}
+\DoxyCodeLine{99                                            T*,}
+\DoxyCodeLine{100                                            T\&> \{}
+\DoxyCodeLine{101         \textcolor{keyword}{public}:}
+\DoxyCodeLine{102             \textcolor{keyword}{enum} \{ yiEof = -\/1, yiBegin = 0 \};}
+\DoxyCodeLine{103         \textcolor{keyword}{protected}:}
+\DoxyCodeLine{104             \textcolor{comment}{// don't change the order of these members, }}
+\DoxyCodeLine{105             \textcolor{comment}{// helper\_ must be constructed before state\_}}
+\DoxyCodeLine{106             \mbox{\hyperlink{classjclib_1_1CountedPointer}{CountedPointer}}< \mbox{\hyperlink{classjclib_1_1yieldingIteratorHelper}{yieldingIteratorHelper}}<T> > helper\_;}
+\DoxyCodeLine{107             \textcolor{keywordtype}{int} state\_;}
+\DoxyCodeLine{108             T value\_;}
+\DoxyCodeLine{109         \textcolor{keyword}{public}:}
+\DoxyCodeLine{110             \mbox{\hyperlink{classjclib_1_1yieldingIterator}{yieldingIterator}}<T> operator++(\textcolor{keywordtype}{int} postfix) \{}
+\DoxyCodeLine{111                 \mbox{\hyperlink{classjclib_1_1yieldingIterator}{yieldingIterator}}<T> answer = *\textcolor{keyword}{this};}
+\DoxyCodeLine{112                 helper\_-\/>next(value\_, state\_);}
+\DoxyCodeLine{113                 \textcolor{keywordflow}{return} answer;}
+\DoxyCodeLine{114             \}}
+\DoxyCodeLine{115             \mbox{\hyperlink{classjclib_1_1yieldingIterator}{yieldingIterator}}<T> \& operator++() \{}
+\DoxyCodeLine{116                 helper\_-\/>next(value\_, state\_);}
+\DoxyCodeLine{117                 \textcolor{keywordflow}{if}( state\_ == yiEof)}
+\DoxyCodeLine{118                     helper\_-\/>ending(value\_);}
+\DoxyCodeLine{119                 \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
+\DoxyCodeLine{120             \}}
+\DoxyCodeLine{121             T \& operator*() \textcolor{keyword}{const} \{ \textcolor{keywordflow}{return} \textcolor{keyword}{const\_cast}<T\&>(value\_); \}}
+\DoxyCodeLine{122             T * operator-\/>() \textcolor{keyword}{const} \{ \textcolor{keywordflow}{return} \&\textcolor{keyword}{const\_cast}<T\&>(value\_); \}}
+\DoxyCodeLine{123 }
+\DoxyCodeLine{124             \textcolor{comment}{/**}}
+\DoxyCodeLine{125 \textcolor{comment}{             * Reset the iterator to the beginning of its sequence}}
+\DoxyCodeLine{126 \textcolor{comment}{             * requires the helper to act appropriately to the begin() call}}
+\DoxyCodeLine{127 \textcolor{comment}{             */}}
+\DoxyCodeLine{128             \textcolor{keywordtype}{void} \mbox{\hyperlink{classjclib_1_1yieldingIterator_af6051397c336c96df0a31895b2f125ab}{set\_begin}}() \{}
+\DoxyCodeLine{129                 \textcolor{keywordflow}{if}( helper\_.isset()) \{}
+\DoxyCodeLine{130                     state\_ = yiBegin;}
+\DoxyCodeLine{131                     helper\_-\/>begin(value\_, state\_);}
+\DoxyCodeLine{132                 \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{133                     state\_ = yiEof;}
+\DoxyCodeLine{134                 \}}
+\DoxyCodeLine{135             \}}
+\DoxyCodeLine{136 }
+\DoxyCodeLine{137             \textcolor{comment}{/**}}
+\DoxyCodeLine{138 \textcolor{comment}{             * Checks if the iterator is at the end of its range<br/>}}
+\DoxyCodeLine{139 \textcolor{comment}{             * Quick test for when container.end() isn't accessible.<br/>}}
+\DoxyCodeLine{140 \textcolor{comment}{             * Once end is set, helper\_-\/>next() won't be called until the}}
+\DoxyCodeLine{141 \textcolor{comment}{             * iterator is reset by a call to set\_begin() or an assignment.}}
+\DoxyCodeLine{142 \textcolor{comment}{             * @return boolean}}
+\DoxyCodeLine{143 \textcolor{comment}{             */}}
+\DoxyCodeLine{144             \textcolor{keyword}{inline} \textcolor{keywordtype}{bool} \mbox{\hyperlink{classjclib_1_1yieldingIterator_a2a80f65927659a1e913a9ed318113756}{is\_end}}() \textcolor{keyword}{const} \{ \textcolor{keywordflow}{return} state\_ == yiEof; \}}
+\DoxyCodeLine{145 }
+\DoxyCodeLine{146             \textcolor{comment}{/**}}
+\DoxyCodeLine{147 \textcolor{comment}{             * Sets the internal state to end of sequence<br/>}}
+\DoxyCodeLine{148 \textcolor{comment}{             * Once end is set, helper\_-\/>next() won't be called until the}}
+\DoxyCodeLine{149 \textcolor{comment}{             * iterator is reset by a call to set\_begin() or an assignment.}}
+\DoxyCodeLine{150 \textcolor{comment}{             */}}
+\DoxyCodeLine{151             \textcolor{keywordtype}{void} \mbox{\hyperlink{classjclib_1_1yieldingIterator_ab824de9cf3585fe0e24d4efef9eb78d6}{set\_end}}() \{}
+\DoxyCodeLine{152                 state\_ = yiEof;}
+\DoxyCodeLine{153                 \textcolor{keywordflow}{if}( helper\_.isset())}
+\DoxyCodeLine{154                     helper\_-\/>ending( value\_ );}
+\DoxyCodeLine{155             \}}
+\DoxyCodeLine{156 }
+\DoxyCodeLine{157             \textcolor{keyword}{inline} \textcolor{keywordtype}{bool} operator==( \textcolor{keyword}{const} \mbox{\hyperlink{classjclib_1_1yieldingIterator}{yieldingIterator}} \& rhs ) \textcolor{keyword}{const} \{}
+\DoxyCodeLine{158                 \textcolor{keywordflow}{return} state\_ == rhs.state\_ \&\&}
+\DoxyCodeLine{159                       (state\_ < 1 || value\_ == rhs.value\_);}
+\DoxyCodeLine{160             \}}
+\DoxyCodeLine{161 }
+\DoxyCodeLine{162             \textcolor{keyword}{inline} \textcolor{keywordtype}{bool} operator!=( \textcolor{keyword}{const} \mbox{\hyperlink{classjclib_1_1yieldingIterator}{yieldingIterator}} \& rhs ) \textcolor{keyword}{const} \{}
+\DoxyCodeLine{163                 \textcolor{keywordflow}{return} ! ( * \textcolor{keyword}{this} == rhs );}
+\DoxyCodeLine{164             \}}
+\DoxyCodeLine{165 }
+\DoxyCodeLine{166             \textcolor{comment}{/** Variadic constructor relies on the helper being able to }}
+\DoxyCodeLine{167 \textcolor{comment}{             * accept const \& arguments in all positions. If this ever turns}}
+\DoxyCodeLine{168 \textcolor{comment}{             * out to be not so we may need to subclass or even split this class}}
+\DoxyCodeLine{169 \textcolor{comment}{             * }}
+\DoxyCodeLine{170 \textcolor{comment}{             * @param helper }}
+\DoxyCodeLine{171 \textcolor{comment}{             * @param args for the constructor of type T}}
+\DoxyCodeLine{172 \textcolor{comment}{             */}}
+\DoxyCodeLine{173             \textcolor{keyword}{template}< \textcolor{keyword}{typename} ... Types >}
+\DoxyCodeLine{174                 \mbox{\hyperlink{classjclib_1_1yieldingIterator_a0dbcbd34a94bcce3144d2318fd7d8c09}{yieldingIterator}}( \textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1yieldingIteratorHelper}{yieldingIteratorHelper}}<T> * helper,}
+\DoxyCodeLine{175                                   \textcolor{keyword}{const} Types\&...args )}
+\DoxyCodeLine{176                 : helper\_( helper )}
+\DoxyCodeLine{177                 , state\_( yiBegin)}
+\DoxyCodeLine{178                 , value\_(args...)}
+\DoxyCodeLine{179                 \{}
+\DoxyCodeLine{180                     \textcolor{keywordflow}{if}( helper\_.isset() ) \{}
+\DoxyCodeLine{181                         helper\_-\/>begin( value\_, state\_);}
+\DoxyCodeLine{182                     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{183                         state\_ = yiEof;}
+\DoxyCodeLine{184                         \textcolor{comment}{// No helper so can't call ending())}}
+\DoxyCodeLine{185                     \}}
+\DoxyCodeLine{186                 \}}
+\DoxyCodeLine{187 }
+\DoxyCodeLine{188             \textcolor{comment}{/**}}
+\DoxyCodeLine{189 \textcolor{comment}{             * Constructor to satisfy the default constructable requirement }}
+\DoxyCodeLine{190 \textcolor{comment}{             * for iterators.}}
+\DoxyCodeLine{191 \textcolor{comment}{             */}}
+\DoxyCodeLine{192             \mbox{\hyperlink{classjclib_1_1yieldingIterator_a2dc7307fa736746412ad507c2acbd963}{yieldingIterator}}( )}
+\DoxyCodeLine{193             : helper\_(  \textcolor{keywordtype}{nullptr} )}
+\DoxyCodeLine{194             , state\_( yiEof )}
+\DoxyCodeLine{195             , value\_( )}
+\DoxyCodeLine{196             \{}
+\DoxyCodeLine{197             \}}
+\DoxyCodeLine{198 }
+\DoxyCodeLine{199             \textcolor{comment}{/**}}
+\DoxyCodeLine{200 \textcolor{comment}{             * Copy constructor. NB: If the source iterator has ended, the}}
+\DoxyCodeLine{201 \textcolor{comment}{             * ending() method will be called. This means it is possible for}}
+\DoxyCodeLine{202 \textcolor{comment}{             * an iterator that never had a begin() to end().}}
+\DoxyCodeLine{203 \textcolor{comment}{             * @param old cource of copy.}}
+\DoxyCodeLine{204 \textcolor{comment}{             */}}
+\DoxyCodeLine{205             \mbox{\hyperlink{classjclib_1_1yieldingIterator_a8aaf76517fb120bca9cae336eff64458}{yieldingIterator}}( \textcolor{keyword}{const} \mbox{\hyperlink{classjclib_1_1yieldingIterator}{yieldingIterator}}<T> \& old )}
+\DoxyCodeLine{206             : helper\_( old.helper\_.isnull() ? \textcolor{keywordtype}{nullptr} : old.helper\_-\/>maybeClone() )}
+\DoxyCodeLine{207             , state\_( old.helper\_.isnull() ? yiEof : old.state\_ )}
+\DoxyCodeLine{208             , value\_( old.value\_)}
+\DoxyCodeLine{209             \{}
+\DoxyCodeLine{210                 \textcolor{keywordflow}{if}( helper\_.isset() \&\& state\_ == yiEof )}
+\DoxyCodeLine{211                     helper\_-\/>ending(value\_);}
+\DoxyCodeLine{212             \}}
+\DoxyCodeLine{213 }
+\DoxyCodeLine{214             \textcolor{comment}{/**}}
+\DoxyCodeLine{215 \textcolor{comment}{             * Assignment operator. NB: If the source iterator has ended, the}}
+\DoxyCodeLine{216 \textcolor{comment}{             * ending() method will be called. This means it is possible for}}
+\DoxyCodeLine{217 \textcolor{comment}{             * an iterator that never had a begin() to end().}}
+\DoxyCodeLine{218 \textcolor{comment}{             * @param old cource of copy.}}
+\DoxyCodeLine{219 \textcolor{comment}{             */}}
+\DoxyCodeLine{220             \mbox{\hyperlink{classjclib_1_1yieldingIterator}{yieldingIterator}}<T> \& \mbox{\hyperlink{classjclib_1_1yieldingIterator_a6c5013cbb0700beacee6a3bd63dd4a1a}{operator}}=( \textcolor{keyword}{const} \mbox{\hyperlink{classjclib_1_1yieldingIterator}{yieldingIterator}}<T> \& old ) \{}
+\DoxyCodeLine{221                 helper\_ = old.helper\_.isnull() ? \textcolor{keywordtype}{nullptr} : old.helper\_-\/>maybeClone();}
+\DoxyCodeLine{222                 state\_ = old.helper\_.isnull() ? yiEof : old.state\_;}
+\DoxyCodeLine{223                 value\_ = old.value\_;}
+\DoxyCodeLine{224                 \textcolor{keywordflow}{if}( helper\_.isset() \&\& state\_ == yiEof )}
+\DoxyCodeLine{225                     helper\_-\/>ending(value\_);}
+\DoxyCodeLine{226                 \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
+\DoxyCodeLine{227             \}}
+\DoxyCodeLine{228     \};}
+\DoxyCodeLine{229 }
+\DoxyCodeLine{230     \textcolor{comment}{/**}}
+\DoxyCodeLine{231 \textcolor{comment}{     * Emulates a container object providing begin \& end iterators}}
+\DoxyCodeLine{232 \textcolor{comment}{     * suitable for feeding to for( var : container )}}
+\DoxyCodeLine{233 \textcolor{comment}{     */}}
+\DoxyCodeLine{234     \textcolor{keyword}{template}<\textcolor{keyword}{typename} T> \textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1yieldingContainer}{yieldingContainer}} \{}
+\DoxyCodeLine{235         \textcolor{keyword}{public}:}
+\DoxyCodeLine{236             \mbox{\hyperlink{classjclib_1_1CountedPointer}{CountedPointer}}< \mbox{\hyperlink{classjclib_1_1yieldingIteratorHelper}{yieldingIteratorHelper}}< T > > helper\_;}
+\DoxyCodeLine{237             \textcolor{keyword}{typedef} \textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1yieldingIterator}{yieldingIterator}}<T> iterator\_T;}
+\DoxyCodeLine{238         \textcolor{keyword}{public}:}
+\DoxyCodeLine{239             \textcolor{comment}{/**}}
+\DoxyCodeLine{240 \textcolor{comment}{             * instantiate and return an iterator set to the start of the range}}
+\DoxyCodeLine{241 \textcolor{comment}{             * @return the iterator}}
+\DoxyCodeLine{242 \textcolor{comment}{             */}}
+\DoxyCodeLine{243             iterator\_T \mbox{\hyperlink{classjclib_1_1yieldingContainer_a9cdbb83859db191572b78264821c5d3b}{begin}}() \{}
+\DoxyCodeLine{244                 iterator\_T answer( helper\_.isnull() ? \textcolor{keywordtype}{nullptr} : helper\_-\/>maybeClone() );}
+\DoxyCodeLine{245                 answer.set\_begin();}
+\DoxyCodeLine{246                 \textcolor{keywordflow}{return} answer;}
+\DoxyCodeLine{247             \}}
+\DoxyCodeLine{248             \textcolor{comment}{/**}}
+\DoxyCodeLine{249 \textcolor{comment}{             * return an iterator set to the end of the range. Only one iterator}}
+\DoxyCodeLine{250 \textcolor{comment}{             * per class is actually created}}
+\DoxyCodeLine{251 \textcolor{comment}{             * @return the iterator}}
+\DoxyCodeLine{252 \textcolor{comment}{             */}}
+\DoxyCodeLine{253             iterator\_T \textcolor{keyword}{const} \& \mbox{\hyperlink{classjclib_1_1yieldingContainer_a64c65b30280f9ff9a7a1f46c237d332b}{end}}() \{}
+\DoxyCodeLine{254                 \textcolor{comment}{// Being able to use a static end\_ relies on the }}
+\DoxyCodeLine{255                 \textcolor{comment}{// == operator considering only state\_ when it is yiEof.}}
+\DoxyCodeLine{256                 \textcolor{keyword}{static} iterator\_T end\_(\textcolor{keywordtype}{nullptr});}
+\DoxyCodeLine{257                 \textcolor{keywordflow}{return} end\_;}
+\DoxyCodeLine{258             \}}
+\DoxyCodeLine{259             \textcolor{comment}{/**}}
+\DoxyCodeLine{260 \textcolor{comment}{             * Constructor<br/>}}
+\DoxyCodeLine{261 \textcolor{comment}{             * I have deliberately not created a default constructor.<br/>}}
+\DoxyCodeLine{262 \textcolor{comment}{             * Given that instances can be constructed with a nullptr (and a}}
+\DoxyCodeLine{263 \textcolor{comment}{             * test exercises that) there is no functional reason for not}}
+\DoxyCodeLine{264 \textcolor{comment}{             * having one, I simply can't see a purpose for it. JC Oct 2017}}
+\DoxyCodeLine{265 \textcolor{comment}{             * @param helper. If a nullptr, an assignment must be made before}}
+\DoxyCodeLine{266 \textcolor{comment}{             * calling begin() or bad things will happen}}
+\DoxyCodeLine{267 \textcolor{comment}{             */}}
+\DoxyCodeLine{268             \mbox{\hyperlink{classjclib_1_1yieldingContainer_a2be1354629759fbe753a23361ddff48b}{yieldingContainer}} ( \mbox{\hyperlink{classjclib_1_1yieldingIteratorHelper}{yieldingIteratorHelper}}< T > * helper )}
+\DoxyCodeLine{269             : helper\_( helper )}
+\DoxyCodeLine{270             \{}
+\DoxyCodeLine{271             \}}
+\DoxyCodeLine{272 }
+\DoxyCodeLine{273 }
+\DoxyCodeLine{274             \textcolor{comment}{/**}}
+\DoxyCodeLine{275 \textcolor{comment}{             * Copy constructor.}}
+\DoxyCodeLine{276 \textcolor{comment}{             * @param source object}}
+\DoxyCodeLine{277 \textcolor{comment}{             */}}
+\DoxyCodeLine{278             \mbox{\hyperlink{classjclib_1_1yieldingContainer_a63e99537ac3eda23b731bcca7c4ec7a7}{yieldingContainer}} ( \textcolor{keyword}{const} \mbox{\hyperlink{classjclib_1_1yieldingContainer}{yieldingContainer}}< T > \& old )}
+\DoxyCodeLine{279              \textcolor{comment}{// I'm not sure if a maybeClone is required I believe not as it}}
+\DoxyCodeLine{280              \textcolor{comment}{// should happen for every iterator created through begin() }}
+\DoxyCodeLine{281             : helper\_( old.helper\_ )}
+\DoxyCodeLine{282             \{\}}
+\DoxyCodeLine{283 }
+\DoxyCodeLine{284             \textcolor{keyword}{virtual} \string~yieldingContainer() \{}
+\DoxyCodeLine{285             \}}
+\DoxyCodeLine{286 }
+\DoxyCodeLine{287             \textcolor{comment}{/**}}
+\DoxyCodeLine{288 \textcolor{comment}{             * Assignment.}}
+\DoxyCodeLine{289 \textcolor{comment}{             * @param source object}}
+\DoxyCodeLine{290 \textcolor{comment}{             */}}
+\DoxyCodeLine{291             \mbox{\hyperlink{classjclib_1_1yieldingContainer}{yieldingContainer}}<T> \& \mbox{\hyperlink{classjclib_1_1yieldingContainer_aa4fb2046e3c969038fb5a1797af6fbd0}{operator}} = ( \textcolor{keyword}{const} \mbox{\hyperlink{classjclib_1_1yieldingContainer}{yieldingContainer}}< T > \& old ) \{}
+\DoxyCodeLine{292              \textcolor{comment}{// see note on maybeClone in the copy constructor}}
+\DoxyCodeLine{293                 helper\_ = old.helper\_;}
+\DoxyCodeLine{294                 \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
+\DoxyCodeLine{295             \}}
+\DoxyCodeLine{296     \};}
+\DoxyCodeLine{297 \}}
+\DoxyCodeLine{298 }
+\DoxyCodeLine{299 }
+\DoxyCodeLine{300 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{endif} \textcolor{comment}{/* YIELDINGITERATOR\_HPP */}}
 
 \end{DoxyCode}
