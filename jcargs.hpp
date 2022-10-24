@@ -26,6 +26,7 @@ SOFTWARE.
  * Created 22-24 October 2022
  */
 #ifndef JCARGS_HPP
+#define JCARGS_HPP
 #include "countedPointer.hpp"
 #include "jString.hpp"
 #include <iostream>
