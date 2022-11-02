@@ -32,6 +32,7 @@ SOFTWARE.
 #define jString_HPP
 #include <limits>
 #include <cstring>
+#include <string_view>
 #include <ostream>
 #include <vector>
 #include "countedPointer.hpp"
@@ -117,17 +118,27 @@ namespace jclib {
         /***
          * The user interface to the strings
         */
-        private:
+        public:
+            /** return an empty string.
+             *  We use so many it makes sense to pre-create one
+            */
             static jString get_empty() {
                 static jString empty_base("");
                 return empty_base;
             } 
-        public:
+
             const char * data() const { return get()->m_data;}
+            
+            operator const char *() const { return (*this)->m_data;};
+
+            size_t len() const { return get()->len();}
+
             friend std::ostream& operator<<(std::ostream& os, const class jString & string);
+            
             bool isvalid() const {
                 return isset();
             }
+            
             // create from an existing base
             // shouldn't really happen, but who knows
             // what changes will occur in the future or
@@ -153,6 +164,17 @@ namespace jclib {
             jString( const char * start, const char * end ):
                 CountedPointer<jStringBase>(jStringBase::create(start, end-start))
                 {}
+#ifdef __cpp_lib_string_view
+            // Create from std::string_view
+            // NB: Same as previous, really
+            jString( const std::string_view & view ):
+                CountedPointer<jStringBase>(jStringBase::create(view.begin(), view.length()))
+                {}
+            // Cast to std::string_view
+            operator std::string_view () const {
+               return std::string_view( data(), len() );
+            }
+#endif
             // string concatenation
             jString operator + (const jString &rhs) {
                 jStringBase * lhs_base = get();
@@ -233,6 +255,16 @@ namespace jclib {
                 }
                 return answer;
             }
+            /** Return position of first occurrence of findee */
+            int find( jString findee ) {
+                auto buffer = data();
+                auto findee_chars = findee.data();
+                auto position = strstr( buffer, findee_chars );
+                if( position == nullptr )
+                    return -1;
+                return position - buffer;
+
+            }
             bool operator < (const jString &rhs) const {
                 return strcmp(get()->m_data, rhs->m_data) < 0;
             }
@@ -251,9 +283,6 @@ namespace jclib {
             bool operator != (const jString &rhs) const {
                 return strcmp(get()->m_data, rhs->m_data) != 0;
             }
-            size_t len() const { return get()->len();}
-            
-            operator const char *() const { return (*this)->m_data;};
     };
 
 

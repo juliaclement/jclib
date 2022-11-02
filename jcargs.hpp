@@ -29,6 +29,7 @@ SOFTWARE.
 #define JCARGS_HPP
 #include "countedPointer.hpp"
 #include "jString.hpp"
+#include <algorithm>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -160,10 +161,17 @@ namespace jclib {
             std::ostream & error_log_;
             std::vector< jString > positional_args_;
             // jString end_keywords_ = "--";
+            std::vector<CountedPointer< arg_base > > all_options_;
             std::map<jString, CountedPointer< arg_base > > short_names_;
             std::map<jString, CountedPointer< arg_base > > long_names_;
+            jclib::jString help_prefix_ = jclib::jString::get_empty();
+            jclib::jString help_suffix_ = jclib::jString::get_empty();
+            jclib::jString version_string_ = jclib::jString::get_empty();
             int errors_ = 0;
+            bool show_help_ = false;
+            bool show_version_ = false;
             void insert(CountedPointer<arg_base> input) {
+                all_options_.push_back( input );
                 if( input->short_name_.len()==1) {
                     if( short_names_.find(input->short_name_) != short_names_.end() ) {
                         error_log_ << "Internal error: \"" << input->short_name_ << "\" duplicated\n";
@@ -208,7 +216,7 @@ namespace jclib {
                         jString kw=argarray[0];
                         jString val=argarray[1];
                         if( ! val.isvalid())
-                            val = "";
+                            val = jString::get_empty();
                         auto found = long_names_.find(kw);
                         if( found == long_names_.end()) {
                             error_log_<< "Unknown argument " << argstr << "\n";
@@ -230,9 +238,10 @@ namespace jclib {
                             } else {
                                 if( val.len() == 0 )
                                     arg.is_set_ = arg.set();
-                                else
+                                else {
                                     error_log_ << arg.long_name_ << " does not accept options\n";
                                     errors_++;
+                                 }
                             }
                         }
                     } else {
@@ -271,27 +280,52 @@ namespace jclib {
                     this->positional_args_.push_back(argv[argnum]);
                 }
                 // Finally, scan arguments to make sure required ones are set
-                // Step 1 gather up the unset single letter names, skipping
-                // long names to make sure we don't report them twice
                 
-                for( auto k : short_names_) {
-                    if(  k.second->required_ &&  ! k.second->is_set_ &&
-                         k.second->long_name_.len() == 0 ) {
-                        error_log_ << "Required option \"-" << k.second->short_name_ << "\" missing\n";
-                        errors_++;
+                if( ! (show_version_ || show_help_ ) )
+                {
+                    for( auto k : all_options_) {
+                        if(  k->required_ &&  ! k->is_set_) {
+                            errors_++;
+                            error_log_ << "Required option \"";
+                            if( k->short_name_.len() > 0 && k->long_name_.len() > 0 )
+                                error_log_ << "--" << k->long_name_ << "\" (\"-" << k->short_name_ << "\")";
+                            else if (k->short_name_.len() > 0)
+                                error_log_ << "-" << k->short_name_ << "\"";
+                            else
+                                error_log_ << "--" << k->long_name_ << "\"";
+                            if( k->desc_.len() > 0 )
+                                error_log_ << " (" << k->desc_ << ")";
+                            error_log_ << " missing\n";
+                            errors_++;
+                        }
                     }
                 }
-                // Step 2. Scan the unused long names
-                for ( auto k : long_names_ ) {
-                    if(  k.second->required_ &&  ! k.second->is_set_ ){
-                        error_log_ << "Required option \"--" << k.second->long_name_ << "\" ";
-                        if( k.second->short_name_.len() > 0 )
-                            error_log_ << "(\"-"<<k.second->short_name_<<"\") ";
-                        error_log_ << "missing\n";
-                        errors_++;
-                    }
+                // If version has been requested & we are set-up to provide it.
+                if( show_version_ ) {
+                    error_log_ << version_string_ << "\n";;
                 }
-                return errors_ == 0;
+                // If help has been requested or a parameter error is detected & we are set-up to provide it.
+                if( show_help_ || ( errors_ != 0 && help_prefix_.len()>0 ) ) {
+                    error_log_ << help_prefix_ << "\n";
+                    // find longest long option name
+                    size_t longest = 1;
+                    for( auto k : all_options_) {
+                        longest=std::max<size_t>( longest, k->long_name_.len() );
+                    }
+                    // now print the lines
+                    longest ++;
+                    for( auto k : all_options_) {
+                        if( k->short_name_.len() > 0 )
+                            error_log_ << "  -" << k->short_name_ << " ";
+                        else
+                            error_log_<< "     ";
+                        error_log_ << (k->long_name_.len()==0 ? "  " : "--")
+                                   << k->long_name_.pad(longest)
+                                   << k->desc_ << "\n";
+                    }
+                    error_log_ << help_suffix_ << "\n";
+                }
+                return errors_ == 0 && !(show_version_ || show_help_);
             }
 
             arguments(std::ostream & error_log=std::cerr)

@@ -46,6 +46,7 @@ namespace jStringTestClassNS {
         jString e = a.substr(5,2);
         jString  f = e.substr(5,2);
         jString  g=a.right(6);
+        jString  h=a.left(4);
     } struct_data;
 };
 using namespace jStringTestClassNS;
@@ -72,9 +73,10 @@ private:
         CPPUNIT_ASSERT( sd.b == jString("This is a string") );
         CPPUNIT_ASSERT( sd.c == jString("xxx"));
         CPPUNIT_ASSERT( sd.d == jString("This is a stringxxx")); // b+c
-        CPPUNIT_ASSERT( sd.e == jString("is"));
-        CPPUNIT_ASSERT( sd.f == jString(""));
-        CPPUNIT_ASSERT( sd.g == jString("string"));
+        CPPUNIT_ASSERT( sd.e == jString("is")); // from substr
+        CPPUNIT_ASSERT( sd.f == jString("")); // from substr
+        CPPUNIT_ASSERT( sd.g == jString("string")); // from right()
+        CPPUNIT_ASSERT( sd.h == jString("This")); // from left()
     }
     void testAssign(){
         jString a2(sd.g);
@@ -104,8 +106,26 @@ private:
         CPPUNIT_ASSERT(sd.d>=sd.a);
         CPPUNIT_ASSERT(sd.a>=sd.b);
     }
+    void testFindFound(){
+        // "This is a string" contains "is" at position 2
+        CPPUNIT_ASSERT(sd.b.find(sd.e) == 2 );
+    }
+    void testFindNotFound(){
+        // "This is a string" does not contain "xxx"
+        CPPUNIT_ASSERT(sd.b.find(sd.c) == -1 );
+    }
     void testNoEqualCompare(){
         CPPUNIT_ASSERT(sd.d!=sd.a);
+    }
+    void teststring_view(){
+#ifdef __cpp_lib_string_view
+        std::string_view sv( sd.d );
+        jString svs( sv );
+        CPPUNIT_ASSERT(sd.d==svs);
+#else
+        CPPUNIT_FAIL("std::string_view not implemented, check compiler options.\n"
+                     "    If using clang, try clang++");
+#endif
     }
     
     CPPUNIT_TEST_SUITE(jStringTestClass);
@@ -118,6 +138,9 @@ private:
         CPPUNIT_TEST(testGreaterCompare);
         CPPUNIT_TEST(testGreaterEqualCompare);
         CPPUNIT_TEST(testNoEqualCompare);
+        CPPUNIT_TEST(testFindFound);
+        CPPUNIT_TEST(testFindNotFound);
+        CPPUNIT_TEST(teststring_view);
     CPPUNIT_TEST_SUITE_END();
 
 
