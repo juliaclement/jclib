@@ -114,7 +114,13 @@ private:
         // "This is a string" does not contain "xxx"
         CPPUNIT_ASSERT(sd.b.find(sd.c) == -1 );
     }
-    void testNoEqualCompare(){
+    void testJoin(){
+        jString a=", ";
+        const char * words[] = {"One", "Two", "Three"};
+        jString b=a.join(words);
+        CPPUNIT_ASSERT(b==jString("One, Two, Three"));
+    }
+    void testNoEqualCompare(){ 
         CPPUNIT_ASSERT(sd.d!=sd.a);
     }
     void teststring_view(){
@@ -138,6 +144,7 @@ private:
         CPPUNIT_TEST(testGreaterCompare);
         CPPUNIT_TEST(testGreaterEqualCompare);
         CPPUNIT_TEST(testNoEqualCompare);
+        CPPUNIT_TEST(testJoin);
         CPPUNIT_TEST(testFindFound);
         CPPUNIT_TEST(testFindNotFound);
         CPPUNIT_TEST(teststring_view);

@@ -44,7 +44,7 @@ namespace jclib {
      * itself being little more than a slightly smart pointer.
      * 
      * Primarily created to satisfy a need I have for
-     * dynamic invariant strings in a re2cc/lemon based project
+     * dynamic invariant strings in a re2c/lemon based project
      * which will be passing a ridiculous number of strings around.
     */
 
@@ -73,13 +73,14 @@ namespace jclib {
             jStringBase( const char * data, std::size_t len )
             : counter_(0)
 #ifdef SAFE_JSTRING
-            , m_data( new char[len+1])
+            , data_( new char[len+1])
 #endif
-            , m_len( len )
+            , len_( len )
             {
-                strncpy(m_data, data, len);
-                m_data[len] = '\0';
+                strncpy(data_, data, len);
+                data_[len] = '\0';
             }
+            /** create a jStringBase with data */
             static jStringBase * create(const char * data, std::size_t len) {
 #ifdef SAFE_JSTRING
                 // Double create on heap
@@ -90,15 +91,26 @@ namespace jclib {
                 return new_object;
 #endif
             }
+            /** create an empty jStringBase */
+            static jStringBase * create(std::size_t len) {
+#ifdef SAFE_JSTRING
+                // Double create on heap
+                return new jStringBase(data, len);
+#else
+                void * new_store = new unsigned char[len + sizeof(jStringBase)];
+                jStringBase * new_object= new (new_store) jStringBase("", len);
+                return new_object;
+#endif
+            }
 #ifdef SAFE_JSTRING
             virtual ~jStringBase() {
-                delete m_data;
+                delete data_;
             }
 #endif
-            std::size_t m_len;
+            std::size_t len_;
 #ifdef SAFE_JSTRING
             // Not the most efficient, but portable.
-            char * m_data;
+            char * data_;
 #else
             // **** This MUST be the last data member in the struct as
             // we deliberately overrun the declared length of the array.
@@ -107,11 +119,11 @@ namespace jclib {
             // are laid out in declaration order, but every compiler I
             // know works that way. 
             // If you get strange crashes, try defining SAFE_JSTRING
-            char m_data[1];
+            char data_[1];
 #endif
         public:
-            operator const char *() const { return m_data;};
-            auto len() const { return m_len;}
+            operator const char *() const { return data_;};
+            auto len() const { return len_;}
     };
 
     class jString: /* private */ CountedPointer<jStringBase> {
@@ -127,9 +139,9 @@ namespace jclib {
                 return empty_base;
             } 
 
-            const char * data() const { return get()->m_data;}
+            const char * data() const { return get()->data_;}
             
-            operator const char *() const { return (*this)->m_data;};
+            operator const char *() const { return (*this)->data_;};
 
             size_t len() const { return get()->len();}
 
@@ -178,14 +190,14 @@ namespace jclib {
             // string concatenation
             jString operator + (const jString &rhs) {
                 jStringBase * lhs_base = get();
-                if( lhs_base->m_len == 0 )
+                if( lhs_base->len_ == 0 )
                     return rhs;
                 if( rhs.len() == 0 )
                     return *this;
-                auto len = lhs_base->m_len + rhs->m_len;
-                jStringBase * new_base = jStringBase::create(lhs_base->m_data,len );
-                strncpy(new_base->m_data + lhs_base->m_len,rhs->m_data, rhs->m_len );
-                new_base->m_data[len]='\0';
+                auto len = lhs_base->len_ + rhs->len_;
+                jStringBase * new_base = jStringBase::create(lhs_base->data_,len );
+                strncpy(new_base->data_ + lhs_base->len_,rhs->data_, rhs->len_ );
+                new_base->data_[len]='\0';
                 return new_base;
             }
             // extract substrings (left, right, any) with
@@ -196,45 +208,49 @@ namespace jclib {
             // whole new string. This saves creating a new 
             // jStringBase.
             jString left(std::size_t len) const {
-                auto ilen=std::min(len,get()->m_len);
-                if(ilen == get()->m_len)
+                auto ilen=std::min(len,get()->len_);
+                if(ilen == get()->len_)
                     return *this;
-                return jStringBase::create(get()->m_data, ilen );
+                return jStringBase::create(get()->data_, ilen );
             }
             jString right(std::size_t len) const {
-                auto ilen=std::min(len,get()->m_len);
-                if(ilen == get()->m_len)
+                auto ilen=std::min(len,get()->len_);
+                if(ilen == get()->len_)
                     return *this;
-                auto start=get()->m_len-ilen;
-                return jStringBase::create(get()->m_data+start, ilen );
+                auto start=get()->len_-ilen;
+                return jStringBase::create(get()->data_+start, ilen );
             }
             jString substr(std::size_t start, std::size_t len) const {
-                if( start >= get()->m_len ){
+                if( start >= get()->len_ ){
                     return get_empty();
                 }
-                auto ilen=std::min(get()->m_len-start, len);
-                if(ilen == get()->m_len)
+                auto ilen=std::min(get()->len_-start, len);
+                if(ilen == get()->len_)
                     return *this;
-                return jStringBase::create(get()->m_data+start,ilen);
+                return jStringBase::create(get()->data_+start,ilen);
             }
 
             jString pad(std::size_t length, char pad_char = ' ' ) const {
                 if( length <= len())
                     return *this;
                 
-                jStringBase * new_stringBase = jStringBase::create(get()->m_data, length );
+                jStringBase * new_stringBase = jStringBase::create(get()->data_, length );
                 
-                char * pad_ptr = new_stringBase->m_data + len();
-                for( ; pad_ptr < new_stringBase->m_data + length; ++ pad_ptr ) {
+                char * pad_ptr = new_stringBase->data_ + len();
+                for( ; pad_ptr < new_stringBase->data_ + length; ++ pad_ptr ) {
                     *pad_ptr = pad_char;
                 }
                 *pad_ptr = '\0';
                 return new_stringBase;
             }
             
+            /*** Split string on delim, retuirning answers as an array of strings,
+             *   once max_splits copies of the delimiter have been found, the 
+             * remainder if any is a single string at the end of the array.
+            */
             std::vector<jString> split(const char * delim, int max_splits=std::numeric_limits<int>::max() ) const {
                 std::vector<jString> answer;
-                const char * buffer = get()->m_data;
+                const char * buffer = get()->data_;
                 const char * buffer_end = buffer+len();
                 const int step = strlen(delim);
                 auto position = strstr( buffer, delim );
@@ -255,6 +271,7 @@ namespace jclib {
                 }
                 return answer;
             }
+
             /** Return position of first occurrence of findee */
             int find( jString findee ) {
                 auto buffer = data();
@@ -263,25 +280,55 @@ namespace jclib {
                 if( position == nullptr )
                     return -1;
                 return position - buffer;
-
             }
+
+            /** Join elements in an iterable into a new string
+             *  with the elements separated by our value.
+             *  Elements must be valid for jString constructors.
+             *  Based on Python's str.join() method
+             */
+            template<class T> jString join( const T & input ) {
+                size_t total_length = 0;
+                std::vector<jString> strings; // No guarantee that input can be parsed twice
+                for( jString bit : input ) {
+                    strings.push_back( bit );
+                    total_length += bit.len() + len();
+                }
+                total_length = total_length + 1 - len();
+                jStringBase * answer = jStringBase::create(total_length);
+                char * out = const_cast<char *>(answer->data_);
+                bool first = true;
+                for( jString bit : strings ) {
+                    if( first )
+                        first = false;
+                    else {
+                        memmove(out, data(), len());
+                        out+=len();
+                    }
+                    memmove(out, bit.data(), bit.len());
+                    out+=bit.len();
+                }
+                *out='\0';
+                return answer;
+            }
+
             bool operator < (const jString &rhs) const {
-                return strcmp(get()->m_data, rhs->m_data) < 0;
+                return strcmp(get()->data_, rhs->data_) < 0;
             }
             bool operator <= (const jString &rhs) const {
-                return strcmp(get()->m_data, rhs->m_data) <= 0;
+                return strcmp(get()->data_, rhs->data_) <= 0;
             }
             bool operator > (const jString &rhs) const {
-                return strcmp(get()->m_data, rhs->m_data) > 0;
+                return strcmp(get()->data_, rhs->data_) > 0;
             }
             bool operator >= (const jString &rhs) const {
-                return strcmp(get()->m_data, rhs->m_data) >= 0;
+                return strcmp(get()->data_, rhs->data_) >= 0;
             }
             bool operator == (const jString &rhs) const {
-                return strcmp(get()->m_data, rhs->m_data) == 0;
+                return strcmp(get()->data_, rhs->data_) == 0;
             }
             bool operator != (const jString &rhs) const {
-                return strcmp(get()->m_data, rhs->m_data) != 0;
+                return strcmp(get()->data_, rhs->data_) != 0;
             }
     };
 
