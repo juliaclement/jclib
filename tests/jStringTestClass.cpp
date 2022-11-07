@@ -91,6 +91,10 @@ private:
     void testEqualityCompare(){
         CPPUNIT_ASSERT(sd.a==sd.b);
     }
+    // Check comparison operators
+    void testEqualityCompareAgainstCString(){
+        CPPUNIT_ASSERT(sd.c=="xxx");
+    }
     void testLessCompare(){
         CPPUNIT_ASSERT(sd.d<sd.c);
     }
@@ -141,6 +145,7 @@ private:
         CPPUNIT_TEST(testEqualityCompare);
         CPPUNIT_TEST(testLessCompare);
         CPPUNIT_TEST(testLessEqualCompare);
+        CPPUNIT_TEST(testEqualityCompareAgainstCString);
         CPPUNIT_TEST(testGreaterCompare);
         CPPUNIT_TEST(testGreaterEqualCompare);
         CPPUNIT_TEST(testNoEqualCompare);

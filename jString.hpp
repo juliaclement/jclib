@@ -48,88 +48,93 @@ namespace jclib {
      * which will be passing a ridiculous number of strings around.
     */
 
-    // If you get strange crashes, enable this #define
-    // To double the number of heap allocations / frees
-    // but do it safely
-    //#define SAFE_JSTRING 1
+    class jString;
+    namespace Private {
+        // If you get strange crashes, enable this #define
+        // It doubles the number of heap allocations / frees
+        // but does it safely
+        //#define SAFE_JSTRING 1
 
-    struct jStringBase {
-        /**
-         * A class to store the string data.
-        */
-        private:
-            friend class jString;
-            friend class CountedPointer<jStringBase>; // = jString's parent class;
-            friend std::ostream& operator<<(std::ostream& os, const class jString & string);
-            // no copy constructor
-            jStringBase( const jStringBase & ) = delete;
-            // suppress assignment into the string
-            jStringBase& operator = (const jStringBase&) = delete;
-            // Implement the requirements for CountedPointer
-            int counter_;
-            inline void CountedPointerAttach() { ++counter_; }
-            inline void CountedPointerDetach() { if( !--counter_) delete this;}
-            // ctor private so only jString can access it
-            jStringBase( const char * data, std::size_t len )
-            : counter_(0)
-#ifdef SAFE_JSTRING
-            , data_( new char[len+1])
-#endif
-            , len_( len )
-            {
-                strncpy(data_, data, len);
-                data_[len] = '\0';
-            }
-            /** create a jStringBase with data */
-            static jStringBase * create(const char * data, std::size_t len) {
-#ifdef SAFE_JSTRING
-                // Double create on heap
-                return new jStringBase(data, len);
-#else
-                void * new_store = new unsigned char[len + sizeof(jStringBase)];
-                jStringBase * new_object= new (new_store) jStringBase(data, len);
-                return new_object;
-#endif
-            }
-            /** create an empty jStringBase */
-            static jStringBase * create(std::size_t len) {
-#ifdef SAFE_JSTRING
-                // Double create on heap
-                return new jStringBase(data, len);
-#else
-                void * new_store = new unsigned char[len + sizeof(jStringBase)];
-                jStringBase * new_object= new (new_store) jStringBase("", len);
-                return new_object;
-#endif
-            }
-#ifdef SAFE_JSTRING
-            virtual ~jStringBase() {
-                delete data_;
-            }
-#endif
-            std::size_t len_;
-#ifdef SAFE_JSTRING
-            // Not the most efficient, but portable.
-            char * data_;
-#else
-            // **** This MUST be the last data member in the struct as
-            // we deliberately overrun the declared length of the array.
-            //
-            // I don't recall seeing any guarantee that struct members
-            // are laid out in declaration order, but every compiler I
-            // know works that way. 
-            // If you get strange crashes, try defining SAFE_JSTRING
-            char data_[1];
-#endif
-        public:
-            operator const char *() const { return data_;};
-            auto len() const { return len_;}
+        struct jStringBase {
+            /**
+             * A class to store the string data.
+            */
+            private:
+                friend class jclib::jString;
+                friend class jclib::CountedPointer<jStringBase>; // = jString's parent class;
+                friend std::ostream& operator<<(std::ostream& os, const class jclib::jString & string);
+                // no copy constructor
+                jStringBase( const jStringBase & ) = delete;
+                // suppress assignment into the string
+                jStringBase& operator = (const jStringBase&) = delete;
+                // Implement the requirements for CountedPointer
+                int counter_;
+                inline void CountedPointerAttach() { ++counter_; }
+                inline void CountedPointerDetach() { if( !--counter_) delete this;}
+                // ctor private so only jString can access it
+                jStringBase( const char * data, std::size_t len )
+                : counter_(0)
+    #ifdef SAFE_JSTRING
+                , data_( new char[len+1])
+    #endif
+                , len_( len )
+                {
+                    strncpy(data_, data, len);
+                    data_[len] = '\0';
+                }
+                /** create a jStringBase with data */
+                static jStringBase * create(const char * data, std::size_t len) {
+    #ifdef SAFE_JSTRING
+                    // Double create on heap
+                    return new jStringBase(data, len);
+    #else
+                    void * new_store = new unsigned char[len + sizeof(jStringBase)];
+                    jStringBase * new_object= new (new_store) jStringBase(data, len);
+                    return new_object;
+    #endif
+                }
+                /** create an empty jStringBase */
+                static jStringBase * create(std::size_t len) {
+    #ifdef SAFE_JSTRING
+                    // Double create on heap
+                    return new jStringBase(data, len);
+    #else
+                    void * new_store = new unsigned char[len + sizeof(jStringBase)];
+                    jStringBase * new_object= new (new_store) jStringBase("", len);
+                    return new_object;
+    #endif
+                }
+    #ifdef SAFE_JSTRING
+                virtual ~jStringBase() {
+                    delete data_;
+                }
+    #endif
+                std::size_t len_;
+    #ifdef SAFE_JSTRING
+                // Not the most efficient, but portable.
+                char * data_;
+    #else
+                // **** This MUST be the last data member in the struct as
+                // we deliberately overrun the declared length of the array.
+                //
+                // I don't recall seeing any guarantee that struct members
+                // are laid out in declaration order, but every compiler I
+                // know works that way. 
+                // If you get strange crashes, try defining SAFE_JSTRING
+                char data_[1];
+    #endif
+            public:
+                operator const char *() const { return data_;};
+                auto len() const { return len_;}
+        };
     };
 
-    class jString: /* private */ CountedPointer<jStringBase> {
+    class jString: /* private */ CountedPointer<Private::jStringBase> {
         /***
          * The user interface to the strings
         */
+        private:
+            typedef Private::jStringBase jStringBase;
         public:
             /** return an empty string.
              *  We use so many it makes sense to pre-create one
@@ -156,7 +161,7 @@ namespace jclib {
             // what changes will occur in the future or
             // either lemon or re2c does something weird
             // in its generated code?
-            jString( jStringBase *base )
+            jString( Private::jStringBase *base )
                 : CountedPointer<jStringBase>(base)
              {}
             // Create empty string
@@ -326,6 +331,9 @@ namespace jclib {
             }
             bool operator == (const jString &rhs) const {
                 return strcmp(get()->data_, rhs->data_) == 0;
+            }
+            bool operator == (const char *rhs) const {
+                return strcmp(get()->data_, jString(rhs)->data_) == 0;
             }
             bool operator != (const jString &rhs) const {
                 return strcmp(get()->data_, rhs->data_) != 0;
