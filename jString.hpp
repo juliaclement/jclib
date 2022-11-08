@@ -31,6 +31,7 @@ SOFTWARE.
 #ifndef jString_HPP
 #define jString_HPP
 #include <limits>
+#include <cctype>
 #include <cstring>
 #include <string_view>
 #include <ostream>
@@ -285,6 +286,39 @@ namespace jclib {
                 if( position == nullptr )
                     return -1;
                 return position - buffer;
+            }
+
+            /** Check is only all alphabetic ascii characters */
+            bool isalpha() {
+                if( len() == 0 )
+                    return false;
+                for( const char * c = data(); *c; ++c) {
+                    if( ! std::isalpha(*c) )
+                        return false;
+                }
+                return true;
+            }
+
+            /** Check all alphabetic ascii characters in string are upper case */
+            bool isupper() {
+                if( len() == 0 )
+                    return false;
+                for( const char * c = data(); *c; ++c) {
+                    if( std::isalpha(*c) && ! std::isupper(*c))
+                        return false;
+                }
+                return true;
+            }
+
+            /** Check all alphabetic ascii characters in string are upper case */
+            bool islower() {
+                if( len() == 0 )
+                    return false;
+                for( const char * c = data(); *c; ++c) {
+                    if( std::isalpha(*c) && ! std::islower(*c))
+                        return false;
+                }
+                return true;
             }
 
             /** Join elements in an iterable into a new string

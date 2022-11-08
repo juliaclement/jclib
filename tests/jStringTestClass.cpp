@@ -127,6 +127,36 @@ private:
     void testNoEqualCompare(){ 
         CPPUNIT_ASSERT(sd.d!=sd.a);
     }
+    void testEmptyIsNoneOfAlphaLowerUpper(){ 
+        jString txt(jString::get_empty());
+        CPPUNIT_ASSERT(!txt.isalpha());
+        CPPUNIT_ASSERT(!txt.islower());
+        CPPUNIT_ASSERT(!txt.isupper());
+    }
+    void testIsAlphaOK(){ 
+        jString txt("aAbBcC");
+        CPPUNIT_ASSERT(txt.isalpha());
+    }
+    void testIsAlphaFail(){ 
+        jString txt("aAb-BcC");
+        CPPUNIT_ASSERT(!txt.isalpha());
+    }
+    void testIsLowerOK(){ 
+        jString txt("ab c");
+        CPPUNIT_ASSERT(txt.islower());
+    }
+    void testIsLowerFail(){ 
+        jString txt("aBc");
+        CPPUNIT_ASSERT(!txt.islower());
+    }
+    void testIsUpperOK(){ 
+        jString txt("XXX-YYY");
+        CPPUNIT_ASSERT(txt.isupper());
+    }
+    void testIsUpperFail(){ 
+        jString txt("XyX-YYY");
+        CPPUNIT_ASSERT(!txt.isupper());
+    }
     void teststring_view(){
 #ifdef __cpp_lib_string_view
         std::string_view sv( sd.d );
@@ -152,6 +182,13 @@ private:
         CPPUNIT_TEST(testJoin);
         CPPUNIT_TEST(testFindFound);
         CPPUNIT_TEST(testFindNotFound);
+        CPPUNIT_TEST(testEmptyIsNoneOfAlphaLowerUpper);
+        CPPUNIT_TEST(testIsAlphaOK);
+        CPPUNIT_TEST(testIsAlphaFail);
+        CPPUNIT_TEST(testIsLowerOK);
+        CPPUNIT_TEST(testIsLowerFail);
+        CPPUNIT_TEST(testIsUpperOK);
+        CPPUNIT_TEST(testIsUpperFail);
         CPPUNIT_TEST(teststring_view);
     CPPUNIT_TEST_SUITE_END();
 
