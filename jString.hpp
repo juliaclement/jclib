@@ -53,7 +53,7 @@ namespace jclib {
     namespace Private {
         // If you get strange crashes, enable this #define
         // It doubles the number of heap allocations / frees
-        // but does it safely
+        // but does it safely. See comment just before "char data_[1]"
         //#define SAFE_JSTRING 1
 
         struct jStringBase {
@@ -94,7 +94,11 @@ namespace jclib {
                     return new_object;
     #endif
                 }
-                /** create an empty jStringBase */
+                /** create an empty jStringBase 
+                 *  used by join() to create a place to write the answer
+                 *  into otherwise a bug in calling routine unless len == 0
+                 *  when it has the same effect as jStringBase( "", 0 )
+                */
                 static jStringBase * create(std::size_t len) {
     #ifdef SAFE_JSTRING
                     // Double create on heap
@@ -116,18 +120,27 @@ namespace jclib {
                 char * data_;
     #else
                 // **** This MUST be the last data member in the struct as
-                // we deliberately overrun the declared length of the array.
+                // we deliberately allocate padding then overrun the declared
+                // length of the array.
                 //
-                // I don't recall seeing any guarantee that struct members
-                // are laid out in declaration order, but every compiler I
-                // know works that way. 
-                // If you get strange crashes, try defining SAFE_JSTRING
+                // I think it's safe as:
+                // C99 requires that struct members are laid out in
+                // declaration order:
+                //     "Within a structure object, the non-bit-field members
+                //     and the units in which bit-fields reside have addresses
+                //     that increase in the order in which they are declared"
+                // C++ probably requires that in a standard-layout struct
+                // object struct members are laid out in declaration order.
+                // Problem is I can't seem to locate it in an actual C++ standard
+                // but every compiler I know works that way.
+                //
+                // If you get strange crashes, try defining SAFE_JSTRING above
                 char data_[1];
     #endif
             public:
                 operator const char *() const { return data_;};
                 auto len() const { return len_;}
-        };
+            };
     };
 
     class jString: /* private */ CountedPointer<Private::jStringBase> {
@@ -141,8 +154,15 @@ namespace jclib {
              *  We use so many it makes sense to pre-create one
             */
             static jString get_empty() {
-                static jString empty_base("");
-                return empty_base;
+                static jStringBase * empty_base = nullptr;
+                static bool first = true;
+                if( first ) {
+                    empty_base = jStringBase::create("", 0);
+                    empty_base->CountedPointerAttach(); // ensure never deleted
+                    first = false;
+                }
+                static jString empty_string( empty_base );
+                return empty_string;
             } 
 
             const char * data() const { return get()->data_;}
@@ -163,7 +183,7 @@ namespace jclib {
             // either lemon or re2c does something weird
             // in its generated code?
             jString( Private::jStringBase *base )
-                : CountedPointer<jStringBase>(base)
+                : CountedPointer<jStringBase>(base ? base : get_empty().get() )
              {}
             // Create empty string
             jString( ):
@@ -171,16 +191,25 @@ namespace jclib {
                 {}
             // Create from c string
             jString( const char * source ):
-                CountedPointer<jStringBase>(jStringBase::create(source, strlen(source)))
+                CountedPointer<jStringBase>(
+                    (source && *source )
+                        ? jStringBase::create(source, strlen(source))
+                        : get_empty().get())
                 {}
             // Create from start of c string
             jString( const char * source, std::size_t len ):
-                CountedPointer<jStringBase>(jStringBase::create(source, len))
+                CountedPointer<jStringBase>(
+                    (source && len )
+                        ? jStringBase::create(source, len)
+                        : get_empty().get()) // NB: len ignored
                 {}
             // Create from two pointers to the same buffer
             // NB: This is what re2c gives on a match
             jString( const char * start, const char * end ):
-                CountedPointer<jStringBase>(jStringBase::create(start, end-start))
+                CountedPointer<jStringBase>(
+                    ( start && (start != end ))
+                        ? jStringBase::create(start, end-start)
+                        : get_empty().get()) // NB: end ignored
                 {}
 #ifdef __cpp_lib_string_view
             // Create from std::string_view

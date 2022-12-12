@@ -64,6 +64,35 @@ private:
         jString empty;
         CPPUNIT_ASSERT(empty.len()==0);
     }
+    void testEmptyStringReturnsDefault() {
+        jString empty;
+        const char * empty_chars(empty);
+        jString test("");
+        const char * test_chars(test);
+        CPPUNIT_ASSERT(empty_chars == test_chars);
+    }
+    void testLenZeroReturnsDefault() {
+        jString empty;
+        const char * empty_chars(empty);
+        jString test("aa",(std::size_t)0);
+        const char * test_chars(test);
+        CPPUNIT_ASSERT(empty_chars == test_chars);
+    }
+    void testStartEqualsEndReturnsDefault() {
+        jString empty;
+        const char * empty_chars(empty);
+        const char buf[]={'a','b','c','\0'};
+        jString test(buf,buf);
+        const char * test_chars(test);
+        CPPUNIT_ASSERT(empty_chars == test_chars);
+    }
+    void testNullStringReturnsDefault() {
+        jString empty;
+        const char * empty_chars(empty);
+        jString test((const char*)nullptr);
+        const char * test_chars(test);
+        CPPUNIT_ASSERT(empty_chars == test_chars);
+    }
     void testInitialisers() {
         jString empty;
         CPPUNIT_ASSERT(empty.len()==0);
@@ -170,6 +199,10 @@ private:
     
     CPPUNIT_TEST_SUITE(jStringTestClass);
         CPPUNIT_TEST(testDefaultCtorIsEmpty);
+        CPPUNIT_TEST(testEmptyStringReturnsDefault);
+        CPPUNIT_TEST(testLenZeroReturnsDefault);
+        CPPUNIT_TEST(testStartEqualsEndReturnsDefault);
+        CPPUNIT_TEST(testNullStringReturnsDefault);
         CPPUNIT_TEST(testcopyConstructor);
         CPPUNIT_TEST(testInitialisers);
         CPPUNIT_TEST(testEqualityCompare);
