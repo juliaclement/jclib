@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['simple_5fbool_0',['simple_bool',['../classjclib_1_1simple__bool.html',1,'jclib']]]
+  ['options_5f_0',['options_',['../structjcArgsTestClassNS_1_1options__.html',1,'jcArgsTestClassNS']]]
 ];

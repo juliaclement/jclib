@@ -86,8 +86,6 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjclib_1_1jString.html">jString</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structjclib_1_1jStringBase.html">jStringBase</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjclib_1_1simple__bool.html">simple_bool</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjclib_1_1WeakPointer.html">WeakPointer</a></td></tr>
@@ -117,6 +115,10 @@ template&lt;class T &gt; </td></tr>
 <tr class="memitem:af6f4a57371cc79caa86aa0c93114f43b"><td class="memItemLeft" align="right" valign="top"><a id="af6f4a57371cc79caa86aa0c93114f43b" name="af6f4a57371cc79caa86aa0c93114f43b"></a>
 <a class="el" href="classjclib_1_1simple__bool.html">simple_bool</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>arg</b> (bool &amp;answer, <a class="el" href="classjclib_1_1jString.html">jString</a> short_name, <a class="el" href="classjclib_1_1jString.html">jString</a> long_name, <a class="el" href="classjclib_1_1jString.html">jString</a> desc, bool takes_parameter, bool required=false)</td></tr>
 <tr class="separator:af6f4a57371cc79caa86aa0c93114f43b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9de5ca738d7ff04a623ab44e2a76f662"><td class="memTemplParams" colspan="2"><a id="a9de5ca738d7ff04a623ab44e2a76f662" name="a9de5ca738d7ff04a623ab44e2a76f662"></a>
+template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a9de5ca738d7ff04a623ab44e2a76f662"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classjclib_1_1Private_1_1Saver.html">Private::Saver</a>&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>Save</b> (T &amp;savee)</td></tr>
+<tr class="separator:a9de5ca738d7ff04a623ab44e2a76f662"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >Implementation of a weak pointer. <a class="el" href="classjclib_1_1WeakPointer.html">jclib::WeakPointer</a> is a smart pointer that holds a non-owning ("weak") reference to an object that is managed by <a class="el" href="classjclib_1_1CountedPointer.html">jclib::CountedPointer</a>. like std::weak_ptr, <a class="el" href="classjclib_1_1WeakPointer.html">jclib::WeakPointer</a> models temporary ownership: when an object needs to be available only if it exists, and it may be deleted at any time by other code. Like std::weak_ptr, <a class="el" href="classjclib_1_1WeakPointer.html">jclib::WeakPointer</a> is intended to break circular references in pointers..</p>

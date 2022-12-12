@@ -1,10 +1,6 @@
 var searchData=
 [
-  ['yieldingcontainer_0',['yieldingContainer',['../classjclib_1_1yieldingContainer.html',1,'jclib']]],
-  ['yieldingiterator_1',['yieldingIterator',['../classjclib_1_1yieldingIterator.html',1,'jclib']]],
-  ['yieldingiteratorhelper_2',['yieldingIteratorHelper',['../classjclib_1_1yieldingIteratorHelper.html',1,'jclib']]],
-  ['yieldingiteratorhelper_3c_20char_20_3e_3',['yieldingIteratorHelper&lt; char &gt;',['../classjclib_1_1yieldingIteratorHelper.html',1,'jclib']]],
-  ['yieldingiteratorhelper_3c_20int_20_3e_4',['yieldingIteratorHelper&lt; int &gt;',['../classjclib_1_1yieldingIteratorHelper.html',1,'jclib']]],
-  ['yieldingiteratorhelper_3c_20struct_20maotest_20_3e_5',['yieldingIteratorHelper&lt; struct maoTest &gt;',['../classjclib_1_1yieldingIteratorHelper.html',1,'jclib']]],
-  ['yieldingiteratorstestclass_6',['YieldingIteratorsTestClass',['../classYieldingIteratorsTestClass.html',1,'']]]
+  ['saver_0',['Saver',['../classjclib_1_1Private_1_1Saver.html',1,'jclib::Private']]],
+  ['savetestclass_1',['SaveTestClass',['../classSaveTestClass.html',1,'']]],
+  ['simple_5fbool_2',['simple_bool',['../classjclib_1_1simple__bool.html',1,'jclib']]]
 ];

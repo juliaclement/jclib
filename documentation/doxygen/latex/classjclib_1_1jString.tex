@@ -6,7 +6,7 @@ Inheritance diagram for jclib\+::j\+String\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=198pt]{classjclib_1_1jString__inherit__graph}
+\includegraphics[width=215pt]{classjclib_1_1jString__inherit__graph}
 \end{center}
 \end{figure}
 
@@ -15,7 +15,7 @@ Collaboration diagram for jclib\+::j\+String\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=198pt]{classjclib_1_1jString__coll__graph}
+\includegraphics[width=215pt]{classjclib_1_1jString__coll__graph}
 \end{center}
 \end{figure}
 \doxysubsection*{Public Member Functions}
@@ -24,11 +24,17 @@ Collaboration diagram for jclib\+::j\+String\+:\nopagebreak
 \mbox{\Hypertarget{classjclib_1_1jString_a872eaaec620afdc377791d522f7619bc}\label{classjclib_1_1jString_a872eaaec620afdc377791d522f7619bc}} 
 const char $\ast$ {\bfseries data} () const
 \item 
+\mbox{\Hypertarget{classjclib_1_1jString_a3a08821324c65bb40e6ad0319c7f2638}\label{classjclib_1_1jString_a3a08821324c65bb40e6ad0319c7f2638}} 
+{\bfseries operator const char $\ast$} () const
+\item 
+\mbox{\Hypertarget{classjclib_1_1jString_a4f2213068b23fbcd585eb6d54a3fef55}\label{classjclib_1_1jString_a4f2213068b23fbcd585eb6d54a3fef55}} 
+size\+\_\+t {\bfseries len} () const
+\item 
 \mbox{\Hypertarget{classjclib_1_1jString_a42af2a62d5f94d50df0a6fea9d04e8bd}\label{classjclib_1_1jString_a42af2a62d5f94d50df0a6fea9d04e8bd}} 
 bool {\bfseries isvalid} () const
 \item 
-\mbox{\Hypertarget{classjclib_1_1jString_a9119fb7fb6274ba8e7a9ecdbea65d466}\label{classjclib_1_1jString_a9119fb7fb6274ba8e7a9ecdbea65d466}} 
-{\bfseries j\+String} (\mbox{\hyperlink{structjclib_1_1jStringBase}{j\+String\+Base}} $\ast$base)
+\mbox{\Hypertarget{classjclib_1_1jString_aaff59e6a3d02b04f5f841f9e75beef2d}\label{classjclib_1_1jString_aaff59e6a3d02b04f5f841f9e75beef2d}} 
+{\bfseries j\+String} (\mbox{\hyperlink{structjclib_1_1Private_1_1jStringBase}{Private\+::j\+String\+Base}} $\ast$base)
 \item 
 \mbox{\Hypertarget{classjclib_1_1jString_a9efb9cf7ac496cbbe11a993190c54b8a}\label{classjclib_1_1jString_a9efb9cf7ac496cbbe11a993190c54b8a}} 
 {\bfseries j\+String} (const char $\ast$source)
@@ -57,6 +63,16 @@ bool {\bfseries isvalid} () const
 \mbox{\Hypertarget{classjclib_1_1jString_ace3b1ad453717614ca476b0f1d205c91}\label{classjclib_1_1jString_ace3b1ad453717614ca476b0f1d205c91}} 
 std\+::vector$<$ \mbox{\hyperlink{classjclib_1_1jString}{j\+String}} $>$ {\bfseries split} (const char $\ast$delim, int max\+\_\+splits=std\+::numeric\+\_\+limits$<$ int $>$\+::max()) const
 \item 
+int \mbox{\hyperlink{classjclib_1_1jString_ad1d51cf9e884aabcbf0387edc40a9eb2}{find}} (\mbox{\hyperlink{classjclib_1_1jString}{j\+String}} findee)
+\item 
+bool \mbox{\hyperlink{classjclib_1_1jString_ab0d1653253c0c5636e524628cd0b0a27}{isalpha}} ()
+\item 
+bool \mbox{\hyperlink{classjclib_1_1jString_aae84c1413b3d137a21fecb495c059ef1}{isupper}} ()
+\item 
+bool \mbox{\hyperlink{classjclib_1_1jString_ae9c51457a9e150c838de713183783814}{islower}} ()
+\item 
+{\footnotesize template$<$class T $>$ }\\\mbox{\hyperlink{classjclib_1_1jString}{j\+String}} \mbox{\hyperlink{classjclib_1_1jString_a003c161a28051c3ce6390a45841ba38f}{join}} (const T \&input)
+\item 
 \mbox{\Hypertarget{classjclib_1_1jString_aac1073792f5fb0c9dd6bd3366532a727}\label{classjclib_1_1jString_aac1073792f5fb0c9dd6bd3366532a727}} 
 bool {\bfseries operator$<$} (const \mbox{\hyperlink{classjclib_1_1jString}{j\+String}} \&rhs) const
 \item 
@@ -72,14 +88,16 @@ bool {\bfseries operator$>$=} (const \mbox{\hyperlink{classjclib_1_1jString}{j\+
 \mbox{\Hypertarget{classjclib_1_1jString_a957678d937d3aee8e19a1d7c0043d108}\label{classjclib_1_1jString_a957678d937d3aee8e19a1d7c0043d108}} 
 bool {\bfseries operator==} (const \mbox{\hyperlink{classjclib_1_1jString}{j\+String}} \&rhs) const
 \item 
+\mbox{\Hypertarget{classjclib_1_1jString_ae1ad76e6e678c3dc9b9adde596fb7ddd}\label{classjclib_1_1jString_ae1ad76e6e678c3dc9b9adde596fb7ddd}} 
+bool {\bfseries operator==} (const char $\ast$rhs) const
+\item 
 \mbox{\Hypertarget{classjclib_1_1jString_affec74e67b0f1f6d7ee519344352d063}\label{classjclib_1_1jString_affec74e67b0f1f6d7ee519344352d063}} 
 bool {\bfseries operator!=} (const \mbox{\hyperlink{classjclib_1_1jString}{j\+String}} \&rhs) const
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{classjclib_1_1jString_a4f2213068b23fbcd585eb6d54a3fef55}\label{classjclib_1_1jString_a4f2213068b23fbcd585eb6d54a3fef55}} 
-size\+\_\+t {\bfseries len} () const
-\item 
-\mbox{\Hypertarget{classjclib_1_1jString_a3a08821324c65bb40e6ad0319c7f2638}\label{classjclib_1_1jString_a3a08821324c65bb40e6ad0319c7f2638}} 
-{\bfseries operator const char $\ast$} () const
+static \mbox{\hyperlink{classjclib_1_1jString}{j\+String}} \mbox{\hyperlink{classjclib_1_1jString_a64b12d83c87606faedf066ad33c07f53}{get\+\_\+empty}} ()
 \end{DoxyCompactItemize}
 \doxysubsection*{Friends}
 \begin{DoxyCompactItemize}
@@ -88,6 +106,46 @@ size\+\_\+t {\bfseries len} () const
 std\+::ostream \& {\bfseries operator$<$$<$} (std\+::ostream \&os, const class \mbox{\hyperlink{classjclib_1_1jString}{j\+String}} \&string)
 \end{DoxyCompactItemize}
 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classjclib_1_1jString_ad1d51cf9e884aabcbf0387edc40a9eb2}\label{classjclib_1_1jString_ad1d51cf9e884aabcbf0387edc40a9eb2}} 
+\index{jclib::jString@{jclib::jString}!find@{find}}
+\index{find@{find}!jclib::jString@{jclib::jString}}
+\doxysubsubsection{\texorpdfstring{find()}{find()}}
+{\footnotesize\ttfamily int jclib\+::j\+String\+::find (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classjclib_1_1jString}{j\+String}}}]{findee }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Return position of first occurrence of findee \mbox{\Hypertarget{classjclib_1_1jString_a64b12d83c87606faedf066ad33c07f53}\label{classjclib_1_1jString_a64b12d83c87606faedf066ad33c07f53}} 
+\index{jclib::jString@{jclib::jString}!get\_empty@{get\_empty}}
+\index{get\_empty@{get\_empty}!jclib::jString@{jclib::jString}}
+\doxysubsubsection{\texorpdfstring{get\_empty()}{get\_empty()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{classjclib_1_1jString}{j\+String}} jclib\+::j\+String\+::get\+\_\+empty (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+return an empty string. We use so many it makes sense to pre-\/create one \mbox{\Hypertarget{classjclib_1_1jString_ab0d1653253c0c5636e524628cd0b0a27}\label{classjclib_1_1jString_ab0d1653253c0c5636e524628cd0b0a27}} 
+\index{jclib::jString@{jclib::jString}!isalpha@{isalpha}}
+\index{isalpha@{isalpha}!jclib::jString@{jclib::jString}}
+\doxysubsubsection{\texorpdfstring{isalpha()}{isalpha()}}
+{\footnotesize\ttfamily bool jclib\+::j\+String\+::isalpha (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Check is only all alphabetic ascii characters \mbox{\Hypertarget{classjclib_1_1jString_ae9c51457a9e150c838de713183783814}\label{classjclib_1_1jString_ae9c51457a9e150c838de713183783814}} 
+\index{jclib::jString@{jclib::jString}!islower@{islower}}
+\index{islower@{islower}!jclib::jString@{jclib::jString}}
+\doxysubsubsection{\texorpdfstring{islower()}{islower()}}
+{\footnotesize\ttfamily bool jclib\+::j\+String\+::islower (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Check all alphabetic ascii characters in string are upper case \mbox{\Hypertarget{classjclib_1_1jString_aae84c1413b3d137a21fecb495c059ef1}\label{classjclib_1_1jString_aae84c1413b3d137a21fecb495c059ef1}} 
+\index{jclib::jString@{jclib::jString}!isupper@{isupper}}
+\index{isupper@{isupper}!jclib::jString@{jclib::jString}}
+\doxysubsubsection{\texorpdfstring{isupper()}{isupper()}}
+{\footnotesize\ttfamily bool jclib\+::j\+String\+::isupper (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Check all alphabetic ascii characters in string are upper case \mbox{\Hypertarget{classjclib_1_1jString_a003c161a28051c3ce6390a45841ba38f}\label{classjclib_1_1jString_a003c161a28051c3ce6390a45841ba38f}} 
+\index{jclib::jString@{jclib::jString}!join@{join}}
+\index{join@{join}!jclib::jString@{jclib::jString}}
+\doxysubsubsection{\texorpdfstring{join()}{join()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+\mbox{\hyperlink{classjclib_1_1jString}{j\+String}} jclib\+::j\+String\+::join (\begin{DoxyParamCaption}\item[{const T \&}]{input }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Join elements in an iterable into a new string with the elements separated by our value. Elements must be valid for \mbox{\hyperlink{classjclib_1_1jString}{j\+String}} constructors. Based on Python\textquotesingle{}s str.\+join() method 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 

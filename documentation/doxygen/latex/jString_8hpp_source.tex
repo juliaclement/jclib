@@ -34,238 +34,356 @@
 \DoxyCodeLine{31 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{ifndef} \textcolor{preprocessor}{jString\_HPP}}
 \DoxyCodeLine{32 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{jString\_HPP}}
 \DoxyCodeLine{33 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{include} \textcolor{preprocessor}{<}\textcolor{preprocessor}{limits}\textcolor{preprocessor}{>}}
-\DoxyCodeLine{34 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{include} \textcolor{preprocessor}{<}\textcolor{preprocessor}{cstring}\textcolor{preprocessor}{>}}
-\DoxyCodeLine{35 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{include} \textcolor{preprocessor}{<}\textcolor{preprocessor}{ostream}\textcolor{preprocessor}{>}}
-\DoxyCodeLine{36 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{include} \textcolor{preprocessor}{<}\textcolor{preprocessor}{vector}\textcolor{preprocessor}{>}}
-\DoxyCodeLine{37 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{include} \mbox{\hyperlink{countedPointer_8hpp}{"{}countedPointer.hpp"{}}}}
-\DoxyCodeLine{38 }
-\DoxyCodeLine{39 \textcolor{keyword}{namespace} \mbox{\hyperlink{namespacejclib}{jclib}} \{}
-\DoxyCodeLine{40     \textcolor{comment}{/**}}
-\DoxyCodeLine{41 \textcolor{comment}{     * Implementation of a reference counted string}}
-\DoxyCodeLine{42 \textcolor{comment}{     * This string is lighweight with the string class}}
-\DoxyCodeLine{43 \textcolor{comment}{     * itself being little more than a slightly smart pointer.}}
-\DoxyCodeLine{44 \textcolor{comment}{     * }}
-\DoxyCodeLine{45 \textcolor{comment}{     * Primarily created to satisfy a need I have for}}
-\DoxyCodeLine{46 \textcolor{comment}{     * dynamic invariant strings in a re2cc/lemon based project}}
-\DoxyCodeLine{47 \textcolor{comment}{     * which will be passing a ridiculous number of strings around.}}
-\DoxyCodeLine{48 \textcolor{comment}{    */}}
-\DoxyCodeLine{49 }
-\DoxyCodeLine{50     \textcolor{comment}{// If you get strange crashes, enable this \#define}}
-\DoxyCodeLine{51     \textcolor{comment}{// To double the number of heap allocations / frees}}
-\DoxyCodeLine{52     \textcolor{comment}{// but do it safely}}
-\DoxyCodeLine{53     \textcolor{comment}{//\#define SAFE\_JSTRING 1}}
-\DoxyCodeLine{54 }
-\DoxyCodeLine{55     \textcolor{keyword}{struct} \mbox{\hyperlink{structjclib_1_1jStringBase}{jStringBase}} \{}
-\DoxyCodeLine{56         \textcolor{comment}{/**}}
-\DoxyCodeLine{57 \textcolor{comment}{         * A class to store the string data.}}
-\DoxyCodeLine{58 \textcolor{comment}{        */}}
-\DoxyCodeLine{59         \textcolor{keyword}{private}:}
-\DoxyCodeLine{60             \textcolor{keyword}{friend} \textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1jString}{jString}};}
-\DoxyCodeLine{61             \textcolor{keyword}{friend} \textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1CountedPointer}{CountedPointer}}<\mbox{\hyperlink{structjclib_1_1jStringBase}{jStringBase}}>; \textcolor{comment}{// = jString's parent class;}}
-\DoxyCodeLine{62             \textcolor{keyword}{friend} \mbox{\hyperlink{structjclib_1_1jStringBase}{std}}::\mbox{\hyperlink{structjclib_1_1jStringBase}{ostream}}\& \mbox{\hyperlink{structjclib_1_1jStringBase}{operator}}<<(\mbox{\hyperlink{structjclib_1_1jStringBase}{std}}::\mbox{\hyperlink{structjclib_1_1jStringBase}{ostream}}\& \mbox{\hyperlink{structjclib_1_1jStringBase}{os}}, \textcolor{keyword}{const} \textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1jString}{jString}} \& string);}
-\DoxyCodeLine{63             \textcolor{comment}{// no copy constructor}}
-\DoxyCodeLine{64             jStringBase( \textcolor{keyword}{const} \mbox{\hyperlink{structjclib_1_1jStringBase}{jStringBase}} \& ) = \textcolor{keyword}{delete};}
-\DoxyCodeLine{65             \textcolor{comment}{// suppress assignment into the string}}
-\DoxyCodeLine{66             \mbox{\hyperlink{structjclib_1_1jStringBase}{jStringBase}}\& operator = (\textcolor{keyword}{const} \mbox{\hyperlink{structjclib_1_1jStringBase}{jStringBase}}\&) = \textcolor{keyword}{delete};}
-\DoxyCodeLine{67             \textcolor{comment}{// Implement the requirements for CountedPointer}}
-\DoxyCodeLine{68             \textcolor{keywordtype}{int} counter\_;}
-\DoxyCodeLine{69             \textcolor{keyword}{inline} \textcolor{keywordtype}{void} CountedPointerAttach() \{ ++counter\_; \}}
-\DoxyCodeLine{70             \textcolor{keyword}{inline} \textcolor{keywordtype}{void} CountedPointerDetach() \{ \textcolor{keywordflow}{if}( !-\/-\/counter\_) \textcolor{keyword}{delete} \textcolor{keyword}{this};\}}
-\DoxyCodeLine{71             \textcolor{comment}{// ctor private so only jString can access it}}
-\DoxyCodeLine{72             jStringBase( \textcolor{keyword}{const} \textcolor{keywordtype}{char} * data, std::size\_t len )}
-\DoxyCodeLine{73             : counter\_(0)}
-\DoxyCodeLine{74 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{ifdef} \textcolor{preprocessor}{SAFE\_JSTRING}}
-\DoxyCodeLine{75             , m\_data( \textcolor{keyword}{new} \textcolor{keywordtype}{char}[len+1])}
-\DoxyCodeLine{76 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{endif}}
-\DoxyCodeLine{77             , m\_len( len )}
-\DoxyCodeLine{78             \{}
-\DoxyCodeLine{79                 strncpy(m\_data, data, len);}
-\DoxyCodeLine{80                 m\_data[len] = \textcolor{stringliteral}{'\(\backslash\)0'};}
-\DoxyCodeLine{81             \}}
-\DoxyCodeLine{82             \textcolor{keyword}{static} \mbox{\hyperlink{structjclib_1_1jStringBase}{jStringBase}} * create(\textcolor{keyword}{const} \textcolor{keywordtype}{char} * data, std::size\_t len) \{}
-\DoxyCodeLine{83 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{ifdef} \textcolor{preprocessor}{SAFE\_JSTRING}}
-\DoxyCodeLine{84                 \textcolor{comment}{// Double create on heap}}
-\DoxyCodeLine{85                 \textcolor{keywordflow}{return} \textcolor{keyword}{new} jStringBase(data, len);}
-\DoxyCodeLine{86 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{else}}
-\DoxyCodeLine{87                 \textcolor{keywordtype}{void} * new\_store = \textcolor{keyword}{new} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char}[len + \textcolor{keyword}{sizeof}(\mbox{\hyperlink{structjclib_1_1jStringBase}{jStringBase}})];}
-\DoxyCodeLine{88                 \mbox{\hyperlink{structjclib_1_1jStringBase}{jStringBase}} * new\_object= \textcolor{keyword}{new} (new\_store) \mbox{\hyperlink{structjclib_1_1jStringBase}{jStringBase}}(data, len);}
-\DoxyCodeLine{89                 \textcolor{keywordflow}{return} new\_object;}
-\DoxyCodeLine{90 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{endif}}
-\DoxyCodeLine{91             \}}
-\DoxyCodeLine{92 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{ifdef} \textcolor{preprocessor}{SAFE\_JSTRING}}
-\DoxyCodeLine{93             \textcolor{keyword}{virtual} \string~\mbox{\hyperlink{structjclib_1_1jStringBase}{jStringBase}}() \{}
-\DoxyCodeLine{94                 \textcolor{keyword}{delete} \mbox{\hyperlink{structjclib_1_1jStringBase}{m\_data}};}
-\DoxyCodeLine{95             \}}
-\DoxyCodeLine{96 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{endif}}
-\DoxyCodeLine{97             std::size\_t m\_len;}
-\DoxyCodeLine{98 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{ifdef} \textcolor{preprocessor}{SAFE\_JSTRING}}
-\DoxyCodeLine{99             \textcolor{comment}{// Not the most efficient, but portable.}}
-\DoxyCodeLine{100             \textcolor{keywordtype}{char} * \mbox{\hyperlink{structjclib_1_1jStringBase}{m\_data}};}
-\DoxyCodeLine{101 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{else}}
-\DoxyCodeLine{102             \textcolor{comment}{// **** This MUST be the last data member in the struct as}}
-\DoxyCodeLine{103             \textcolor{comment}{// we deliberately overrun the declared length of the array.}}
-\DoxyCodeLine{104             \textcolor{comment}{//}}
-\DoxyCodeLine{105             \textcolor{comment}{// I don't recall seeing any guarantee that struct members}}
-\DoxyCodeLine{106             \textcolor{comment}{// are laid out in declaration order, but every compiler I}}
-\DoxyCodeLine{107             \textcolor{comment}{// know works that way. }}
-\DoxyCodeLine{108             \textcolor{comment}{// If you get strange crashes, try defining SAFE\_JSTRING}}
-\DoxyCodeLine{109             \textcolor{keywordtype}{char} m\_data[1];}
-\DoxyCodeLine{110 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{endif}}
-\DoxyCodeLine{111         \textcolor{keyword}{public}:}
-\DoxyCodeLine{112             operator \textcolor{keyword}{const} \textcolor{keywordtype}{char} *() \textcolor{keyword}{const} \{ \textcolor{keywordflow}{return} m\_data;\};}
-\DoxyCodeLine{113             \textcolor{keyword}{auto} len() \textcolor{keyword}{const} \{ \textcolor{keywordflow}{return} m\_len;\}}
-\DoxyCodeLine{114     \};}
-\DoxyCodeLine{115 }
-\DoxyCodeLine{116     \textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1jString}{jString}}: \textcolor{comment}{/* private */} \mbox{\hyperlink{classjclib_1_1CountedPointer}{CountedPointer}}<\mbox{\hyperlink{structjclib_1_1jStringBase}{jStringBase}}> \{}
-\DoxyCodeLine{117         \textcolor{comment}{/***}}
-\DoxyCodeLine{118 \textcolor{comment}{         * The user interface to the strings}}
-\DoxyCodeLine{119 \textcolor{comment}{        */}}
-\DoxyCodeLine{120         \textcolor{keyword}{private}:}
-\DoxyCodeLine{121             \textcolor{keyword}{static} \mbox{\hyperlink{classjclib_1_1jString}{jString}} get\_empty() \{}
-\DoxyCodeLine{122                 \textcolor{keyword}{static} \mbox{\hyperlink{classjclib_1_1jString}{jString}} empty\_base(\textcolor{stringliteral}{"{}"{}});}
-\DoxyCodeLine{123                 \textcolor{keywordflow}{return} empty\_base;}
-\DoxyCodeLine{124             \}}
-\DoxyCodeLine{125         \textcolor{keyword}{public}:}
-\DoxyCodeLine{126             \textcolor{keyword}{const} \textcolor{keywordtype}{char} * data() \textcolor{keyword}{const} \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{)}}-\/>m\_data;\}}
-\DoxyCodeLine{127             \textcolor{keyword}{friend} std::ostream\& operator<<(std::ostream\& os, \textcolor{keyword}{const} \textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1jString}{jString}} \& string);}
-\DoxyCodeLine{128             \textcolor{keywordtype}{bool} isvalid() \textcolor{keyword}{const} \{}
-\DoxyCodeLine{129                 \textcolor{keywordflow}{return} \mbox{\hyperlink{classjclib_1_1CountedPointer_aba4799319512576d8873edd9239d7073}{isset}}\mbox{\hyperlink{classjclib_1_1CountedPointer_aba4799319512576d8873edd9239d7073}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_aba4799319512576d8873edd9239d7073}{)}};}
-\DoxyCodeLine{130             \}}
-\DoxyCodeLine{131             \textcolor{comment}{// create from an existing base}}
-\DoxyCodeLine{132             \textcolor{comment}{// shouldn't really happen, but who knows}}
-\DoxyCodeLine{133             \textcolor{comment}{// what changes will occur in the future or}}
-\DoxyCodeLine{134             \textcolor{comment}{// either lemon or re2c does something weird}}
-\DoxyCodeLine{135             \textcolor{comment}{// in its generated code?}}
-\DoxyCodeLine{136             jString( \mbox{\hyperlink{structjclib_1_1jStringBase}{jStringBase}} *base )}
-\DoxyCodeLine{137                 : \mbox{\hyperlink{classjclib_1_1CountedPointer}{CountedPointer}}<\mbox{\hyperlink{structjclib_1_1jStringBase}{jStringBase}}>(base)}
-\DoxyCodeLine{138              \{\}}
-\DoxyCodeLine{139             \textcolor{comment}{// Create empty string}}
-\DoxyCodeLine{140             jString( ):}
-\DoxyCodeLine{141                 \mbox{\hyperlink{classjclib_1_1CountedPointer}{CountedPointer}}<\mbox{\hyperlink{structjclib_1_1jStringBase}{jStringBase}}>(get\_empty()\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{.}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{)}})}
-\DoxyCodeLine{142                 \{\}}
-\DoxyCodeLine{143             \textcolor{comment}{// Create from c string}}
-\DoxyCodeLine{144             jString( \textcolor{keyword}{const} \textcolor{keywordtype}{char} * source ):}
-\DoxyCodeLine{145                 \mbox{\hyperlink{classjclib_1_1CountedPointer}{CountedPointer}}<\mbox{\hyperlink{structjclib_1_1jStringBase}{jStringBase}}>(\mbox{\hyperlink{structjclib_1_1jStringBase}{jStringBase}}::create(source, strlen(source)))}
-\DoxyCodeLine{146                 \{\}}
-\DoxyCodeLine{147             \textcolor{comment}{// Create from start of c string}}
-\DoxyCodeLine{148             jString( \textcolor{keyword}{const} \textcolor{keywordtype}{char} * source, std::size\_t len ):}
-\DoxyCodeLine{149                 \mbox{\hyperlink{classjclib_1_1CountedPointer}{CountedPointer}}<\mbox{\hyperlink{structjclib_1_1jStringBase}{jStringBase}}>(\mbox{\hyperlink{structjclib_1_1jStringBase}{jStringBase}}::create(source, len))}
-\DoxyCodeLine{150                 \{\}}
-\DoxyCodeLine{151             \textcolor{comment}{// Create from two pointers to the same buffer}}
-\DoxyCodeLine{152             \textcolor{comment}{// NB: This is what re2c gives on a match}}
-\DoxyCodeLine{153             jString( \textcolor{keyword}{const} \textcolor{keywordtype}{char} * start, \textcolor{keyword}{const} \textcolor{keywordtype}{char} * end ):}
-\DoxyCodeLine{154                 \mbox{\hyperlink{classjclib_1_1CountedPointer}{CountedPointer}}<\mbox{\hyperlink{structjclib_1_1jStringBase}{jStringBase}}>(\mbox{\hyperlink{structjclib_1_1jStringBase}{jStringBase}}::create(start, end-\/start))}
-\DoxyCodeLine{155                 \{\}}
-\DoxyCodeLine{156             \textcolor{comment}{// string concatenation}}
-\DoxyCodeLine{157             \mbox{\hyperlink{classjclib_1_1jString}{jString}} operator + (\textcolor{keyword}{const} \mbox{\hyperlink{classjclib_1_1jString}{jString}} \&rhs) \{}
-\DoxyCodeLine{158                 \mbox{\hyperlink{structjclib_1_1jStringBase}{jStringBase}} * lhs\_base = \mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{)}};}
-\DoxyCodeLine{159                 \textcolor{keywordflow}{if}( lhs\_base-\/>m\_len == 0 )}
-\DoxyCodeLine{160                     \textcolor{keywordflow}{return} rhs;}
-\DoxyCodeLine{161                 \textcolor{keywordflow}{if}( rhs.len() == 0 )}
-\DoxyCodeLine{162                     \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
-\DoxyCodeLine{163                 \textcolor{keyword}{auto} len = lhs\_base-\/>m\_len + rhs-\/>m\_len;}
-\DoxyCodeLine{164                 \mbox{\hyperlink{structjclib_1_1jStringBase}{jStringBase}} * new\_base = \mbox{\hyperlink{structjclib_1_1jStringBase}{jStringBase}}::create(lhs\_base-\/>m\_data,len );}
-\DoxyCodeLine{165                 strncpy(new\_base-\/>m\_data + lhs\_base-\/>m\_len,rhs-\/>m\_data, rhs-\/>m\_len );}
-\DoxyCodeLine{166                 new\_base-\/>m\_data[len]=\textcolor{stringliteral}{'\(\backslash\)0'};}
-\DoxyCodeLine{167                 \textcolor{keywordflow}{return} new\_base;}
-\DoxyCodeLine{168             \}}
-\DoxyCodeLine{169             \textcolor{comment}{// extract substrings (left, right, any) with}}
-\DoxyCodeLine{170             \textcolor{comment}{// silent bounds checks.}}
-\DoxyCodeLine{171             \textcolor{comment}{// E.g. if z=="{}123"{}, z.substr(2,999) will quietly return "{}3"{}}}
-\DoxyCodeLine{172             \textcolor{comment}{// NB: Const but when the whole string is to be }}
-\DoxyCodeLine{173             \textcolor{comment}{// returned, we return a copy of ourself not a}}
-\DoxyCodeLine{174             \textcolor{comment}{// whole new string. This saves creating a new }}
-\DoxyCodeLine{175             \textcolor{comment}{// jStringBase.}}
-\DoxyCodeLine{176             \mbox{\hyperlink{classjclib_1_1jString}{jString}} left(std::size\_t len) \textcolor{keyword}{const} \{}
-\DoxyCodeLine{177                 \textcolor{keyword}{auto} ilen=std::min(len,\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{)}}-\/>m\_len);}
-\DoxyCodeLine{178                 \textcolor{keywordflow}{if}(ilen == \mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{)}}-\/>m\_len)}
-\DoxyCodeLine{179                     \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
-\DoxyCodeLine{180                 \textcolor{keywordflow}{return} \mbox{\hyperlink{structjclib_1_1jStringBase}{jStringBase}}::create(\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{)}}-\/>m\_data, ilen );}
-\DoxyCodeLine{181             \}}
-\DoxyCodeLine{182             \mbox{\hyperlink{classjclib_1_1jString}{jString}} right(std::size\_t len) \textcolor{keyword}{const} \{}
-\DoxyCodeLine{183                 \textcolor{keyword}{auto} ilen=std::min(len,\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{)}}-\/>m\_len);}
-\DoxyCodeLine{184                 \textcolor{keywordflow}{if}(ilen == \mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{)}}-\/>m\_len)}
-\DoxyCodeLine{185                     \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
-\DoxyCodeLine{186                 \textcolor{keyword}{auto} start=\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{)}}-\/>m\_len-\/ilen;}
-\DoxyCodeLine{187                 \textcolor{keywordflow}{return} \mbox{\hyperlink{structjclib_1_1jStringBase}{jStringBase}}::create(\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{)}}-\/>m\_data+start, ilen );}
-\DoxyCodeLine{188             \}}
-\DoxyCodeLine{189             \mbox{\hyperlink{classjclib_1_1jString}{jString}} substr(std::size\_t start, std::size\_t len) \textcolor{keyword}{const} \{}
-\DoxyCodeLine{190                 \textcolor{keywordflow}{if}( start >= \mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{)}}-\/>m\_len )\{}
-\DoxyCodeLine{191                     \textcolor{keywordflow}{return} get\_empty();}
-\DoxyCodeLine{192                 \}}
-\DoxyCodeLine{193                 \textcolor{keyword}{auto} ilen=std::min(\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{)}}-\/>m\_len-\/start, len);}
-\DoxyCodeLine{194                 \textcolor{keywordflow}{if}(ilen == \mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{)}}-\/>m\_len)}
-\DoxyCodeLine{195                     \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
-\DoxyCodeLine{196                 \textcolor{keywordflow}{return} \mbox{\hyperlink{structjclib_1_1jStringBase}{jStringBase}}::create(\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{)}}-\/>m\_data+start,ilen);}
-\DoxyCodeLine{197             \}}
-\DoxyCodeLine{198 }
-\DoxyCodeLine{199             \mbox{\hyperlink{classjclib_1_1jString}{jString}} pad(std::size\_t length, \textcolor{keywordtype}{char} pad\_char = \textcolor{stringliteral}{' '} ) \textcolor{keyword}{const} \{}
-\DoxyCodeLine{200                 \textcolor{keywordflow}{if}( length <= len())}
-\DoxyCodeLine{201                     \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
-\DoxyCodeLine{202 }
-\DoxyCodeLine{203                 \mbox{\hyperlink{structjclib_1_1jStringBase}{jStringBase}} * new\_stringBase = \mbox{\hyperlink{structjclib_1_1jStringBase}{jStringBase}}::create(\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{)}}-\/>m\_data, length );}
-\DoxyCodeLine{204 }
-\DoxyCodeLine{205                 \textcolor{keywordtype}{char} * pad\_ptr = new\_stringBase-\/>m\_data + len();}
-\DoxyCodeLine{206                 \textcolor{keywordflow}{for}( ; pad\_ptr < new\_stringBase-\/>m\_data + length; ++ pad\_ptr ) \{}
-\DoxyCodeLine{207                     *pad\_ptr = pad\_char;}
-\DoxyCodeLine{208                 \}}
-\DoxyCodeLine{209                 *pad\_ptr = \textcolor{stringliteral}{'\(\backslash\)0'};}
-\DoxyCodeLine{210                 \textcolor{keywordflow}{return} new\_stringBase;}
-\DoxyCodeLine{211             \}}
-\DoxyCodeLine{212 }
-\DoxyCodeLine{213             std::vector<\mbox{\hyperlink{classjclib_1_1jString}{jString}}> split(\textcolor{keyword}{const} \textcolor{keywordtype}{char} * delim, \textcolor{keywordtype}{int} max\_splits=std::numeric\_limits<\textcolor{keywordtype}{int}>::max() ) \textcolor{keyword}{const} \{}
-\DoxyCodeLine{214                 std::vector<\mbox{\hyperlink{classjclib_1_1jString}{jString}}> answer;}
-\DoxyCodeLine{215                 \textcolor{keyword}{const} \textcolor{keywordtype}{char} * buffer = \mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{)}}-\/>m\_data;}
-\DoxyCodeLine{216                 \textcolor{keyword}{const} \textcolor{keywordtype}{char} * buffer\_end = buffer+len();}
-\DoxyCodeLine{217                 \textcolor{keyword}{const} \textcolor{keywordtype}{int} step = strlen(delim);}
-\DoxyCodeLine{218                 \textcolor{keyword}{auto} position = strstr( buffer, delim );}
-\DoxyCodeLine{219                 \textcolor{keywordflow}{if}( position == \textcolor{keywordtype}{nullptr} )\{}
-\DoxyCodeLine{220                     answer.push\_back(*\textcolor{keyword}{this});}
-\DoxyCodeLine{221                     \textcolor{keywordflow}{return} answer;}
-\DoxyCodeLine{222                 \}}
-\DoxyCodeLine{223                 \textcolor{keywordflow}{for}(    ;}
-\DoxyCodeLine{224                         position != \textcolor{keywordtype}{nullptr} \&\& max\_splits != 0;}
-\DoxyCodeLine{225                         -\/-\/max\_splits )\{}
-\DoxyCodeLine{226                     \mbox{\hyperlink{classjclib_1_1jString}{jString}} chunk(buffer,position);}
-\DoxyCodeLine{227                     answer.push\_back( chunk );}
-\DoxyCodeLine{228                     buffer += chunk.len() + step;}
-\DoxyCodeLine{229                     position = (buffer < buffer\_end) ? strstr( buffer, delim ) : \textcolor{keywordtype}{nullptr};}
-\DoxyCodeLine{230                 \}}
-\DoxyCodeLine{231                 \textcolor{keywordflow}{if}( buffer < buffer\_end ) \{}
-\DoxyCodeLine{232                     answer.push\_back(\mbox{\hyperlink{classjclib_1_1jString}{jString}}(buffer));}
-\DoxyCodeLine{233                 \}}
-\DoxyCodeLine{234                 \textcolor{keywordflow}{return} answer;}
-\DoxyCodeLine{235             \}}
-\DoxyCodeLine{236             \textcolor{keywordtype}{bool} operator < (\textcolor{keyword}{const} \mbox{\hyperlink{classjclib_1_1jString}{jString}} \&rhs) \textcolor{keyword}{const} \{}
-\DoxyCodeLine{237                 \textcolor{keywordflow}{return} strcmp(\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{)}}-\/>m\_data, rhs-\/>m\_data) < 0;}
-\DoxyCodeLine{238             \}}
-\DoxyCodeLine{239             \textcolor{keywordtype}{bool} operator <= (\textcolor{keyword}{const} \mbox{\hyperlink{classjclib_1_1jString}{jString}} \&rhs) \textcolor{keyword}{const} \{}
-\DoxyCodeLine{240                 \textcolor{keywordflow}{return} strcmp(\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{)}}-\/>m\_data, rhs-\/>m\_data) <= 0;}
-\DoxyCodeLine{241             \}}
-\DoxyCodeLine{242             \textcolor{keywordtype}{bool} operator > (\textcolor{keyword}{const} \mbox{\hyperlink{classjclib_1_1jString}{jString}} \&rhs) \textcolor{keyword}{const} \{}
-\DoxyCodeLine{243                 \textcolor{keywordflow}{return} strcmp(\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{)}}-\/>m\_data, rhs-\/>m\_data) > 0;}
-\DoxyCodeLine{244             \}}
-\DoxyCodeLine{245             \textcolor{keywordtype}{bool} operator >= (\textcolor{keyword}{const} \mbox{\hyperlink{classjclib_1_1jString}{jString}} \&rhs) \textcolor{keyword}{const} \{}
-\DoxyCodeLine{246                 \textcolor{keywordflow}{return} strcmp(\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{)}}-\/>m\_data, rhs-\/>m\_data) >= 0;}
-\DoxyCodeLine{247             \}}
-\DoxyCodeLine{248             \textcolor{keywordtype}{bool} operator == (\textcolor{keyword}{const} \mbox{\hyperlink{classjclib_1_1jString}{jString}} \&rhs) \textcolor{keyword}{const} \{}
-\DoxyCodeLine{249                 \textcolor{keywordflow}{return} strcmp(\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{)}}-\/>m\_data, rhs-\/>m\_data) == 0;}
-\DoxyCodeLine{250             \}}
-\DoxyCodeLine{251             \textcolor{keywordtype}{bool} operator != (\textcolor{keyword}{const} \mbox{\hyperlink{classjclib_1_1jString}{jString}} \&rhs) \textcolor{keyword}{const} \{}
-\DoxyCodeLine{252                 \textcolor{keywordflow}{return} strcmp(\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{)}}-\/>m\_data, rhs-\/>m\_data) != 0;}
-\DoxyCodeLine{253             \}}
-\DoxyCodeLine{254             size\_t len() \textcolor{keyword}{const} \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{)}}-\/>len();\}}
-\DoxyCodeLine{255 }
-\DoxyCodeLine{256             operator \textcolor{keyword}{const} \textcolor{keywordtype}{char} *() \textcolor{keyword}{const} \{ \textcolor{keywordflow}{return} (*\textcolor{keyword}{this})-\/>m\_data;\};}
-\DoxyCodeLine{257     \};}
-\DoxyCodeLine{258 }
-\DoxyCodeLine{259 }
-\DoxyCodeLine{260     \textcolor{keyword}{inline} std::ostream\& operator<<(std::ostream\& os, \textcolor{keyword}{const} \mbox{\hyperlink{classjclib_1_1jString}{jString}} \& string) \{}
-\DoxyCodeLine{261         os << string.data();}
-\DoxyCodeLine{262         \textcolor{keywordflow}{return} os;}
-\DoxyCodeLine{263     \}}
-\DoxyCodeLine{264 \};}
-\DoxyCodeLine{265 }
-\DoxyCodeLine{266 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{endif}}
+\DoxyCodeLine{34 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{include} \textcolor{preprocessor}{<}\textcolor{preprocessor}{cctype}\textcolor{preprocessor}{>}}
+\DoxyCodeLine{35 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{include} \textcolor{preprocessor}{<}\textcolor{preprocessor}{cstring}\textcolor{preprocessor}{>}}
+\DoxyCodeLine{36 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{include} \textcolor{preprocessor}{<}\textcolor{preprocessor}{string\_view}\textcolor{preprocessor}{>}}
+\DoxyCodeLine{37 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{include} \textcolor{preprocessor}{<}\textcolor{preprocessor}{ostream}\textcolor{preprocessor}{>}}
+\DoxyCodeLine{38 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{include} \textcolor{preprocessor}{<}\textcolor{preprocessor}{vector}\textcolor{preprocessor}{>}}
+\DoxyCodeLine{39 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{include} \mbox{\hyperlink{countedPointer_8hpp}{"{}countedPointer.hpp"{}}}}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41 \textcolor{keyword}{namespace} \mbox{\hyperlink{namespacejclib}{jclib}} \{}
+\DoxyCodeLine{42     \textcolor{comment}{/**}}
+\DoxyCodeLine{43 \textcolor{comment}{     * Implementation of a reference counted string}}
+\DoxyCodeLine{44 \textcolor{comment}{     * This string is lighweight with the string class}}
+\DoxyCodeLine{45 \textcolor{comment}{     * itself being little more than a slightly smart pointer.}}
+\DoxyCodeLine{46 \textcolor{comment}{     * }}
+\DoxyCodeLine{47 \textcolor{comment}{     * Primarily created to satisfy a need I have for}}
+\DoxyCodeLine{48 \textcolor{comment}{     * dynamic invariant strings in a re2c/lemon based project}}
+\DoxyCodeLine{49 \textcolor{comment}{     * which will be passing a ridiculous number of strings around.}}
+\DoxyCodeLine{50 \textcolor{comment}{    */}}
+\DoxyCodeLine{51 }
+\DoxyCodeLine{52     \textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1jString}{jString}};}
+\DoxyCodeLine{53     \textcolor{keyword}{namespace} Private \{}
+\DoxyCodeLine{54         \textcolor{comment}{// If you get strange crashes, enable this \#define}}
+\DoxyCodeLine{55         \textcolor{comment}{// It doubles the number of heap allocations / frees}}
+\DoxyCodeLine{56         \textcolor{comment}{// but does it safely}}
+\DoxyCodeLine{57         \textcolor{comment}{//\#define SAFE\_JSTRING 1}}
+\DoxyCodeLine{58 }
+\DoxyCodeLine{59         \textcolor{keyword}{struct} \mbox{\hyperlink{structjclib_1_1Private_1_1jStringBase}{jStringBase}} \{}
+\DoxyCodeLine{60             \textcolor{comment}{/**}}
+\DoxyCodeLine{61 \textcolor{comment}{             * A class to store the string data.}}
+\DoxyCodeLine{62 \textcolor{comment}{            */}}
+\DoxyCodeLine{63             \textcolor{keyword}{private}:}
+\DoxyCodeLine{64                 \textcolor{keyword}{friend} \textcolor{keyword}{class} \mbox{\hyperlink{namespacejclib}{jclib}}::\mbox{\hyperlink{classjclib_1_1jString}{jString}};}
+\DoxyCodeLine{65                 \textcolor{keyword}{friend} \textcolor{keyword}{class} \mbox{\hyperlink{namespacejclib}{jclib}}::\mbox{\hyperlink{classjclib_1_1CountedPointer}{CountedPointer}}<\mbox{\hyperlink{structjclib_1_1Private_1_1jStringBase}{jStringBase}}>; \textcolor{comment}{// = jString's parent class;}}
+\DoxyCodeLine{66                 \textcolor{keyword}{friend} std::ostream\& operator<<(std::ostream\& os, \textcolor{keyword}{const} \textcolor{keyword}{class} \mbox{\hyperlink{namespacejclib}{jclib}}::\mbox{\hyperlink{classjclib_1_1jString}{jString}} \& string);}
+\DoxyCodeLine{67                 \textcolor{comment}{// no copy constructor}}
+\DoxyCodeLine{68                 jStringBase( \textcolor{keyword}{const} \mbox{\hyperlink{structjclib_1_1Private_1_1jStringBase}{jStringBase}} \& ) = \textcolor{keyword}{delete};}
+\DoxyCodeLine{69                 \textcolor{comment}{// suppress assignment into the string}}
+\DoxyCodeLine{70                 \mbox{\hyperlink{structjclib_1_1Private_1_1jStringBase}{jStringBase}}\& operator = (\textcolor{keyword}{const} \mbox{\hyperlink{structjclib_1_1Private_1_1jStringBase}{jStringBase}}\&) = \textcolor{keyword}{delete};}
+\DoxyCodeLine{71                 \textcolor{comment}{// Implement the requirements for CountedPointer}}
+\DoxyCodeLine{72                 \textcolor{keywordtype}{int} counter\_;}
+\DoxyCodeLine{73                 \textcolor{keyword}{inline} \textcolor{keywordtype}{void} CountedPointerAttach() \{ ++counter\_; \}}
+\DoxyCodeLine{74                 \textcolor{keyword}{inline} \textcolor{keywordtype}{void} CountedPointerDetach() \{ \textcolor{keywordflow}{if}( !-\/-\/counter\_) \textcolor{keyword}{delete} \textcolor{keyword}{this};\}}
+\DoxyCodeLine{75                 \textcolor{comment}{// ctor private so only jString can access it}}
+\DoxyCodeLine{76                 jStringBase( \textcolor{keyword}{const} \textcolor{keywordtype}{char} * data, std::size\_t len )}
+\DoxyCodeLine{77                 : counter\_(0)}
+\DoxyCodeLine{78     \textcolor{preprocessor}{\#}\textcolor{preprocessor}{ifdef} \textcolor{preprocessor}{SAFE\_JSTRING}}
+\DoxyCodeLine{79                 , data\_( \textcolor{keyword}{new} \textcolor{keywordtype}{char}[len+1])}
+\DoxyCodeLine{80     \textcolor{preprocessor}{\#}\textcolor{preprocessor}{endif}}
+\DoxyCodeLine{81                 , len\_( len )}
+\DoxyCodeLine{82                 \{}
+\DoxyCodeLine{83                     strncpy(data\_, data, len);}
+\DoxyCodeLine{84                     data\_[len] = \textcolor{stringliteral}{'\(\backslash\)0'};}
+\DoxyCodeLine{85                 \}}
+\DoxyCodeLine{86                 \textcolor{comment}{/** create a jStringBase with data */}}
+\DoxyCodeLine{87                 \textcolor{keyword}{static} \mbox{\hyperlink{structjclib_1_1Private_1_1jStringBase}{jStringBase}} * create(\textcolor{keyword}{const} \textcolor{keywordtype}{char} * data, std::size\_t len) \{}
+\DoxyCodeLine{88     \textcolor{preprocessor}{\#}\textcolor{preprocessor}{ifdef} \textcolor{preprocessor}{SAFE\_JSTRING}}
+\DoxyCodeLine{89                     \textcolor{comment}{// Double create on heap}}
+\DoxyCodeLine{90                     \textcolor{keywordflow}{return} \textcolor{keyword}{new} jStringBase(data, len);}
+\DoxyCodeLine{91     \textcolor{preprocessor}{\#}\textcolor{preprocessor}{else}}
+\DoxyCodeLine{92                     \textcolor{keywordtype}{void} * new\_store = \textcolor{keyword}{new} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char}[len + \textcolor{keyword}{sizeof}(\mbox{\hyperlink{structjclib_1_1Private_1_1jStringBase}{jStringBase}})];}
+\DoxyCodeLine{93                     \mbox{\hyperlink{structjclib_1_1Private_1_1jStringBase}{jStringBase}} * new\_object= \textcolor{keyword}{new} (new\_store) \mbox{\hyperlink{structjclib_1_1Private_1_1jStringBase}{jStringBase}}(data, len);}
+\DoxyCodeLine{94                     \textcolor{keywordflow}{return} new\_object;}
+\DoxyCodeLine{95     \textcolor{preprocessor}{\#}\textcolor{preprocessor}{endif}}
+\DoxyCodeLine{96                 \}}
+\DoxyCodeLine{97                 \textcolor{comment}{/** create an empty jStringBase */}}
+\DoxyCodeLine{98                 \textcolor{keyword}{static} \mbox{\hyperlink{structjclib_1_1Private_1_1jStringBase}{jStringBase}} * create(std::size\_t len) \{}
+\DoxyCodeLine{99     \textcolor{preprocessor}{\#}\textcolor{preprocessor}{ifdef} \textcolor{preprocessor}{SAFE\_JSTRING}}
+\DoxyCodeLine{100                     \textcolor{comment}{// Double create on heap}}
+\DoxyCodeLine{101                     \textcolor{keywordflow}{return} \textcolor{keyword}{new} jStringBase(data, len);}
+\DoxyCodeLine{102     \textcolor{preprocessor}{\#}\textcolor{preprocessor}{else}}
+\DoxyCodeLine{103                     \textcolor{keywordtype}{void} * new\_store = \textcolor{keyword}{new} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char}[len + \textcolor{keyword}{sizeof}(\mbox{\hyperlink{structjclib_1_1Private_1_1jStringBase}{jStringBase}})];}
+\DoxyCodeLine{104                     \mbox{\hyperlink{structjclib_1_1Private_1_1jStringBase}{jStringBase}} * new\_object= \textcolor{keyword}{new} (new\_store) \mbox{\hyperlink{structjclib_1_1Private_1_1jStringBase}{jStringBase}}(\textcolor{stringliteral}{"{}"{}}, len);}
+\DoxyCodeLine{105                     \textcolor{keywordflow}{return} new\_object;}
+\DoxyCodeLine{106     \textcolor{preprocessor}{\#}\textcolor{preprocessor}{endif}}
+\DoxyCodeLine{107                 \}}
+\DoxyCodeLine{108     \textcolor{preprocessor}{\#}\textcolor{preprocessor}{ifdef} \textcolor{preprocessor}{SAFE\_JSTRING}}
+\DoxyCodeLine{109                 \textcolor{keyword}{virtual} \string~\mbox{\hyperlink{structjclib_1_1Private_1_1jStringBase}{jStringBase}}() \{}
+\DoxyCodeLine{110                     \textcolor{keyword}{delete} \mbox{\hyperlink{structjclib_1_1Private_1_1jStringBase}{data\_}};}
+\DoxyCodeLine{111                 \}}
+\DoxyCodeLine{112     \textcolor{preprocessor}{\#}\textcolor{preprocessor}{endif}}
+\DoxyCodeLine{113                 std::size\_t len\_;}
+\DoxyCodeLine{114     \textcolor{preprocessor}{\#}\textcolor{preprocessor}{ifdef} \textcolor{preprocessor}{SAFE\_JSTRING}}
+\DoxyCodeLine{115                 \textcolor{comment}{// Not the most efficient, but portable.}}
+\DoxyCodeLine{116                 \textcolor{keywordtype}{char} * \mbox{\hyperlink{structjclib_1_1Private_1_1jStringBase}{data\_}};}
+\DoxyCodeLine{117     \textcolor{preprocessor}{\#}\textcolor{preprocessor}{else}}
+\DoxyCodeLine{118                 \textcolor{comment}{// **** This MUST be the last data member in the struct as}}
+\DoxyCodeLine{119                 \textcolor{comment}{// we deliberately overrun the declared length of the array.}}
+\DoxyCodeLine{120                 \textcolor{comment}{//}}
+\DoxyCodeLine{121                 \textcolor{comment}{// I don't recall seeing any guarantee that struct members}}
+\DoxyCodeLine{122                 \textcolor{comment}{// are laid out in declaration order, but every compiler I}}
+\DoxyCodeLine{123                 \textcolor{comment}{// know works that way. }}
+\DoxyCodeLine{124                 \textcolor{comment}{// If you get strange crashes, try defining SAFE\_JSTRING}}
+\DoxyCodeLine{125                 \textcolor{keywordtype}{char} data\_[1];}
+\DoxyCodeLine{126     \textcolor{preprocessor}{\#}\textcolor{preprocessor}{endif}}
+\DoxyCodeLine{127             \textcolor{keyword}{public}:}
+\DoxyCodeLine{128                 operator \textcolor{keyword}{const} \textcolor{keywordtype}{char} *() \textcolor{keyword}{const} \{ \textcolor{keywordflow}{return} data\_;\};}
+\DoxyCodeLine{129                 \textcolor{keyword}{auto} len() \textcolor{keyword}{const} \{ \textcolor{keywordflow}{return} len\_;\}}
+\DoxyCodeLine{130         \};}
+\DoxyCodeLine{131     \};}
+\DoxyCodeLine{132 }
+\DoxyCodeLine{133     \textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1jString}{jString}}: \textcolor{comment}{/* private */} \mbox{\hyperlink{classjclib_1_1CountedPointer}{CountedPointer}}<Private::\mbox{\hyperlink{structjclib_1_1Private_1_1jStringBase}{jStringBase}}> \{}
+\DoxyCodeLine{134         \textcolor{comment}{/***}}
+\DoxyCodeLine{135 \textcolor{comment}{         * The user interface to the strings}}
+\DoxyCodeLine{136 \textcolor{comment}{        */}}
+\DoxyCodeLine{137         \textcolor{keyword}{private}:}
+\DoxyCodeLine{138             \textcolor{keyword}{typedef} Private::\mbox{\hyperlink{structjclib_1_1Private_1_1jStringBase}{jStringBase}} jStringBase;}
+\DoxyCodeLine{139         \textcolor{keyword}{public}:}
+\DoxyCodeLine{140             \textcolor{comment}{/** return an empty string.}}
+\DoxyCodeLine{141 \textcolor{comment}{             *  We use so many it makes sense to pre-\/create one}}
+\DoxyCodeLine{142 \textcolor{comment}{            */}}
+\DoxyCodeLine{143             \textcolor{keyword}{static} \mbox{\hyperlink{classjclib_1_1jString}{jString}} \mbox{\hyperlink{classjclib_1_1jString_a64b12d83c87606faedf066ad33c07f53}{get\_empty}}() \{}
+\DoxyCodeLine{144                 \textcolor{keyword}{static} \mbox{\hyperlink{classjclib_1_1jString}{jString}} empty\_base(\textcolor{stringliteral}{"{}"{}});}
+\DoxyCodeLine{145                 \textcolor{keywordflow}{return} empty\_base;}
+\DoxyCodeLine{146             \}}
+\DoxyCodeLine{147 }
+\DoxyCodeLine{148             \textcolor{keyword}{const} \textcolor{keywordtype}{char} * data() \textcolor{keyword}{const} \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{)}}-\/>data\_;\}}
+\DoxyCodeLine{149 }
+\DoxyCodeLine{150             operator \textcolor{keyword}{const} \textcolor{keywordtype}{char} *() \textcolor{keyword}{const} \{ \textcolor{keywordflow}{return} (*\textcolor{keyword}{this})-\/>data\_;\};}
+\DoxyCodeLine{151 }
+\DoxyCodeLine{152             size\_t len() \textcolor{keyword}{const} \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{)}}-\/>len();\}}
+\DoxyCodeLine{153 }
+\DoxyCodeLine{154             \textcolor{keyword}{friend} std::ostream\& operator<<(std::ostream\& os, \textcolor{keyword}{const} \textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1jString}{jString}} \& string);}
+\DoxyCodeLine{155 }
+\DoxyCodeLine{156             \textcolor{keywordtype}{bool} isvalid() \textcolor{keyword}{const} \{}
+\DoxyCodeLine{157                 \textcolor{keywordflow}{return} \mbox{\hyperlink{classjclib_1_1CountedPointer_aba4799319512576d8873edd9239d7073}{isset}}\mbox{\hyperlink{classjclib_1_1CountedPointer_aba4799319512576d8873edd9239d7073}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_aba4799319512576d8873edd9239d7073}{)}};}
+\DoxyCodeLine{158             \}}
+\DoxyCodeLine{159 }
+\DoxyCodeLine{160             \textcolor{comment}{// create from an existing base}}
+\DoxyCodeLine{161             \textcolor{comment}{// shouldn't really happen, but who knows}}
+\DoxyCodeLine{162             \textcolor{comment}{// what changes will occur in the future or}}
+\DoxyCodeLine{163             \textcolor{comment}{// either lemon or re2c does something weird}}
+\DoxyCodeLine{164             \textcolor{comment}{// in its generated code?}}
+\DoxyCodeLine{165             jString( Private::\mbox{\hyperlink{structjclib_1_1Private_1_1jStringBase}{jStringBase}} *base )}
+\DoxyCodeLine{166                 : \mbox{\hyperlink{classjclib_1_1CountedPointer}{CountedPointer}}<jStringBase>(base)}
+\DoxyCodeLine{167              \{\}}
+\DoxyCodeLine{168             \textcolor{comment}{// Create empty string}}
+\DoxyCodeLine{169             jString( ):}
+\DoxyCodeLine{170                 \mbox{\hyperlink{classjclib_1_1CountedPointer}{CountedPointer}}<jStringBase>(\mbox{\hyperlink{classjclib_1_1jString_a64b12d83c87606faedf066ad33c07f53}{get\_empty}}\mbox{\hyperlink{classjclib_1_1jString_a64b12d83c87606faedf066ad33c07f53}{(}}\mbox{\hyperlink{classjclib_1_1jString_a64b12d83c87606faedf066ad33c07f53}{)}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{.}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{)}})}
+\DoxyCodeLine{171                 \{\}}
+\DoxyCodeLine{172             \textcolor{comment}{// Create from c string}}
+\DoxyCodeLine{173             jString( \textcolor{keyword}{const} \textcolor{keywordtype}{char} * source ):}
+\DoxyCodeLine{174                 \mbox{\hyperlink{classjclib_1_1CountedPointer}{CountedPointer}}<jStringBase>(jStringBase::create(source, strlen(source)))}
+\DoxyCodeLine{175                 \{\}}
+\DoxyCodeLine{176             \textcolor{comment}{// Create from start of c string}}
+\DoxyCodeLine{177             jString( \textcolor{keyword}{const} \textcolor{keywordtype}{char} * source, std::size\_t len ):}
+\DoxyCodeLine{178                 \mbox{\hyperlink{classjclib_1_1CountedPointer}{CountedPointer}}<jStringBase>(jStringBase::create(source, len))}
+\DoxyCodeLine{179                 \{\}}
+\DoxyCodeLine{180             \textcolor{comment}{// Create from two pointers to the same buffer}}
+\DoxyCodeLine{181             \textcolor{comment}{// NB: This is what re2c gives on a match}}
+\DoxyCodeLine{182             jString( \textcolor{keyword}{const} \textcolor{keywordtype}{char} * start, \textcolor{keyword}{const} \textcolor{keywordtype}{char} * end ):}
+\DoxyCodeLine{183                 \mbox{\hyperlink{classjclib_1_1CountedPointer}{CountedPointer}}<jStringBase>(jStringBase::create(start, end-\/start))}
+\DoxyCodeLine{184                 \{\}}
+\DoxyCodeLine{185 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{ifdef} \textcolor{preprocessor}{\_\_cpp\_lib\_string\_view}}
+\DoxyCodeLine{186             \textcolor{comment}{// Create from std::string\_view}}
+\DoxyCodeLine{187             \textcolor{comment}{// NB: Same as previous, really}}
+\DoxyCodeLine{188             \mbox{\hyperlink{classjclib_1_1jString}{jString}}( \textcolor{keyword}{const} \mbox{\hyperlink{classjclib_1_1jString}{std}}::\mbox{\hyperlink{classjclib_1_1jString}{string\_view}} \& \mbox{\hyperlink{classjclib_1_1jString}{view}} ):}
+\DoxyCodeLine{189                 \mbox{\hyperlink{classjclib_1_1jString}{CountedPointer}}<\mbox{\hyperlink{classjclib_1_1jString}{jStringBase}}>(\mbox{\hyperlink{classjclib_1_1jString}{jStringBase}}::\mbox{\hyperlink{classjclib_1_1jString}{create}}(\mbox{\hyperlink{classjclib_1_1jString}{view}}.\mbox{\hyperlink{classjclib_1_1jString}{begin}}(), \mbox{\hyperlink{classjclib_1_1jString}{view}}.\mbox{\hyperlink{classjclib_1_1jString}{length}}()))}
+\DoxyCodeLine{190                 \{\}}
+\DoxyCodeLine{191             \textcolor{comment}{// Cast to std::string\_view}}
+\DoxyCodeLine{192             \mbox{\hyperlink{classjclib_1_1jString}{operator}} \mbox{\hyperlink{classjclib_1_1jString}{std}}::\mbox{\hyperlink{classjclib_1_1jString}{string\_view}} () \textcolor{keyword}{const} \{}
+\DoxyCodeLine{193                \textcolor{keywordflow}{return} \mbox{\hyperlink{classjclib_1_1jString}{std}}::\mbox{\hyperlink{classjclib_1_1jString}{string\_view}}( \mbox{\hyperlink{classjclib_1_1jString}{data}}(), \mbox{\hyperlink{classjclib_1_1jString}{len}}() );}
+\DoxyCodeLine{194             \}}
+\DoxyCodeLine{195 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{endif}}
+\DoxyCodeLine{196             \textcolor{comment}{// string concatenation}}
+\DoxyCodeLine{197             \mbox{\hyperlink{classjclib_1_1jString}{jString}} operator + (\textcolor{keyword}{const} \mbox{\hyperlink{classjclib_1_1jString}{jString}} \&rhs) \{}
+\DoxyCodeLine{198                 jStringBase * lhs\_base = \mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{)}};}
+\DoxyCodeLine{199                 \textcolor{keywordflow}{if}( lhs\_base-\/>len\_ == 0 )}
+\DoxyCodeLine{200                     \textcolor{keywordflow}{return} rhs;}
+\DoxyCodeLine{201                 \textcolor{keywordflow}{if}( rhs.len() == 0 )}
+\DoxyCodeLine{202                     \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
+\DoxyCodeLine{203                 \textcolor{keyword}{auto} len = lhs\_base-\/>len\_ + rhs-\/>len\_;}
+\DoxyCodeLine{204                 jStringBase * new\_base = jStringBase::create(lhs\_base-\/>data\_,len );}
+\DoxyCodeLine{205                 strncpy(new\_base-\/>data\_ + lhs\_base-\/>len\_,rhs-\/>data\_, rhs-\/>len\_ );}
+\DoxyCodeLine{206                 new\_base-\/>data\_[len]=\textcolor{stringliteral}{'\(\backslash\)0'};}
+\DoxyCodeLine{207                 \textcolor{keywordflow}{return} new\_base;}
+\DoxyCodeLine{208             \}}
+\DoxyCodeLine{209             \textcolor{comment}{// extract substrings (left, right, any) with}}
+\DoxyCodeLine{210             \textcolor{comment}{// silent bounds checks.}}
+\DoxyCodeLine{211             \textcolor{comment}{// E.g. if z=="{}123"{}, z.substr(2,999) will quietly return "{}3"{}}}
+\DoxyCodeLine{212             \textcolor{comment}{// NB: Const but when the whole string is to be }}
+\DoxyCodeLine{213             \textcolor{comment}{// returned, we return a copy of ourself not a}}
+\DoxyCodeLine{214             \textcolor{comment}{// whole new string. This saves creating a new }}
+\DoxyCodeLine{215             \textcolor{comment}{// jStringBase.}}
+\DoxyCodeLine{216             \mbox{\hyperlink{classjclib_1_1jString}{jString}} left(std::size\_t len) \textcolor{keyword}{const} \{}
+\DoxyCodeLine{217                 \textcolor{keyword}{auto} ilen=std::min(len,\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{)}}-\/>len\_);}
+\DoxyCodeLine{218                 \textcolor{keywordflow}{if}(ilen == \mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{)}}-\/>len\_)}
+\DoxyCodeLine{219                     \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
+\DoxyCodeLine{220                 \textcolor{keywordflow}{return} jStringBase::create(\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{)}}-\/>data\_, ilen );}
+\DoxyCodeLine{221             \}}
+\DoxyCodeLine{222             \mbox{\hyperlink{classjclib_1_1jString}{jString}} right(std::size\_t len) \textcolor{keyword}{const} \{}
+\DoxyCodeLine{223                 \textcolor{keyword}{auto} ilen=std::min(len,\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{)}}-\/>len\_);}
+\DoxyCodeLine{224                 \textcolor{keywordflow}{if}(ilen == \mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{)}}-\/>len\_)}
+\DoxyCodeLine{225                     \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
+\DoxyCodeLine{226                 \textcolor{keyword}{auto} start=\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{)}}-\/>len\_-\/ilen;}
+\DoxyCodeLine{227                 \textcolor{keywordflow}{return} jStringBase::create(\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{)}}-\/>data\_+start, ilen );}
+\DoxyCodeLine{228             \}}
+\DoxyCodeLine{229             \mbox{\hyperlink{classjclib_1_1jString}{jString}} substr(std::size\_t start, std::size\_t len) \textcolor{keyword}{const} \{}
+\DoxyCodeLine{230                 \textcolor{keywordflow}{if}( start >= \mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{)}}-\/>len\_ )\{}
+\DoxyCodeLine{231                     \textcolor{keywordflow}{return} \mbox{\hyperlink{classjclib_1_1jString_a64b12d83c87606faedf066ad33c07f53}{get\_empty}}\mbox{\hyperlink{classjclib_1_1jString_a64b12d83c87606faedf066ad33c07f53}{(}}\mbox{\hyperlink{classjclib_1_1jString_a64b12d83c87606faedf066ad33c07f53}{)}};}
+\DoxyCodeLine{232                 \}}
+\DoxyCodeLine{233                 \textcolor{keyword}{auto} ilen=std::min(\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{)}}-\/>len\_-\/start, len);}
+\DoxyCodeLine{234                 \textcolor{keywordflow}{if}(ilen == \mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{)}}-\/>len\_)}
+\DoxyCodeLine{235                     \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
+\DoxyCodeLine{236                 \textcolor{keywordflow}{return} jStringBase::create(\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{)}}-\/>data\_+start,ilen);}
+\DoxyCodeLine{237             \}}
+\DoxyCodeLine{238 }
+\DoxyCodeLine{239             \mbox{\hyperlink{classjclib_1_1jString}{jString}} pad(std::size\_t length, \textcolor{keywordtype}{char} pad\_char = \textcolor{stringliteral}{' '} ) \textcolor{keyword}{const} \{}
+\DoxyCodeLine{240                 \textcolor{keywordflow}{if}( length <= len())}
+\DoxyCodeLine{241                     \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
+\DoxyCodeLine{242 }
+\DoxyCodeLine{243                 jStringBase * new\_stringBase = jStringBase::create(\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{)}}-\/>data\_, length );}
+\DoxyCodeLine{244 }
+\DoxyCodeLine{245                 \textcolor{keywordtype}{char} * pad\_ptr = new\_stringBase-\/>data\_ + len();}
+\DoxyCodeLine{246                 \textcolor{keywordflow}{for}( ; pad\_ptr < new\_stringBase-\/>data\_ + length; ++ pad\_ptr ) \{}
+\DoxyCodeLine{247                     *pad\_ptr = pad\_char;}
+\DoxyCodeLine{248                 \}}
+\DoxyCodeLine{249                 *pad\_ptr = \textcolor{stringliteral}{'\(\backslash\)0'};}
+\DoxyCodeLine{250                 \textcolor{keywordflow}{return} new\_stringBase;}
+\DoxyCodeLine{251             \}}
+\DoxyCodeLine{252 }
+\DoxyCodeLine{253             \textcolor{comment}{/*** Split string on delim, retuirning answers as an array of strings,}}
+\DoxyCodeLine{254 \textcolor{comment}{             *   once max\_splits copies of the delimiter have been found, the }}
+\DoxyCodeLine{255 \textcolor{comment}{             * remainder if any is a single string at the end of the array.}}
+\DoxyCodeLine{256 \textcolor{comment}{            */}}
+\DoxyCodeLine{257             std::vector<\mbox{\hyperlink{classjclib_1_1jString}{jString}}> split(\textcolor{keyword}{const} \textcolor{keywordtype}{char} * delim, \textcolor{keywordtype}{int} max\_splits=std::numeric\_limits<\textcolor{keywordtype}{int}>::max() ) \textcolor{keyword}{const} \{}
+\DoxyCodeLine{258                 std::vector<\mbox{\hyperlink{classjclib_1_1jString}{jString}}> answer;}
+\DoxyCodeLine{259                 \textcolor{keyword}{const} \textcolor{keywordtype}{char} * buffer = \mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{)}}-\/>data\_;}
+\DoxyCodeLine{260                 \textcolor{keyword}{const} \textcolor{keywordtype}{char} * buffer\_end = buffer+len();}
+\DoxyCodeLine{261                 \textcolor{keyword}{const} \textcolor{keywordtype}{int} step = strlen(delim);}
+\DoxyCodeLine{262                 \textcolor{keyword}{auto} position = strstr( buffer, delim );}
+\DoxyCodeLine{263                 \textcolor{keywordflow}{if}( position == \textcolor{keywordtype}{nullptr} )\{}
+\DoxyCodeLine{264                     answer.push\_back(*\textcolor{keyword}{this});}
+\DoxyCodeLine{265                     \textcolor{keywordflow}{return} answer;}
+\DoxyCodeLine{266                 \}}
+\DoxyCodeLine{267                 \textcolor{keywordflow}{for}(    ;}
+\DoxyCodeLine{268                         position != \textcolor{keywordtype}{nullptr} \&\& max\_splits != 0;}
+\DoxyCodeLine{269                         -\/-\/max\_splits )\{}
+\DoxyCodeLine{270                     \mbox{\hyperlink{classjclib_1_1jString}{jString}} chunk(buffer,position);}
+\DoxyCodeLine{271                     answer.push\_back( chunk );}
+\DoxyCodeLine{272                     buffer += chunk.len() + step;}
+\DoxyCodeLine{273                     position = (buffer < buffer\_end) ? strstr( buffer, delim ) : \textcolor{keywordtype}{nullptr};}
+\DoxyCodeLine{274                 \}}
+\DoxyCodeLine{275                 \textcolor{keywordflow}{if}( buffer < buffer\_end ) \{}
+\DoxyCodeLine{276                     answer.push\_back(\mbox{\hyperlink{classjclib_1_1jString}{jString}}(buffer));}
+\DoxyCodeLine{277                 \}}
+\DoxyCodeLine{278                 \textcolor{keywordflow}{return} answer;}
+\DoxyCodeLine{279             \}}
+\DoxyCodeLine{280 }
+\DoxyCodeLine{281             \textcolor{comment}{/** Return position of first occurrence of findee */}}
+\DoxyCodeLine{282             \textcolor{keywordtype}{int} \mbox{\hyperlink{classjclib_1_1jString_ad1d51cf9e884aabcbf0387edc40a9eb2}{find}}( \mbox{\hyperlink{classjclib_1_1jString}{jString}} findee ) \{}
+\DoxyCodeLine{283                 \textcolor{keyword}{auto} buffer = data();}
+\DoxyCodeLine{284                 \textcolor{keyword}{auto} findee\_chars = findee.data();}
+\DoxyCodeLine{285                 \textcolor{keyword}{auto} position = strstr( buffer, findee\_chars );}
+\DoxyCodeLine{286                 \textcolor{keywordflow}{if}( position == \textcolor{keywordtype}{nullptr} )}
+\DoxyCodeLine{287                     \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{288                 \textcolor{keywordflow}{return} position -\/ buffer;}
+\DoxyCodeLine{289             \}}
+\DoxyCodeLine{290 }
+\DoxyCodeLine{291             \textcolor{comment}{/** Check is only all alphabetic ascii characters */}}
+\DoxyCodeLine{292             \textcolor{keywordtype}{bool} \mbox{\hyperlink{classjclib_1_1jString_ab0d1653253c0c5636e524628cd0b0a27}{isalpha}}() \{}
+\DoxyCodeLine{293                 \textcolor{keywordflow}{if}( len() == 0 )}
+\DoxyCodeLine{294                     \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{295                 \textcolor{keywordflow}{for}( \textcolor{keyword}{const} \textcolor{keywordtype}{char} * c = data(); *c; ++c) \{}
+\DoxyCodeLine{296                     \textcolor{keywordflow}{if}( ! std::isalpha(*c) )}
+\DoxyCodeLine{297                         \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{298                 \}}
+\DoxyCodeLine{299                 \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{300             \}}
+\DoxyCodeLine{301 }
+\DoxyCodeLine{302             \textcolor{comment}{/** Check all alphabetic ascii characters in string are upper case */}}
+\DoxyCodeLine{303             \textcolor{keywordtype}{bool} \mbox{\hyperlink{classjclib_1_1jString_aae84c1413b3d137a21fecb495c059ef1}{isupper}}() \{}
+\DoxyCodeLine{304                 \textcolor{keywordflow}{if}( len() == 0 )}
+\DoxyCodeLine{305                     \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{306                 \textcolor{keywordflow}{for}( \textcolor{keyword}{const} \textcolor{keywordtype}{char} * c = data(); *c; ++c) \{}
+\DoxyCodeLine{307                     \textcolor{keywordflow}{if}( std::isalpha(*c) \&\& ! std::isupper(*c))}
+\DoxyCodeLine{308                         \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{309                 \}}
+\DoxyCodeLine{310                 \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{311             \}}
+\DoxyCodeLine{312 }
+\DoxyCodeLine{313             \textcolor{comment}{/** Check all alphabetic ascii characters in string are upper case */}}
+\DoxyCodeLine{314             \textcolor{keywordtype}{bool} \mbox{\hyperlink{classjclib_1_1jString_ae9c51457a9e150c838de713183783814}{islower}}() \{}
+\DoxyCodeLine{315                 \textcolor{keywordflow}{if}( len() == 0 )}
+\DoxyCodeLine{316                     \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{317                 \textcolor{keywordflow}{for}( \textcolor{keyword}{const} \textcolor{keywordtype}{char} * c = data(); *c; ++c) \{}
+\DoxyCodeLine{318                     \textcolor{keywordflow}{if}( std::isalpha(*c) \&\& ! std::islower(*c))}
+\DoxyCodeLine{319                         \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{320                 \}}
+\DoxyCodeLine{321                 \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{322             \}}
+\DoxyCodeLine{323 }
+\DoxyCodeLine{324             \textcolor{comment}{/** Join elements in an iterable into a new string}}
+\DoxyCodeLine{325 \textcolor{comment}{             *  with the elements separated by our value.}}
+\DoxyCodeLine{326 \textcolor{comment}{             *  Elements must be valid for jString constructors.}}
+\DoxyCodeLine{327 \textcolor{comment}{             *  Based on Python's str.join() method}}
+\DoxyCodeLine{328 \textcolor{comment}{             */}}
+\DoxyCodeLine{329             \textcolor{keyword}{template}<\textcolor{keyword}{class} T> \mbox{\hyperlink{classjclib_1_1jString}{jString}} \mbox{\hyperlink{classjclib_1_1jString_a003c161a28051c3ce6390a45841ba38f}{join}}( \textcolor{keyword}{const} T \& input ) \{}
+\DoxyCodeLine{330                 size\_t total\_length = 0;}
+\DoxyCodeLine{331                 std::vector<\mbox{\hyperlink{classjclib_1_1jString}{jString}}> strings; \textcolor{comment}{// No guarantee that input can be parsed twice}}
+\DoxyCodeLine{332                 \textcolor{keywordflow}{for}( \mbox{\hyperlink{classjclib_1_1jString}{jString}} bit : input ) \{}
+\DoxyCodeLine{333                     strings.push\_back( bit );}
+\DoxyCodeLine{334                     total\_length += bit.len() + len();}
+\DoxyCodeLine{335                 \}}
+\DoxyCodeLine{336                 total\_length = total\_length + 1 -\/ len();}
+\DoxyCodeLine{337                 jStringBase * answer = jStringBase::create(total\_length);}
+\DoxyCodeLine{338                 \textcolor{keywordtype}{char} * out = \textcolor{keyword}{const\_cast}<\textcolor{keywordtype}{char} *>(answer-\/>data\_);}
+\DoxyCodeLine{339                 \textcolor{keywordtype}{bool} first = \textcolor{keyword}{true};}
+\DoxyCodeLine{340                 \textcolor{keywordflow}{for}( \mbox{\hyperlink{classjclib_1_1jString}{jString}} bit : strings ) \{}
+\DoxyCodeLine{341                     \textcolor{keywordflow}{if}( first )}
+\DoxyCodeLine{342                         first = \textcolor{keyword}{false};}
+\DoxyCodeLine{343                     \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{344                         memmove(out, data(), len());}
+\DoxyCodeLine{345                         out+=len();}
+\DoxyCodeLine{346                     \}}
+\DoxyCodeLine{347                     memmove(out, bit.data(), bit.len());}
+\DoxyCodeLine{348                     out+=bit.len();}
+\DoxyCodeLine{349                 \}}
+\DoxyCodeLine{350                 *out=\textcolor{stringliteral}{'\(\backslash\)0'};}
+\DoxyCodeLine{351                 \textcolor{keywordflow}{return} answer;}
+\DoxyCodeLine{352             \}}
+\DoxyCodeLine{353 }
+\DoxyCodeLine{354             \textcolor{keywordtype}{bool} operator < (\textcolor{keyword}{const} \mbox{\hyperlink{classjclib_1_1jString}{jString}} \&rhs) \textcolor{keyword}{const} \{}
+\DoxyCodeLine{355                 \textcolor{keywordflow}{return} strcmp(\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{)}}-\/>data\_, rhs-\/>data\_) < 0;}
+\DoxyCodeLine{356             \}}
+\DoxyCodeLine{357             \textcolor{keywordtype}{bool} operator <= (\textcolor{keyword}{const} \mbox{\hyperlink{classjclib_1_1jString}{jString}} \&rhs) \textcolor{keyword}{const} \{}
+\DoxyCodeLine{358                 \textcolor{keywordflow}{return} strcmp(\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{)}}-\/>data\_, rhs-\/>data\_) <= 0;}
+\DoxyCodeLine{359             \}}
+\DoxyCodeLine{360             \textcolor{keywordtype}{bool} operator > (\textcolor{keyword}{const} \mbox{\hyperlink{classjclib_1_1jString}{jString}} \&rhs) \textcolor{keyword}{const} \{}
+\DoxyCodeLine{361                 \textcolor{keywordflow}{return} strcmp(\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{)}}-\/>data\_, rhs-\/>data\_) > 0;}
+\DoxyCodeLine{362             \}}
+\DoxyCodeLine{363             \textcolor{keywordtype}{bool} operator >= (\textcolor{keyword}{const} \mbox{\hyperlink{classjclib_1_1jString}{jString}} \&rhs) \textcolor{keyword}{const} \{}
+\DoxyCodeLine{364                 \textcolor{keywordflow}{return} strcmp(\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{)}}-\/>data\_, rhs-\/>data\_) >= 0;}
+\DoxyCodeLine{365             \}}
+\DoxyCodeLine{366             \textcolor{keywordtype}{bool} operator == (\textcolor{keyword}{const} \mbox{\hyperlink{classjclib_1_1jString}{jString}} \&rhs) \textcolor{keyword}{const} \{}
+\DoxyCodeLine{367                 \textcolor{keywordflow}{return} strcmp(\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{)}}-\/>data\_, rhs-\/>data\_) == 0;}
+\DoxyCodeLine{368             \}}
+\DoxyCodeLine{369             \textcolor{keywordtype}{bool} operator == (\textcolor{keyword}{const} \textcolor{keywordtype}{char} *rhs) \textcolor{keyword}{const} \{}
+\DoxyCodeLine{370                 \textcolor{keywordflow}{return} strcmp(\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{)}}-\/>data\_, \mbox{\hyperlink{classjclib_1_1jString}{jString}}(rhs)-\/>data\_) == 0;}
+\DoxyCodeLine{371             \}}
+\DoxyCodeLine{372             \textcolor{keywordtype}{bool} operator != (\textcolor{keyword}{const} \mbox{\hyperlink{classjclib_1_1jString}{jString}} \&rhs) \textcolor{keyword}{const} \{}
+\DoxyCodeLine{373                 \textcolor{keywordflow}{return} strcmp(\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{)}}-\/>data\_, rhs-\/>data\_) != 0;}
+\DoxyCodeLine{374             \}}
+\DoxyCodeLine{375     \};}
+\DoxyCodeLine{376 }
+\DoxyCodeLine{377 }
+\DoxyCodeLine{378     \textcolor{keyword}{inline} std::ostream\& operator<<(std::ostream\& os, \textcolor{keyword}{const} \mbox{\hyperlink{classjclib_1_1jString}{jString}} \& string) \{}
+\DoxyCodeLine{379         os << string.data();}
+\DoxyCodeLine{380         \textcolor{keywordflow}{return} os;}
+\DoxyCodeLine{381     \}}
+\DoxyCodeLine{382 \};}
+\DoxyCodeLine{383 }
+\DoxyCodeLine{384 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{endif}}
 
 \end{DoxyCode}
