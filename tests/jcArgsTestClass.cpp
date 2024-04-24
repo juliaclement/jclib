@@ -27,6 +27,8 @@ SOFTWARE.
  */
 
 // #include "cstdafx"
+#include <filesystem>
+#include <unistd.h>
 #ifdef ONE_FIXTURE
 #include <cppunit/CompilerOutputter.h>
 #include <cppunit/extensions/TestFactoryRegistry.h>
@@ -54,12 +56,34 @@ public:
     jString help_prefix_ = "Help Text";
     jString help_suffix_ = "Help ends";
     std::ostringstream out_stream_;
-    jcArgsTestClass() {}
+    bool temp_dir_exists_ = false;
+    jString temp_dir_;
+    jString temp_file_name_1_;
+    jString temp_file_name_2_;
+    jcArgsTestClass() {
+        std::filesystem::path directory = std::filesystem::temp_directory_path();
+        std::ostringstream dir_text;
+        pid_t pid = getpid();
+        dir_text << directory.string() << "/jclib-test" << pid;
+        temp_dir_ = jString(dir_text.str());
+        temp_file_name_1_ = temp_dir_+"/temp1.txt";
+        temp_file_name_2_ = temp_dir_+"/temp2.txt";
+    }
     virtual ~jcArgsTestClass() {}
     void setUp(){
     }
     void tearDown(){}
 private:
+    jString get_temp_file_name( int which ) {
+        if( ! temp_dir_exists_) {
+            std::filesystem::create_directory((const char *)temp_dir_);
+            temp_dir_exists_ = true;
+        }
+        if( which == 1 ) {
+            return temp_file_name_1_;
+        }
+        return temp_file_name_2_;
+    }
     void standard_args( arguments & args ) {
         args.load({
             arg(so.str_,"s","string","String Arg",true,false),
@@ -67,7 +91,8 @@ private:
             arg(so.int_,"i","int","Int Arg",true,false),
             arg(so.unsigned_,"u","unsigned","Unsigned Arg",true,false),
             arg(args.show_help_,"h", "help", "Show help",false,false),
-            arg(args.show_version_,"v","version", "Show version info", false, false)
+            arg(args.show_version_,"v","version", "Show version info", false, false),
+            new jclib::config( args, "C", "config", "Set Defaults" )
         });
         args.version_string_ = version_;
         args.help_prefix_ = help_prefix_;
@@ -129,13 +154,134 @@ private:
         CPPUNIT_ASSERT(so.int_==2112);
         CPPUNIT_ASSERT(out_stream_.str().length() == 0);
     }
+    void testConfigShortAssign(){
+        arguments args(out_stream_);
+        standard_args( args );
+        std::string config_contents("\n\n#test string\ns=string\nu=123\ni=1221\n");
+        std::istringstream config_file(config_contents);
+        args.process_config(config_file,"Config");
+        // Test above
+        CPPUNIT_ASSERT(so.int_==1221);
+        CPPUNIT_ASSERT(so.str_=="string");
+        CPPUNIT_ASSERT(so.unsigned_==123);
+        CPPUNIT_ASSERT(out_stream_.str().length() == 0);
+    }
+    void testConfigShortSpaces(){
+        arguments args(out_stream_);
+        standard_args( args );
+        std::string config_contents("s  string\nu\t123\ni  1221\n");
+        std::istringstream config_file(config_contents);
+        args.process_config(config_file,"Config");
+        // Test above
+        CPPUNIT_ASSERT(so.int_==1221);
+        CPPUNIT_ASSERT(so.str_=="string");
+        CPPUNIT_ASSERT(so.unsigned_==123);
+        CPPUNIT_ASSERT(out_stream_.str().length() == 0);
+    }
+    void testConfigShortLeadingTrailingSpaces(){
+        arguments args(out_stream_);
+        standard_args( args );
+        std::string config_contents("  s  string  \n\tu\t123\n\ti  1221\t\n");
+        std::istringstream config_file(config_contents);
+        args.process_config(config_file,"Config");
+        // Test above
+        CPPUNIT_ASSERT(so.int_==1221);
+        CPPUNIT_ASSERT(so.str_=="string");
+        CPPUNIT_ASSERT(so.unsigned_==123);
+        CPPUNIT_ASSERT(out_stream_.str().length() == 0);
+    }
+    void testConfigLongAssign(){
+        arguments args(out_stream_);
+        standard_args( args );
+        std::string config_contents("\n\n#test string\nstring=the_string\nunsigned=123\nint=1221\n");
+        std::istringstream config_file(config_contents);
+        args.process_config(config_file,"Config");
+        // Test above
+        CPPUNIT_ASSERT(so.int_==1221);
+        CPPUNIT_ASSERT(so.str_=="the_string");
+        CPPUNIT_ASSERT(so.unsigned_==123);
+        CPPUNIT_ASSERT(out_stream_.str().length() == 0);
+    }
+    void testConfigLongSpaces(){
+        arguments args(out_stream_);
+        standard_args( args );
+        std::string config_contents("string   the_string\nunsigned\t123\nint  1221\n");
+        std::istringstream config_file(config_contents);
+        args.process_config(config_file,"Config");
+        // Test above
+        CPPUNIT_ASSERT(so.int_==1221);
+        CPPUNIT_ASSERT(so.str_=="the_string");
+        CPPUNIT_ASSERT(so.unsigned_==123);
+        CPPUNIT_ASSERT(out_stream_.str().length() == 0);
+    }
+    void testConfigLongLeadingTrailingSpaces(){
+        arguments args(out_stream_);
+        standard_args( args );
+        std::string config_contents("  string  the_string  \n\tunsigned\t123\n\tint  1221\t\n");
+        std::istringstream config_file(config_contents);
+        args.process_config(config_file,"Config");
+        // Test above
+        CPPUNIT_ASSERT(so.int_==1221);
+        CPPUNIT_ASSERT(so.str_=="the_string");
+        CPPUNIT_ASSERT(so.unsigned_==123);
+        CPPUNIT_ASSERT(out_stream_.str().length() == 0);
+    }
+    void testArgsOverrideConfig(){
+        arguments args(out_stream_);
+        standard_args( args );
+        std::string config_contents("\n\n#test string\nstring=the_string\nunsigned=123\nint=1221\n");
+        std::istringstream config_file(config_contents);
+        args.process_config(config_file,"Config");
+        // Test above
+        CPPUNIT_ASSERT(so.int_==1221);
+        CPPUNIT_ASSERT(so.str_=="the_string");
+        CPPUNIT_ASSERT(so.unsigned_==123);
+        // Override
+        const char * argv[] = {"X","--int","2112","-u","4321","-s","2nd String",nullptr};
+        CPPUNIT_ASSERT(args.process_args(7,argv));
+        // Test process_args can override config
+        CPPUNIT_ASSERT(so.int_==2112);
+        CPPUNIT_ASSERT(so.str_=="2nd String");
+        CPPUNIT_ASSERT(so.unsigned_==4321);
+        CPPUNIT_ASSERT(out_stream_.str().length() == 0);
+    }
+    void testConfigFromFile(){
+        jString config_file_name = get_temp_file_name(1);
+        std::ofstream config_file(config_file_name, std::ios_base::trunc | std::ios_base::out );
+        config_file << "  string  the_string  \n\tunsigned\t123\n\tint  1221\t\n";
+        config_file.close();
+        arguments args(out_stream_);
+        standard_args( args );
+        const char * argv[] = {"X","-C",config_file_name,nullptr};
+        CPPUNIT_ASSERT(args.process_args(3,argv));
+        // Test above
+        CPPUNIT_ASSERT(so.int_==1221);
+        CPPUNIT_ASSERT(so.str_=="the_string");
+        CPPUNIT_ASSERT(so.unsigned_==123);
+        CPPUNIT_ASSERT(out_stream_.str().length() == 0);
+    }
+    void testConfigCantOverrideArgs(){
+        jString config_file_name = get_temp_file_name(1);
+        std::ofstream config_file(config_file_name, std::ios_base::trunc | std::ios_base::out );
+        config_file << "  string  ssss  \n\tunsigned\t1111\n\tint  2222\t\n";
+        config_file.close();
+        arguments args(out_stream_);
+        standard_args( args );
+        const char * argv[] = {"X","--int","2112","-s","2nd String","-C",config_file_name,nullptr};
+        CPPUNIT_ASSERT(args.process_args(7,argv));
+        // Test above
+        CPPUNIT_ASSERT(so.int_==2112);
+        CPPUNIT_ASSERT(so.str_=="2nd String");
+        CPPUNIT_ASSERT(so.unsigned_==1111);
+        CPPUNIT_ASSERT(out_stream_.str().length() == 0);
+    }
     void testVersion(){
         arguments args(out_stream_);
         standard_args( args );
         const char * argv[] = {"X","-v",nullptr};
         CPPUNIT_ASSERT(args.process_args(2,argv) == false); // False because version_ set
         CPPUNIT_ASSERT(args.show_version_);
-        CPPUNIT_ASSERT(jString(out_stream_.str()).left(version_.len())==version_ );
+        CPPUNIT_ASSERT(jString(out_stream_.str().c_str()).left(version_.len())==version_ );
     }
     void testHelpPrefix(){
         arguments args(out_stream_);
@@ -143,7 +289,7 @@ private:
         const char * argv[] = {"X","-h",nullptr};
         CPPUNIT_ASSERT(args.process_args(2,argv) == false); // False because version_ set
         CPPUNIT_ASSERT(args.show_help_);
-        CPPUNIT_ASSERT(jString(out_stream_.str()).find(help_prefix_) == 0 );
+        CPPUNIT_ASSERT(jString(out_stream_.str().c_str()).find(help_prefix_) == 0 );
     }
     void testHelpOption(){
         arguments args(out_stream_);
@@ -162,7 +308,7 @@ private:
         const char * argv[] = {"X","--help",nullptr};
         CPPUNIT_ASSERT(args.process_args(2,argv) == false); // False because version_ set
         CPPUNIT_ASSERT(args.show_help_);
-        CPPUNIT_ASSERT(jString(out_stream_.str()).find(help_suffix_) > 0 );
+        CPPUNIT_ASSERT(jString(out_stream_.str().c_str()).find(help_suffix_) > 0 );
     }
     
     CPPUNIT_TEST_SUITE(jcArgsTestClass);
@@ -173,6 +319,15 @@ private:
         CPPUNIT_TEST(testIntShort);
         CPPUNIT_TEST(testIntLongEq);
         CPPUNIT_TEST(testIntLongSep);
+        CPPUNIT_TEST(testConfigShortAssign);
+        CPPUNIT_TEST(testConfigShortSpaces);
+        CPPUNIT_TEST(testConfigShortLeadingTrailingSpaces);
+        CPPUNIT_TEST(testConfigLongAssign);
+        CPPUNIT_TEST(testConfigLongSpaces);
+        CPPUNIT_TEST(testConfigLongLeadingTrailingSpaces);
+        CPPUNIT_TEST(testArgsOverrideConfig);
+        CPPUNIT_TEST(testConfigFromFile);
+        CPPUNIT_TEST(testConfigCantOverrideArgs);
         CPPUNIT_TEST(testVersion);
         CPPUNIT_TEST(testHelpPrefix);
         CPPUNIT_TEST(testHelpOption);

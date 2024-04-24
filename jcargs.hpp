@@ -49,6 +49,7 @@ namespace jclib {
             jString long_name_;
             jString desc_;
             bool is_set_ = false;
+            bool is_defaulted_ = false;
             bool multiples_ok_=false;
             bool takes_parameter_;
             bool required_;
@@ -162,11 +163,12 @@ namespace jclib {
             std::vector< jString > positional_args_;
             // jString end_keywords_ = "--";
             std::vector<CountedPointer< arg_base > > all_options_;
-            std::map<jString, CountedPointer< arg_base > > short_names_;
-            std::map<jString, CountedPointer< arg_base > > long_names_;
-            jclib::jString help_prefix_ = jclib::jString::get_empty();
-            jclib::jString help_suffix_ = jclib::jString::get_empty();
-            jclib::jString version_string_ = jclib::jString::get_empty();
+            typedef std::map<jString, CountedPointer< arg_base > > map_T;
+            map_T short_names_;
+            map_T long_names_;
+            jString help_prefix_ = jclib::jString::get_empty();
+            jString help_suffix_ = jclib::jString::get_empty();
+            jString version_string_ = jclib::jString::get_empty();
             int errors_ = 0;
             bool show_help_ = false;
             bool show_version_ = false;
@@ -203,6 +205,81 @@ namespace jclib {
                 }
             }
 
+            // Process a configuration file, one option per line
+            // Lines starting with # are comments
+            // Blank lines are skipped
+            void process_config( std::istream & file, jString filename ) {
+                constexpr int max_line_len = 1024;
+                char buffer[ max_line_len + 1];
+                char * bufptr;
+                int linenr = 0;
+                jString optionName, value;
+                map_T::iterator found;
+                while( file.getline(buffer, max_line_len)) {
+                    buffer[ max_line_len ] = '\0'; // Prevent overrun, normally there's an earlier null
+                    linenr++;
+                    char * buf = buffer;
+                    // skip leading space on the line
+                    while( *buf == ' ' || *buf == '\t')
+                        buf++;
+                    // skip empty & comment lines
+                    if( *buf == '\0' || *buf == '#' )
+                        continue;
+                    if( *buf == '-' ) {
+                        error_log_ << "Error config file lines must start with option or '#' not '-'. Line "
+                                  << linenr << " of " << filename << "\n";
+                        errors_++;
+                        continue;
+                    }
+                    bufptr = buf + 1;
+                    if( *bufptr == ' ' || *bufptr == '\t' || *bufptr == '=' ) {
+                        // Unix style 1 character argument name
+                        optionName = jString(buf, bufptr );
+                        found = short_names_.find(optionName);
+                        if( found == short_names_.end()) {
+                            error_log_<< "Unknown argument " << optionName << linenr << " of " << filename << "\n";
+                            errors_++;
+                            continue;
+                        }
+                    } else {
+                        // GNU style long argument name
+                        while ( isalnum(*bufptr)) {
+                            bufptr++;
+                        }
+                        optionName = jString(buf, bufptr );
+                        found = long_names_.find(optionName);
+                        if( found == long_names_.end()) {
+                            error_log_<< "Unknown argument " << optionName << linenr << " of " << filename << "\n";
+                            errors_++;
+                            continue;
+                        }
+                    }
+                    arg_base & arg = * found->second;
+                    // config does not override options already set on the command line
+                    if( arg.is_set_ )
+                        continue;
+                    while( *bufptr == '=' || *bufptr == ' ' || *bufptr == '\t' )
+                        ++bufptr;
+                    char * bufend = bufptr;
+                    // Find end of string
+                    while( *bufend )
+                        ++bufend;
+                    while( bufend != bufptr && (*bufend == ' ' || *bufend == '\t' || *bufend == '\0' ))
+                        --bufend;
+                    jString val( bufptr, bufend+1 );
+                    if( arg.takes_parameter_) {
+                        arg.is_defaulted_ = arg.set(val);
+                    } else {
+                        if( val.len() == 0 )
+                            arg.is_defaulted_ = arg.set();
+                        else {
+                            error_log_ << optionName << " does not accept options " << linenr << " of " << filename << "\n";
+                            errors_++;
+                            }
+                    }
+                }
+            }
+
             bool process_args( int argc, const char ** argv, int start_at = 1) {
                 int argnum = start_at;
                 for( ; argnum < argc && argv[ argnum ][0] == '-'; ++argnum ) {
@@ -221,6 +298,7 @@ namespace jclib {
                         if( found == long_names_.end()) {
                             error_log_<< "Unknown argument " << argstr << "\n";
                             errors_++;
+                            continue;
                         }else{
                             arg_base & arg = * found->second;
                             if( arg.is_set_ && ! arg.multiples_ok_ ) {
@@ -284,7 +362,7 @@ namespace jclib {
                 if( ! (show_version_ || show_help_ ) )
                 {
                     for( auto k : all_options_) {
-                        if(  k->required_ &&  ! k->is_set_) {
+                        if(  k->required_ &&  ! ( k->is_set_ || k->is_defaulted_) ) {
                             errors_++;
                             error_log_ << "Required option \"";
                             if( k->short_name_.len() > 0 && k->long_name_.len() > 0 )
@@ -331,6 +409,30 @@ namespace jclib {
             arguments(std::ostream & error_log=std::cerr)
                 : error_log_( error_log)
             {}
+    };
+
+    class config : public arg_base {
+        public:
+            arguments & processor_;
+            virtual bool set() { return false;}
+            config( arguments & processor, jString short_name, jString long_name, jString desc )
+            : arg_base( short_name, long_name, desc, true, false )
+            , processor_( processor )
+            {
+                multiples_ok_ = true;
+            }
+            virtual bool set(jString &value) {
+                std::ifstream stream;
+                stream.open( value, std::ifstream::in);
+                if( stream.is_open()) {
+                    processor_.process_config( stream, value);
+                    stream.close();
+                } else {
+                    processor_.error_log_ << "Can not open config file " << value << "\n";
+                    processor_.errors_++;
+                }
+                return false;
+            }
     };
 }
 #endif

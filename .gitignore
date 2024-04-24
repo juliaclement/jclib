@@ -1,0 +1,9 @@
+.vscode/launch.json
+.vscode/settings.json
+.vscode/tasks.json
+nbproject/private/Makefile-variables.mk
+tests/jcArgsTestClass
+tests/jcArgsTestRunner
+tests/jStringTestClass
+tests/jStringTestRunner
+tests/SaveTestClass

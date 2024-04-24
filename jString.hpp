@@ -279,7 +279,7 @@ namespace jclib {
                 return new_stringBase;
             }
             
-            /*** Split string on delim, retuirning answers as an array of strings,
+            /*** Split string on delim, returning answers as an array of strings,
              *   once max_splits copies of the delimiter have been found, the 
              * remainder if any is a single string at the end of the array.
             */
