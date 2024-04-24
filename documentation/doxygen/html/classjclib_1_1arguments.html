@@ -68,6 +68,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="classjclib_1_1arguments-members.html">List of all members</a>  </div>
@@ -85,6 +86,12 @@ Collaboration diagram for jclib::arguments:</div>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:ab2259ef4a3a2052e327d90a136a95139"><td class="memItemLeft" align="right" valign="top"><a id="ab2259ef4a3a2052e327d90a136a95139" name="ab2259ef4a3a2052e327d90a136a95139"></a>
+typedef std::map&lt; <a class="el" href="classjclib_1_1jString.html">jString</a>, <a class="el" href="classjclib_1_1CountedPointer.html">CountedPointer</a>&lt; <a class="el" href="classjclib_1_1arg__base.html">arg_base</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>map_T</b></td></tr>
+<tr class="separator:ab2259ef4a3a2052e327d90a136a95139"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ab7b99b349a386215a759b8a16b06fe12"><td class="memItemLeft" align="right" valign="top"><a id="ab7b99b349a386215a759b8a16b06fe12" name="ab7b99b349a386215a759b8a16b06fe12"></a>
@@ -93,6 +100,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>insert</b> (<a class=
 <tr class="memitem:a79ef5f1ccd5dc98b46c017c02de28c83"><td class="memItemLeft" align="right" valign="top"><a id="a79ef5f1ccd5dc98b46c017c02de28c83" name="a79ef5f1ccd5dc98b46c017c02de28c83"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>load</b> (std::initializer_list&lt; <a class="el" href="classjclib_1_1arg__base.html">arg_base</a> * &gt; input)</td></tr>
 <tr class="separator:a79ef5f1ccd5dc98b46c017c02de28c83"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adf15aabce20f9bbb36e6c53d4c5fb4e0"><td class="memItemLeft" align="right" valign="top"><a id="adf15aabce20f9bbb36e6c53d4c5fb4e0" name="adf15aabce20f9bbb36e6c53d4c5fb4e0"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>process_config</b> (std::istream &amp;file, <a class="el" href="classjclib_1_1jString.html">jString</a> filename)</td></tr>
+<tr class="separator:adf15aabce20f9bbb36e6c53d4c5fb4e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac1839724dc6708617a21559de5702bde"><td class="memItemLeft" align="right" valign="top"><a id="ac1839724dc6708617a21559de5702bde" name="ac1839724dc6708617a21559de5702bde"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>process_args</b> (int argc, const char **argv, int start_at=1)</td></tr>
 <tr class="separator:ac1839724dc6708617a21559de5702bde"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -111,21 +121,21 @@ std::vector&lt; <a class="el" href="classjclib_1_1jString.html">jString</a> &gt;
 <tr class="memitem:a2044af38fb74fcf51c1d514663a645dd"><td class="memItemLeft" align="right" valign="top"><a id="a2044af38fb74fcf51c1d514663a645dd" name="a2044af38fb74fcf51c1d514663a645dd"></a>
 std::vector&lt; <a class="el" href="classjclib_1_1CountedPointer.html">CountedPointer</a>&lt; <a class="el" href="classjclib_1_1arg__base.html">arg_base</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>all_options_</b></td></tr>
 <tr class="separator:a2044af38fb74fcf51c1d514663a645dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a43cadeaebdd53375251ceaa5b787ee68"><td class="memItemLeft" align="right" valign="top"><a id="a43cadeaebdd53375251ceaa5b787ee68" name="a43cadeaebdd53375251ceaa5b787ee68"></a>
-std::map&lt; <a class="el" href="classjclib_1_1jString.html">jString</a>, <a class="el" href="classjclib_1_1CountedPointer.html">CountedPointer</a>&lt; <a class="el" href="classjclib_1_1arg__base.html">arg_base</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>short_names_</b></td></tr>
-<tr class="separator:a43cadeaebdd53375251ceaa5b787ee68"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3f971be99d3a876e4ff5bc3ff7d03f0e"><td class="memItemLeft" align="right" valign="top"><a id="a3f971be99d3a876e4ff5bc3ff7d03f0e" name="a3f971be99d3a876e4ff5bc3ff7d03f0e"></a>
-std::map&lt; <a class="el" href="classjclib_1_1jString.html">jString</a>, <a class="el" href="classjclib_1_1CountedPointer.html">CountedPointer</a>&lt; <a class="el" href="classjclib_1_1arg__base.html">arg_base</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>long_names_</b></td></tr>
-<tr class="separator:a3f971be99d3a876e4ff5bc3ff7d03f0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1aac145aadb2bc56e2532a3caba300bf"><td class="memItemLeft" align="right" valign="top"><a id="a1aac145aadb2bc56e2532a3caba300bf" name="a1aac145aadb2bc56e2532a3caba300bf"></a>
-<a class="el" href="classjclib_1_1jString.html">jclib::jString</a>&#160;</td><td class="memItemRight" valign="bottom"><b>help_prefix_</b> = <a class="el" href="classjclib_1_1jString.html#a64b12d83c87606faedf066ad33c07f53">jclib::jString::get_empty</a>()</td></tr>
-<tr class="separator:a1aac145aadb2bc56e2532a3caba300bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a067c280bf6555e718467e32fbe925ece"><td class="memItemLeft" align="right" valign="top"><a id="a067c280bf6555e718467e32fbe925ece" name="a067c280bf6555e718467e32fbe925ece"></a>
-<a class="el" href="classjclib_1_1jString.html">jclib::jString</a>&#160;</td><td class="memItemRight" valign="bottom"><b>help_suffix_</b> = <a class="el" href="classjclib_1_1jString.html#a64b12d83c87606faedf066ad33c07f53">jclib::jString::get_empty</a>()</td></tr>
-<tr class="separator:a067c280bf6555e718467e32fbe925ece"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a80a51673ad902c9d406285314f48cf90"><td class="memItemLeft" align="right" valign="top"><a id="a80a51673ad902c9d406285314f48cf90" name="a80a51673ad902c9d406285314f48cf90"></a>
-<a class="el" href="classjclib_1_1jString.html">jclib::jString</a>&#160;</td><td class="memItemRight" valign="bottom"><b>version_string_</b> = <a class="el" href="classjclib_1_1jString.html#a64b12d83c87606faedf066ad33c07f53">jclib::jString::get_empty</a>()</td></tr>
-<tr class="separator:a80a51673ad902c9d406285314f48cf90"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b690bc88b995ab378529975c739959a"><td class="memItemLeft" align="right" valign="top"><a id="a6b690bc88b995ab378529975c739959a" name="a6b690bc88b995ab378529975c739959a"></a>
+map_T&#160;</td><td class="memItemRight" valign="bottom"><b>short_names_</b></td></tr>
+<tr class="separator:a6b690bc88b995ab378529975c739959a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6406eea5066a1fc333f854dbf30c3774"><td class="memItemLeft" align="right" valign="top"><a id="a6406eea5066a1fc333f854dbf30c3774" name="a6406eea5066a1fc333f854dbf30c3774"></a>
+map_T&#160;</td><td class="memItemRight" valign="bottom"><b>long_names_</b></td></tr>
+<tr class="separator:a6406eea5066a1fc333f854dbf30c3774"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a204df7580d8c14c4fc1be1086e97827e"><td class="memItemLeft" align="right" valign="top"><a id="a204df7580d8c14c4fc1be1086e97827e" name="a204df7580d8c14c4fc1be1086e97827e"></a>
+<a class="el" href="classjclib_1_1jString.html">jString</a>&#160;</td><td class="memItemRight" valign="bottom"><b>help_prefix_</b> = <a class="el" href="classjclib_1_1jString.html#a64b12d83c87606faedf066ad33c07f53">jclib::jString::get_empty</a>()</td></tr>
+<tr class="separator:a204df7580d8c14c4fc1be1086e97827e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acbc765c3d8a46924df4c61662267149b"><td class="memItemLeft" align="right" valign="top"><a id="acbc765c3d8a46924df4c61662267149b" name="acbc765c3d8a46924df4c61662267149b"></a>
+<a class="el" href="classjclib_1_1jString.html">jString</a>&#160;</td><td class="memItemRight" valign="bottom"><b>help_suffix_</b> = <a class="el" href="classjclib_1_1jString.html#a64b12d83c87606faedf066ad33c07f53">jclib::jString::get_empty</a>()</td></tr>
+<tr class="separator:acbc765c3d8a46924df4c61662267149b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab947f5ed286af72ad25eb7bd9691fdab"><td class="memItemLeft" align="right" valign="top"><a id="ab947f5ed286af72ad25eb7bd9691fdab" name="ab947f5ed286af72ad25eb7bd9691fdab"></a>
+<a class="el" href="classjclib_1_1jString.html">jString</a>&#160;</td><td class="memItemRight" valign="bottom"><b>version_string_</b> = <a class="el" href="classjclib_1_1jString.html#a64b12d83c87606faedf066ad33c07f53">jclib::jString::get_empty</a>()</td></tr>
+<tr class="separator:ab947f5ed286af72ad25eb7bd9691fdab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abf840aec6b24349ad096fd296844c9b3"><td class="memItemLeft" align="right" valign="top"><a id="abf840aec6b24349ad096fd296844c9b3" name="abf840aec6b24349ad096fd296844c9b3"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>errors_</b> = 0</td></tr>
 <tr class="separator:abf840aec6b24349ad096fd296844c9b3"><td class="memSeparator" colspan="2">&#160;</td></tr>

@@ -9,6 +9,12 @@ Collaboration diagram for jclib\+::arguments\+:\nopagebreak
 \includegraphics[width=223pt]{classjclib_1_1arguments__coll__graph}
 \end{center}
 \end{figure}
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classjclib_1_1arguments_ab2259ef4a3a2052e327d90a136a95139}\label{classjclib_1_1arguments_ab2259ef4a3a2052e327d90a136a95139}} 
+typedef std\+::map$<$ \mbox{\hyperlink{classjclib_1_1jString}{j\+String}}, \mbox{\hyperlink{classjclib_1_1CountedPointer}{Counted\+Pointer}}$<$ \mbox{\hyperlink{classjclib_1_1arg__base}{arg\+\_\+base}} $>$ $>$ {\bfseries map\+\_\+T}
+\end{DoxyCompactItemize}
 \doxysubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -17,6 +23,9 @@ void {\bfseries insert} (\mbox{\hyperlink{classjclib_1_1CountedPointer}{Counted\
 \item 
 \mbox{\Hypertarget{classjclib_1_1arguments_a79ef5f1ccd5dc98b46c017c02de28c83}\label{classjclib_1_1arguments_a79ef5f1ccd5dc98b46c017c02de28c83}} 
 void {\bfseries load} (std\+::initializer\+\_\+list$<$ \mbox{\hyperlink{classjclib_1_1arg__base}{arg\+\_\+base}} $\ast$ $>$ input)
+\item 
+\mbox{\Hypertarget{classjclib_1_1arguments_adf15aabce20f9bbb36e6c53d4c5fb4e0}\label{classjclib_1_1arguments_adf15aabce20f9bbb36e6c53d4c5fb4e0}} 
+void {\bfseries process\+\_\+config} (std\+::istream \&file, \mbox{\hyperlink{classjclib_1_1jString}{j\+String}} filename)
 \item 
 \mbox{\Hypertarget{classjclib_1_1arguments_ac1839724dc6708617a21559de5702bde}\label{classjclib_1_1arguments_ac1839724dc6708617a21559de5702bde}} 
 bool {\bfseries process\+\_\+args} (int argc, const char $\ast$$\ast$argv, int start\+\_\+at=1)
@@ -36,20 +45,20 @@ std\+::vector$<$ \mbox{\hyperlink{classjclib_1_1jString}{j\+String}} $>$ {\bfser
 \mbox{\Hypertarget{classjclib_1_1arguments_a2044af38fb74fcf51c1d514663a645dd}\label{classjclib_1_1arguments_a2044af38fb74fcf51c1d514663a645dd}} 
 std\+::vector$<$ \mbox{\hyperlink{classjclib_1_1CountedPointer}{Counted\+Pointer}}$<$ \mbox{\hyperlink{classjclib_1_1arg__base}{arg\+\_\+base}} $>$ $>$ {\bfseries all\+\_\+options\+\_\+}
 \item 
-\mbox{\Hypertarget{classjclib_1_1arguments_a43cadeaebdd53375251ceaa5b787ee68}\label{classjclib_1_1arguments_a43cadeaebdd53375251ceaa5b787ee68}} 
-std\+::map$<$ \mbox{\hyperlink{classjclib_1_1jString}{j\+String}}, \mbox{\hyperlink{classjclib_1_1CountedPointer}{Counted\+Pointer}}$<$ \mbox{\hyperlink{classjclib_1_1arg__base}{arg\+\_\+base}} $>$ $>$ {\bfseries short\+\_\+names\+\_\+}
+\mbox{\Hypertarget{classjclib_1_1arguments_a6b690bc88b995ab378529975c739959a}\label{classjclib_1_1arguments_a6b690bc88b995ab378529975c739959a}} 
+map\+\_\+T {\bfseries short\+\_\+names\+\_\+}
 \item 
-\mbox{\Hypertarget{classjclib_1_1arguments_a3f971be99d3a876e4ff5bc3ff7d03f0e}\label{classjclib_1_1arguments_a3f971be99d3a876e4ff5bc3ff7d03f0e}} 
-std\+::map$<$ \mbox{\hyperlink{classjclib_1_1jString}{j\+String}}, \mbox{\hyperlink{classjclib_1_1CountedPointer}{Counted\+Pointer}}$<$ \mbox{\hyperlink{classjclib_1_1arg__base}{arg\+\_\+base}} $>$ $>$ {\bfseries long\+\_\+names\+\_\+}
+\mbox{\Hypertarget{classjclib_1_1arguments_a6406eea5066a1fc333f854dbf30c3774}\label{classjclib_1_1arguments_a6406eea5066a1fc333f854dbf30c3774}} 
+map\+\_\+T {\bfseries long\+\_\+names\+\_\+}
 \item 
-\mbox{\Hypertarget{classjclib_1_1arguments_a1aac145aadb2bc56e2532a3caba300bf}\label{classjclib_1_1arguments_a1aac145aadb2bc56e2532a3caba300bf}} 
-\mbox{\hyperlink{classjclib_1_1jString}{jclib\+::j\+String}} {\bfseries help\+\_\+prefix\+\_\+} = \mbox{\hyperlink{classjclib_1_1jString_a64b12d83c87606faedf066ad33c07f53}{jclib\+::j\+String\+::get\+\_\+empty}}()
+\mbox{\Hypertarget{classjclib_1_1arguments_a204df7580d8c14c4fc1be1086e97827e}\label{classjclib_1_1arguments_a204df7580d8c14c4fc1be1086e97827e}} 
+\mbox{\hyperlink{classjclib_1_1jString}{j\+String}} {\bfseries help\+\_\+prefix\+\_\+} = \mbox{\hyperlink{classjclib_1_1jString_a64b12d83c87606faedf066ad33c07f53}{jclib\+::j\+String\+::get\+\_\+empty}}()
 \item 
-\mbox{\Hypertarget{classjclib_1_1arguments_a067c280bf6555e718467e32fbe925ece}\label{classjclib_1_1arguments_a067c280bf6555e718467e32fbe925ece}} 
-\mbox{\hyperlink{classjclib_1_1jString}{jclib\+::j\+String}} {\bfseries help\+\_\+suffix\+\_\+} = \mbox{\hyperlink{classjclib_1_1jString_a64b12d83c87606faedf066ad33c07f53}{jclib\+::j\+String\+::get\+\_\+empty}}()
+\mbox{\Hypertarget{classjclib_1_1arguments_acbc765c3d8a46924df4c61662267149b}\label{classjclib_1_1arguments_acbc765c3d8a46924df4c61662267149b}} 
+\mbox{\hyperlink{classjclib_1_1jString}{j\+String}} {\bfseries help\+\_\+suffix\+\_\+} = \mbox{\hyperlink{classjclib_1_1jString_a64b12d83c87606faedf066ad33c07f53}{jclib\+::j\+String\+::get\+\_\+empty}}()
 \item 
-\mbox{\Hypertarget{classjclib_1_1arguments_a80a51673ad902c9d406285314f48cf90}\label{classjclib_1_1arguments_a80a51673ad902c9d406285314f48cf90}} 
-\mbox{\hyperlink{classjclib_1_1jString}{jclib\+::j\+String}} {\bfseries version\+\_\+string\+\_\+} = \mbox{\hyperlink{classjclib_1_1jString_a64b12d83c87606faedf066ad33c07f53}{jclib\+::j\+String\+::get\+\_\+empty}}()
+\mbox{\Hypertarget{classjclib_1_1arguments_ab947f5ed286af72ad25eb7bd9691fdab}\label{classjclib_1_1arguments_ab947f5ed286af72ad25eb7bd9691fdab}} 
+\mbox{\hyperlink{classjclib_1_1jString}{j\+String}} {\bfseries version\+\_\+string\+\_\+} = \mbox{\hyperlink{classjclib_1_1jString_a64b12d83c87606faedf066ad33c07f53}{jclib\+::j\+String\+::get\+\_\+empty}}()
 \item 
 \mbox{\Hypertarget{classjclib_1_1arguments_abf840aec6b24349ad096fd296844c9b3}\label{classjclib_1_1arguments_abf840aec6b24349ad096fd296844c9b3}} 
 int {\bfseries errors\+\_\+} = 0
