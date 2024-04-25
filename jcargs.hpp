@@ -77,87 +77,88 @@ namespace jclib {
             virtual bool set(jString &value) {return false;} // FIXME: Doesn't take value;
     };
 
-    template<class T> class arg_instance : public arg_base {
-        public: 
-            T & answer_;
-            virtual bool set(jString &value);
-            arg_instance( T & answer, jString short_name, jString long_name, jString desc, bool takes_parameter, bool required=false )
-            : arg_base( short_name, long_name, desc, takes_parameter, required )
-            , answer_( answer)
-            {}
-    };
+    namespace { // Prevent link errors
+        template<class T> class arg_instance : public arg_base {
+            public: 
+                T & answer_;
+                virtual bool set(jString &value);
+                arg_instance( T & answer, jString short_name, jString long_name, jString desc, bool takes_parameter, bool required=false )
+                : arg_base( short_name, long_name, desc, takes_parameter, required )
+                , answer_( answer)
+                {}
+        };
 
-    template<> bool arg_instance<short int>::set(jString &value) {
-        errno = 0;
-        answer_ = strtol(value.data(),nullptr,10);
-        return errno == 0;
-    }
+        template<> bool arg_instance<short int>::set(jString &value) {
+            errno = 0;
+            answer_ = strtol(value.data(),nullptr,10);
+            return errno == 0;
+        }
 
-    template<> bool arg_instance<int>::set(jString &value) {
-        errno = 0;
-        answer_ = strtol(value.data(),nullptr,10);
-        return errno == 0;
-    }
+        template<> bool arg_instance<int>::set(jString &value) {
+            errno = 0;
+            answer_ = strtol(value.data(),nullptr,10);
+            return errno == 0;
+        }
 
-    template<> bool arg_instance<long>::set(jString &value) {
-        errno = 0;
-        answer_ = strtol(value.data(),nullptr,10);
-        return errno == 0;
-    }
+        template<> bool arg_instance<long>::set(jString &value) {
+            errno = 0;
+            answer_ = strtol(value.data(),nullptr,10);
+            return errno == 0;
+        }
 
-    template<> bool arg_instance<long long>::set(jString &value) {
-        errno = 0;
-        answer_ = strtoll(value.data(),nullptr,10);
-        return errno == 0;
-    }
+        template<> bool arg_instance<long long>::set(jString &value) {
+            errno = 0;
+            answer_ = strtoll(value.data(),nullptr,10);
+            return errno == 0;
+        }
 
-    template<> bool arg_instance<unsigned short int>::set(jString &value) {
-        errno = 0;
-        answer_ = strtoul(value.data(),nullptr,10);
-        return errno == 0;
-    }
+        template<> bool arg_instance<unsigned short int>::set(jString &value) {
+            errno = 0;
+            answer_ = strtoul(value.data(),nullptr,10);
+            return errno == 0;
+        }
 
-    template<> bool arg_instance<unsigned int>::set(jString &value) {
-        errno = 0;
-        answer_ = strtoul(value.data(),nullptr,10);
-        return errno == 0;
-    }
+        template<> bool arg_instance<unsigned int>::set(jString &value) {
+            errno = 0;
+            answer_ = strtoul(value.data(),nullptr,10);
+            return errno == 0;
+        }
 
-    template<> bool arg_instance<unsigned long>::set(jString &value) {
-        errno = 0;
-        answer_ = strtoul(value.data(),nullptr,10);
-        return errno == 0;
-    }
+        template<> bool arg_instance<unsigned long>::set(jString &value) {
+            errno = 0;
+            answer_ = strtoul(value.data(),nullptr,10);
+            return errno == 0;
+        }
 
-    template<> bool arg_instance<unsigned long long>::set(jString &value) {
-        errno = 0;
-        answer_ = strtoull(value.data(),nullptr,10);
-        return errno == 0;
-    }
+        template<> bool arg_instance<unsigned long long>::set(jString &value) {
+            errno = 0;
+            answer_ = strtoull(value.data(),nullptr,10);
+            return errno == 0;
+        }
 
-    template<> bool arg_instance<jString>::set(jString &value) {
-        answer_ = value;
-        return true;
-    }
+        template<> bool arg_instance<jString>::set(jString &value) {
+            answer_ = value;
+            return true;
+        }
 
-    template<> bool arg_instance<std::string>::set(jString &value) {
-        answer_.assign(value.data(), value.len());
-        return true;
-    }
+        template<> bool arg_instance<std::string>::set(jString &value) {
+            answer_.assign(value.data(), value.len());
+            return true;
+        }
 
-    template<> bool arg_instance< std::vector<jString> >::set(jString &value) {
-        errno = 0;
-        answer_.push_back(value);
-        multiples_ok_ = true;
-        return errno == 0;
-    }
+        template<> bool arg_instance< std::vector<jString> >::set(jString &value) {
+            errno = 0;
+            answer_.push_back(value);
+            multiples_ok_ = true;
+            return errno == 0;
+        }
 
-    template<class T> arg_instance<T>* arg(T&answer, jString short_name, jString long_name, jString desc, bool takes_parameter, bool required=false ){
-            return new arg_instance<T>( answer, short_name, long_name, desc, takes_parameter, required );}
+        template<class T> arg_instance<T>* arg(T&answer, jString short_name, jString long_name, jString desc, bool takes_parameter, bool required=false ){
+                return new arg_instance<T>( answer, short_name, long_name, desc, takes_parameter, required );}
 
-    simple_bool* arg(bool&answer, jString short_name, jString long_name, jString desc, bool takes_parameter, bool required=false ){
-            return new simple_bool( answer, short_name, long_name, desc, takes_parameter, required );}
-
+        simple_bool* arg(bool&answer, jString short_name, jString long_name, jString desc, bool takes_parameter, bool required=false ){
+                return new simple_bool( answer, short_name, long_name, desc, takes_parameter, required );}
+}
     class arguments{
         public:
             std::ostream & error_log_;
