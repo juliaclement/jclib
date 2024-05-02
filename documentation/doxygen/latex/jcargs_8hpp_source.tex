@@ -34,410 +34,412 @@
 \DoxyCodeLine{31 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{include} \mbox{\hyperlink{jString_8hpp}{"{}jString.hpp"{}}}}
 \DoxyCodeLine{32 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{include} \textcolor{preprocessor}{<}\textcolor{preprocessor}{algorithm}\textcolor{preprocessor}{>}}
 \DoxyCodeLine{33 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{include} \textcolor{preprocessor}{<}\textcolor{preprocessor}{iostream}\textcolor{preprocessor}{>}}
-\DoxyCodeLine{34 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{include} \textcolor{preprocessor}{<}\textcolor{preprocessor}{string}\textcolor{preprocessor}{>}}
-\DoxyCodeLine{35 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{include} \textcolor{preprocessor}{<}\textcolor{preprocessor}{vector}\textcolor{preprocessor}{>}}
-\DoxyCodeLine{36 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{include} \textcolor{preprocessor}{<}\textcolor{preprocessor}{map}\textcolor{preprocessor}{>}}
-\DoxyCodeLine{37 }
-\DoxyCodeLine{38 \textcolor{comment}{/**}}
-\DoxyCodeLine{39 \textcolor{comment}{ * Flexible, header only parser for command line arguments.}}
-\DoxyCodeLine{40 \textcolor{comment}{ * }}
-\DoxyCodeLine{41 \textcolor{comment}{ * Designed to support the awkccc project, but not limited to it.}}
-\DoxyCodeLine{42 \textcolor{comment}{*/}}
-\DoxyCodeLine{43 }
-\DoxyCodeLine{44 \textcolor{keyword}{namespace} \mbox{\hyperlink{namespacejclib}{jclib}} \{}
-\DoxyCodeLine{45     \textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1arg__base}{arg\_base}} : \textcolor{keyword}{public} \mbox{\hyperlink{classjclib_1_1CountedPointerTarget}{CountedPointerTarget}} \{}
-\DoxyCodeLine{46         \textcolor{keyword}{public}:}
-\DoxyCodeLine{47             \textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1arguments}{arguments}} * owner\_ = \textcolor{keywordtype}{nullptr};}
-\DoxyCodeLine{48             \mbox{\hyperlink{classjclib_1_1jString}{jString}} short\_name\_;}
-\DoxyCodeLine{49             \mbox{\hyperlink{classjclib_1_1jString}{jString}} long\_name\_;}
-\DoxyCodeLine{50             \mbox{\hyperlink{classjclib_1_1jString}{jString}} desc\_;}
-\DoxyCodeLine{51             \textcolor{keywordtype}{bool} is\_set\_ = \textcolor{keyword}{false};}
-\DoxyCodeLine{52             \textcolor{keywordtype}{bool} is\_defaulted\_ = \textcolor{keyword}{false};}
-\DoxyCodeLine{53             \textcolor{keywordtype}{bool} multiples\_ok\_=\textcolor{keyword}{false};}
-\DoxyCodeLine{54             \textcolor{keywordtype}{bool} takes\_parameter\_;}
-\DoxyCodeLine{55             \textcolor{keywordtype}{bool} required\_;}
-\DoxyCodeLine{56             \textcolor{keyword}{virtual} \textcolor{keywordtype}{bool} is\_set() \textcolor{keyword}{const} \{ \textcolor{keywordflow}{return} is\_set\_; \}}
-\DoxyCodeLine{57             \textcolor{keyword}{virtual} \textcolor{keywordtype}{bool} set() \{\textcolor{keywordflow}{return} \textcolor{keyword}{false};\}}
-\DoxyCodeLine{58             \textcolor{keyword}{virtual} \textcolor{keywordtype}{bool} set(\mbox{\hyperlink{classjclib_1_1jString}{jString}} \&value) \{\textcolor{keywordflow}{return} \textcolor{keyword}{false};\}}
-\DoxyCodeLine{59             arg\_base(\mbox{\hyperlink{classjclib_1_1jString}{jString}} short\_name, \mbox{\hyperlink{classjclib_1_1jString}{jString}} long\_name, \mbox{\hyperlink{classjclib_1_1jString}{jString}} desc, \textcolor{keywordtype}{bool} takes\_parameter, \textcolor{keywordtype}{bool} required=\textcolor{keyword}{false})}
-\DoxyCodeLine{60             : short\_name\_(short\_name)}
-\DoxyCodeLine{61             , long\_name\_(long\_name)}
-\DoxyCodeLine{62             , desc\_(desc)}
-\DoxyCodeLine{63             , takes\_parameter\_(takes\_parameter)}
-\DoxyCodeLine{64             , required\_(required)}
-\DoxyCodeLine{65             \{\}}
-\DoxyCodeLine{66     \};}
-\DoxyCodeLine{67 }
-\DoxyCodeLine{68     \textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1simple__bool}{simple\_bool}} : \textcolor{keyword}{public} \mbox{\hyperlink{classjclib_1_1arg__base}{arg\_base}} \{}
-\DoxyCodeLine{69         \textcolor{keyword}{public}:}
-\DoxyCodeLine{70             \textcolor{keywordtype}{bool} \& answer\_;}
-\DoxyCodeLine{71             \textcolor{keyword}{virtual} \textcolor{keywordtype}{bool} set() \{answer\_ = \textcolor{keyword}{true}; is\_set\_ = \textcolor{keyword}{true}; \textcolor{keywordflow}{return} \textcolor{keyword}{true};\}}
-\DoxyCodeLine{72             simple\_bool( \textcolor{keywordtype}{bool} \& answer, \mbox{\hyperlink{classjclib_1_1jString}{jString}} short\_name, \mbox{\hyperlink{classjclib_1_1jString}{jString}} long\_name, \mbox{\hyperlink{classjclib_1_1jString}{jString}} desc, \textcolor{keywordtype}{bool} takes\_parameter, \textcolor{keywordtype}{bool} required=\textcolor{keyword}{false} )}
-\DoxyCodeLine{73             : \mbox{\hyperlink{classjclib_1_1arg__base}{arg\_base}}( short\_name, long\_name, desc, takes\_parameter, required )}
-\DoxyCodeLine{74             , answer\_( answer)}
-\DoxyCodeLine{75             \{\}}
-\DoxyCodeLine{76             \textcolor{keyword}{virtual} \textcolor{keywordtype}{bool} set(\mbox{\hyperlink{classjclib_1_1jString}{jString}} \&value) \{\textcolor{keywordflow}{return} \textcolor{keyword}{false};\} \textcolor{comment}{// FIXME: Doesn't take value;}}
-\DoxyCodeLine{77     \};}
-\DoxyCodeLine{78 }
-\DoxyCodeLine{79     \textcolor{keyword}{template}<\textcolor{keyword}{class} T> \textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1arg__instance}{arg\_instance}} : \textcolor{keyword}{public} \mbox{\hyperlink{classjclib_1_1arg__base}{arg\_base}} \{}
-\DoxyCodeLine{80         \textcolor{keyword}{public}:}
-\DoxyCodeLine{81             T \& answer\_;}
-\DoxyCodeLine{82             \textcolor{keyword}{virtual} \textcolor{keywordtype}{bool} set(\mbox{\hyperlink{classjclib_1_1jString}{jString}} \&value);}
-\DoxyCodeLine{83             arg\_instance( T \& answer, \mbox{\hyperlink{classjclib_1_1jString}{jString}} short\_name, \mbox{\hyperlink{classjclib_1_1jString}{jString}} long\_name, \mbox{\hyperlink{classjclib_1_1jString}{jString}} desc, \textcolor{keywordtype}{bool} takes\_parameter, \textcolor{keywordtype}{bool} required=\textcolor{keyword}{false} )}
-\DoxyCodeLine{84             : \mbox{\hyperlink{classjclib_1_1arg__base}{arg\_base}}( short\_name, long\_name, desc, takes\_parameter, required )}
-\DoxyCodeLine{85             , answer\_( answer)}
-\DoxyCodeLine{86             \{\}}
-\DoxyCodeLine{87     \};}
-\DoxyCodeLine{88 }
-\DoxyCodeLine{89     \textcolor{keyword}{template}<> \textcolor{keywordtype}{bool} \mbox{\hyperlink{classjclib_1_1arg__instance}{arg\_instance}}<\textcolor{keywordtype}{short} \textcolor{keywordtype}{int}>::set(\mbox{\hyperlink{classjclib_1_1jString}{jString}} \&value) \{}
-\DoxyCodeLine{90         errno = 0;}
-\DoxyCodeLine{91         answer\_ = strtol(value.data(),\textcolor{keywordtype}{nullptr},10);}
-\DoxyCodeLine{92         \textcolor{keywordflow}{return} errno == 0;}
-\DoxyCodeLine{93     \}}
-\DoxyCodeLine{94 }
-\DoxyCodeLine{95     \textcolor{keyword}{template}<> \textcolor{keywordtype}{bool} \mbox{\hyperlink{classjclib_1_1arg__instance}{arg\_instance}}<\textcolor{keywordtype}{int}>::set(\mbox{\hyperlink{classjclib_1_1jString}{jString}} \&value) \{}
-\DoxyCodeLine{96         errno = 0;}
-\DoxyCodeLine{97         answer\_ = strtol(value.data(),\textcolor{keywordtype}{nullptr},10);}
-\DoxyCodeLine{98         \textcolor{keywordflow}{return} errno == 0;}
-\DoxyCodeLine{99     \}}
-\DoxyCodeLine{100 }
-\DoxyCodeLine{101     \textcolor{keyword}{template}<> \textcolor{keywordtype}{bool} \mbox{\hyperlink{classjclib_1_1arg__instance}{arg\_instance}}<\textcolor{keywordtype}{long}>::set(\mbox{\hyperlink{classjclib_1_1jString}{jString}} \&value) \{}
-\DoxyCodeLine{102         errno = 0;}
-\DoxyCodeLine{103         answer\_ = strtol(value.data(),\textcolor{keywordtype}{nullptr},10);}
-\DoxyCodeLine{104         \textcolor{keywordflow}{return} errno == 0;}
-\DoxyCodeLine{105     \}}
-\DoxyCodeLine{106 }
-\DoxyCodeLine{107     \textcolor{keyword}{template}<> \textcolor{keywordtype}{bool} \mbox{\hyperlink{classjclib_1_1arg__instance}{arg\_instance}}<\textcolor{keywordtype}{long} \textcolor{keywordtype}{long}>::set(\mbox{\hyperlink{classjclib_1_1jString}{jString}} \&value) \{}
-\DoxyCodeLine{108         errno = 0;}
-\DoxyCodeLine{109         answer\_ = strtoll(value.data(),\textcolor{keywordtype}{nullptr},10);}
-\DoxyCodeLine{110         \textcolor{keywordflow}{return} errno == 0;}
-\DoxyCodeLine{111     \}}
-\DoxyCodeLine{112 }
-\DoxyCodeLine{113     \textcolor{keyword}{template}<> \textcolor{keywordtype}{bool} \mbox{\hyperlink{classjclib_1_1arg__instance}{arg\_instance}}<\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} \textcolor{keywordtype}{int}>::set(\mbox{\hyperlink{classjclib_1_1jString}{jString}} \&value) \{}
-\DoxyCodeLine{114         errno = 0;}
-\DoxyCodeLine{115         answer\_ = strtoul(value.data(),\textcolor{keywordtype}{nullptr},10);}
-\DoxyCodeLine{116         \textcolor{keywordflow}{return} errno == 0;}
-\DoxyCodeLine{117     \}}
-\DoxyCodeLine{118 }
-\DoxyCodeLine{119     \textcolor{keyword}{template}<> \textcolor{keywordtype}{bool} \mbox{\hyperlink{classjclib_1_1arg__instance}{arg\_instance}}<\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int}>::set(\mbox{\hyperlink{classjclib_1_1jString}{jString}} \&value) \{}
-\DoxyCodeLine{120         errno = 0;}
-\DoxyCodeLine{121         answer\_ = strtoul(value.data(),\textcolor{keywordtype}{nullptr},10);}
-\DoxyCodeLine{122         \textcolor{keywordflow}{return} errno == 0;}
-\DoxyCodeLine{123     \}}
-\DoxyCodeLine{124 }
-\DoxyCodeLine{125     \textcolor{keyword}{template}<> \textcolor{keywordtype}{bool} \mbox{\hyperlink{classjclib_1_1arg__instance}{arg\_instance}}<\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long}>::set(\mbox{\hyperlink{classjclib_1_1jString}{jString}} \&value) \{}
-\DoxyCodeLine{126         errno = 0;}
-\DoxyCodeLine{127         answer\_ = strtoul(value.data(),\textcolor{keywordtype}{nullptr},10);}
-\DoxyCodeLine{128         \textcolor{keywordflow}{return} errno == 0;}
-\DoxyCodeLine{129     \}}
-\DoxyCodeLine{130 }
-\DoxyCodeLine{131     \textcolor{keyword}{template}<> \textcolor{keywordtype}{bool} \mbox{\hyperlink{classjclib_1_1arg__instance}{arg\_instance}}<\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} \textcolor{keywordtype}{long}>::set(\mbox{\hyperlink{classjclib_1_1jString}{jString}} \&value) \{}
-\DoxyCodeLine{132         errno = 0;}
-\DoxyCodeLine{133         answer\_ = strtoull(value.data(),\textcolor{keywordtype}{nullptr},10);}
-\DoxyCodeLine{134         \textcolor{keywordflow}{return} errno == 0;}
-\DoxyCodeLine{135     \}}
-\DoxyCodeLine{136 }
-\DoxyCodeLine{137     \textcolor{keyword}{template}<> \textcolor{keywordtype}{bool} \mbox{\hyperlink{classjclib_1_1arg__instance}{arg\_instance}}<\mbox{\hyperlink{classjclib_1_1jString}{jString}}>::set(\mbox{\hyperlink{classjclib_1_1jString}{jString}} \&value) \{}
-\DoxyCodeLine{138         answer\_ = value;}
-\DoxyCodeLine{139         \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
-\DoxyCodeLine{140     \}}
-\DoxyCodeLine{141 }
-\DoxyCodeLine{142     \textcolor{keyword}{template}<> \textcolor{keywordtype}{bool} \mbox{\hyperlink{classjclib_1_1arg__instance}{arg\_instance}}<std::string>::set(\mbox{\hyperlink{classjclib_1_1jString}{jString}} \&value) \{}
-\DoxyCodeLine{143         answer\_.assign(value.data(), value.len());}
-\DoxyCodeLine{144         \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
-\DoxyCodeLine{145     \}}
-\DoxyCodeLine{146 }
-\DoxyCodeLine{147     \textcolor{keyword}{template}<> \textcolor{keywordtype}{bool} \mbox{\hyperlink{classjclib_1_1arg__instance}{arg\_instance}}< std::vector<\mbox{\hyperlink{classjclib_1_1jString}{jString}}> >::set(\mbox{\hyperlink{classjclib_1_1jString}{jString}} \&value) \{}
-\DoxyCodeLine{148         errno = 0;}
-\DoxyCodeLine{149         answer\_.push\_back(value);}
-\DoxyCodeLine{150         multiples\_ok\_ = \textcolor{keyword}{true};}
-\DoxyCodeLine{151         \textcolor{keywordflow}{return} errno == 0;}
-\DoxyCodeLine{152     \}}
-\DoxyCodeLine{153 }
-\DoxyCodeLine{154     \textcolor{keyword}{template}<\textcolor{keyword}{class} T> \mbox{\hyperlink{classjclib_1_1arg__instance}{arg\_instance}}<T>* arg(T\&answer, \mbox{\hyperlink{classjclib_1_1jString}{jString}} short\_name, \mbox{\hyperlink{classjclib_1_1jString}{jString}} long\_name, \mbox{\hyperlink{classjclib_1_1jString}{jString}} desc, \textcolor{keywordtype}{bool} takes\_parameter, \textcolor{keywordtype}{bool} required=\textcolor{keyword}{false} )\{}
-\DoxyCodeLine{155             \textcolor{keywordflow}{return} \textcolor{keyword}{new} \mbox{\hyperlink{classjclib_1_1arg__instance}{arg\_instance}}<T>( answer, short\_name, long\_name, desc, takes\_parameter, required );\}}
-\DoxyCodeLine{156 }
-\DoxyCodeLine{157     \mbox{\hyperlink{classjclib_1_1simple__bool}{simple\_bool}}* arg(\textcolor{keywordtype}{bool}\&answer, \mbox{\hyperlink{classjclib_1_1jString}{jString}} short\_name, \mbox{\hyperlink{classjclib_1_1jString}{jString}} long\_name, \mbox{\hyperlink{classjclib_1_1jString}{jString}} desc, \textcolor{keywordtype}{bool} takes\_parameter, \textcolor{keywordtype}{bool} required=\textcolor{keyword}{false} )\{}
-\DoxyCodeLine{158             \textcolor{keywordflow}{return} \textcolor{keyword}{new} \mbox{\hyperlink{classjclib_1_1simple__bool}{simple\_bool}}( answer, short\_name, long\_name, desc, takes\_parameter, required );\}}
-\DoxyCodeLine{159 }
-\DoxyCodeLine{160     \textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1arguments}{arguments}}\{}
-\DoxyCodeLine{161         \textcolor{keyword}{public}:}
-\DoxyCodeLine{162             std::ostream \& error\_log\_;}
-\DoxyCodeLine{163             std::vector< \mbox{\hyperlink{classjclib_1_1jString}{jString}} > positional\_args\_;}
-\DoxyCodeLine{164             \textcolor{comment}{// jString end\_keywords\_ = "{}-\/-\/"{};}}
-\DoxyCodeLine{165             std::vector<\mbox{\hyperlink{classjclib_1_1CountedPointer}{CountedPointer}}< \mbox{\hyperlink{classjclib_1_1arg__base}{arg\_base}} > > all\_options\_;}
-\DoxyCodeLine{166             \textcolor{keyword}{typedef} std::map<\mbox{\hyperlink{classjclib_1_1jString}{jString}}, \mbox{\hyperlink{classjclib_1_1CountedPointer}{CountedPointer}}< \mbox{\hyperlink{classjclib_1_1arg__base}{arg\_base}} > > map\_T;}
-\DoxyCodeLine{167             map\_T short\_names\_;}
-\DoxyCodeLine{168             map\_T long\_names\_;}
-\DoxyCodeLine{169             \mbox{\hyperlink{classjclib_1_1jString}{jString}} help\_prefix\_ = \mbox{\hyperlink{namespacejclib}{jclib}}\mbox{\hyperlink{classjclib_1_1jString_a64b12d83c87606faedf066ad33c07f53}{::}}\mbox{\hyperlink{classjclib_1_1jString}{jString}}\mbox{\hyperlink{classjclib_1_1jString_a64b12d83c87606faedf066ad33c07f53}{::}}\mbox{\hyperlink{classjclib_1_1jString_a64b12d83c87606faedf066ad33c07f53}{get\_empty}}\mbox{\hyperlink{classjclib_1_1jString_a64b12d83c87606faedf066ad33c07f53}{(}}\mbox{\hyperlink{classjclib_1_1jString_a64b12d83c87606faedf066ad33c07f53}{)}};}
-\DoxyCodeLine{170             \mbox{\hyperlink{classjclib_1_1jString}{jString}} help\_suffix\_ = \mbox{\hyperlink{namespacejclib}{jclib}}\mbox{\hyperlink{classjclib_1_1jString_a64b12d83c87606faedf066ad33c07f53}{::}}\mbox{\hyperlink{classjclib_1_1jString}{jString}}\mbox{\hyperlink{classjclib_1_1jString_a64b12d83c87606faedf066ad33c07f53}{::}}\mbox{\hyperlink{classjclib_1_1jString_a64b12d83c87606faedf066ad33c07f53}{get\_empty}}\mbox{\hyperlink{classjclib_1_1jString_a64b12d83c87606faedf066ad33c07f53}{(}}\mbox{\hyperlink{classjclib_1_1jString_a64b12d83c87606faedf066ad33c07f53}{)}};}
-\DoxyCodeLine{171             \mbox{\hyperlink{classjclib_1_1jString}{jString}} version\_string\_ = \mbox{\hyperlink{namespacejclib}{jclib}}\mbox{\hyperlink{classjclib_1_1jString_a64b12d83c87606faedf066ad33c07f53}{::}}\mbox{\hyperlink{classjclib_1_1jString}{jString}}\mbox{\hyperlink{classjclib_1_1jString_a64b12d83c87606faedf066ad33c07f53}{::}}\mbox{\hyperlink{classjclib_1_1jString_a64b12d83c87606faedf066ad33c07f53}{get\_empty}}\mbox{\hyperlink{classjclib_1_1jString_a64b12d83c87606faedf066ad33c07f53}{(}}\mbox{\hyperlink{classjclib_1_1jString_a64b12d83c87606faedf066ad33c07f53}{)}};}
-\DoxyCodeLine{172             \textcolor{keywordtype}{int} errors\_ = 0;}
-\DoxyCodeLine{173             \textcolor{keywordtype}{bool} show\_help\_ = \textcolor{keyword}{false};}
-\DoxyCodeLine{174             \textcolor{keywordtype}{bool} show\_version\_ = \textcolor{keyword}{false};}
-\DoxyCodeLine{175             \textcolor{keywordtype}{void} insert(\mbox{\hyperlink{classjclib_1_1CountedPointer}{CountedPointer}}<\mbox{\hyperlink{classjclib_1_1arg__base}{arg\_base}}> input) \{}
-\DoxyCodeLine{176                 all\_options\_.push\_back( input );}
-\DoxyCodeLine{177                 \textcolor{keywordflow}{if}( input-\/>short\_name\_.len()==1) \{}
-\DoxyCodeLine{178                     \textcolor{keywordflow}{if}( short\_names\_.find(input-\/>short\_name\_) != short\_names\_.end() ) \{}
-\DoxyCodeLine{179                         error\_log\_ << \textcolor{stringliteral}{"{}Internal error: \(\backslash\)"{}"{}} << input-\/>short\_name\_ << \textcolor{stringliteral}{"{}\(\backslash\)"{} duplicated\(\backslash\)n"{}};}
-\DoxyCodeLine{180                         errors\_++;}
-\DoxyCodeLine{181                     \}}
-\DoxyCodeLine{182                     \textcolor{keywordflow}{else}\{}
-\DoxyCodeLine{183                         short\_names\_[input-\/>short\_name\_] \mbox{\hyperlink{classjclib_1_1CountedPointer_aadb8af90c4b0a7e095bf923dde4cf028}{=}} input;}
-\DoxyCodeLine{184                         input-\/>owner\_ = \textcolor{keyword}{this};}
-\DoxyCodeLine{185                     \}}
-\DoxyCodeLine{186                 \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( input-\/>short\_name\_.len() != 0 ) \{}
-\DoxyCodeLine{187                     error\_log\_ << \textcolor{stringliteral}{"{}Internal error: \(\backslash\)"{}"{}} << input-\/>short\_name\_ << \textcolor{stringliteral}{"{}\(\backslash\)"{} longer than 1 character\(\backslash\)n"{}};}
-\DoxyCodeLine{188                     errors\_++;}
-\DoxyCodeLine{189                 \}}
-\DoxyCodeLine{190                 \textcolor{keywordflow}{if}( input-\/>long\_name\_.len()>0) \{}
-\DoxyCodeLine{191                     \textcolor{keywordflow}{if}( long\_names\_.find(input-\/>long\_name\_) != long\_names\_.end() ) \{}
-\DoxyCodeLine{192                         error\_log\_ << \textcolor{stringliteral}{"{}Internal error: \(\backslash\)"{}"{}} << input-\/>long\_name\_ << \textcolor{stringliteral}{"{}\(\backslash\)"{} duplicated\(\backslash\)n"{}};}
-\DoxyCodeLine{193                         errors\_++;}
-\DoxyCodeLine{194                     \}}
-\DoxyCodeLine{195                     \textcolor{keywordflow}{else}\{}
-\DoxyCodeLine{196                         long\_names\_[input-\/>long\_name\_] \mbox{\hyperlink{classjclib_1_1CountedPointer_aadb8af90c4b0a7e095bf923dde4cf028}{=}} input;}
-\DoxyCodeLine{197                         input-\/>owner\_ = \textcolor{keyword}{this};}
-\DoxyCodeLine{198                     \}}
-\DoxyCodeLine{199                 \}}
-\DoxyCodeLine{200             \}}
-\DoxyCodeLine{201 }
-\DoxyCodeLine{202             \textcolor{keywordtype}{void} load(std::initializer\_list<\mbox{\hyperlink{classjclib_1_1arg__base}{arg\_base}} *> input) \{}
-\DoxyCodeLine{203                 \textcolor{keywordflow}{for}( \textcolor{keyword}{auto} i : input) \{}
-\DoxyCodeLine{204                     insert( i );}
-\DoxyCodeLine{205                 \}}
-\DoxyCodeLine{206             \}}
-\DoxyCodeLine{207 }
-\DoxyCodeLine{208             \textcolor{comment}{// Process a configuration file, one option per line}}
-\DoxyCodeLine{209             \textcolor{comment}{// Lines starting with \# are comments}}
-\DoxyCodeLine{210             \textcolor{comment}{// Blank lines are skipped}}
-\DoxyCodeLine{211             \textcolor{keywordtype}{void} process\_config( std::istream \& file, \mbox{\hyperlink{classjclib_1_1jString}{jString}} filename ) \{}
-\DoxyCodeLine{212                 \textcolor{keyword}{constexpr} \textcolor{keywordtype}{int} max\_line\_len = 1024;}
-\DoxyCodeLine{213                 \textcolor{keywordtype}{char} buffer[ max\_line\_len + 1];}
-\DoxyCodeLine{214                 \textcolor{keywordtype}{char} * bufptr;}
-\DoxyCodeLine{215                 \textcolor{keywordtype}{int} linenr = 0;}
-\DoxyCodeLine{216                 \mbox{\hyperlink{classjclib_1_1jString}{jString}} optionName, value;}
-\DoxyCodeLine{217                 map\_T::iterator found;}
-\DoxyCodeLine{218                 \textcolor{keywordflow}{while}( file.getline(buffer, max\_line\_len)) \{}
-\DoxyCodeLine{219                     buffer[ max\_line\_len ] = \textcolor{stringliteral}{'\(\backslash\)0'}; \textcolor{comment}{// Prevent overrun, normally there's an earlier null}}
-\DoxyCodeLine{220                     linenr++;}
-\DoxyCodeLine{221                     \textcolor{keywordtype}{char} * buf = buffer;}
-\DoxyCodeLine{222                     \textcolor{comment}{// skip leading space on the line}}
-\DoxyCodeLine{223                     \textcolor{keywordflow}{while}( *buf == \textcolor{stringliteral}{' '} || *buf == \textcolor{stringliteral}{'\(\backslash\)t'})}
-\DoxyCodeLine{224                         buf++;}
-\DoxyCodeLine{225                     \textcolor{comment}{// skip empty \& comment lines}}
-\DoxyCodeLine{226                     \textcolor{keywordflow}{if}( *buf == \textcolor{stringliteral}{'\(\backslash\)0'} || *buf == \textcolor{stringliteral}{'\#'} )}
-\DoxyCodeLine{227                         \textcolor{keywordflow}{continue};}
-\DoxyCodeLine{228                     \textcolor{keywordflow}{if}( *buf == \textcolor{stringliteral}{'-\/'} ) \{}
-\DoxyCodeLine{229                         error\_log\_ << \textcolor{stringliteral}{"{}Error config file lines must start with option or '\#' not '-\/'. Line "{}}}
-\DoxyCodeLine{230                                   << linenr << \textcolor{stringliteral}{"{} of "{}} << filename << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
-\DoxyCodeLine{231                         errors\_++;}
-\DoxyCodeLine{232                         \textcolor{keywordflow}{continue};}
-\DoxyCodeLine{233                     \}}
-\DoxyCodeLine{234                     bufptr = buf + 1;}
-\DoxyCodeLine{235                     \textcolor{keywordflow}{if}( *bufptr == \textcolor{stringliteral}{' '} || *bufptr == \textcolor{stringliteral}{'\(\backslash\)t'} || *bufptr == \textcolor{stringliteral}{'='} ) \{}
-\DoxyCodeLine{236                         \textcolor{comment}{// Unix style 1 character argument name}}
-\DoxyCodeLine{237                         optionName = \mbox{\hyperlink{classjclib_1_1jString}{jString}}(buf, bufptr );}
-\DoxyCodeLine{238                         found = short\_names\_.find(optionName);}
-\DoxyCodeLine{239                         \textcolor{keywordflow}{if}( found == short\_names\_.end()) \{}
-\DoxyCodeLine{240                             error\_log\_<< \textcolor{stringliteral}{"{}Unknown argument "{}} << optionName << linenr << \textcolor{stringliteral}{"{} of "{}} << filename << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
-\DoxyCodeLine{241                             errors\_++;}
-\DoxyCodeLine{242                             \textcolor{keywordflow}{continue};}
-\DoxyCodeLine{243                         \}}
-\DoxyCodeLine{244                     \} \textcolor{keywordflow}{else} \{}
-\DoxyCodeLine{245                         \textcolor{comment}{// GNU style long argument name}}
-\DoxyCodeLine{246                         \textcolor{keywordflow}{while} ( isalnum(*bufptr)) \{}
-\DoxyCodeLine{247                             bufptr++;}
-\DoxyCodeLine{248                         \}}
-\DoxyCodeLine{249                         optionName = \mbox{\hyperlink{classjclib_1_1jString}{jString}}(buf, bufptr );}
-\DoxyCodeLine{250                         found = long\_names\_.find(optionName);}
-\DoxyCodeLine{251                         \textcolor{keywordflow}{if}( found == long\_names\_.end()) \{}
-\DoxyCodeLine{252                             error\_log\_<< \textcolor{stringliteral}{"{}Unknown argument "{}} << optionName << linenr << \textcolor{stringliteral}{"{} of "{}} << filename << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
-\DoxyCodeLine{253                             errors\_++;}
-\DoxyCodeLine{254                             \textcolor{keywordflow}{continue};}
-\DoxyCodeLine{255                         \}}
-\DoxyCodeLine{256                     \}}
-\DoxyCodeLine{257                     \mbox{\hyperlink{classjclib_1_1arg__base}{arg\_base}} \& arg = \mbox{\hyperlink{classjclib_1_1CountedPointer_a8c5ecd6ea25507d0eff36724dd1bb99a}{*}} found-\/>second;}
-\DoxyCodeLine{258                     \textcolor{comment}{// config does not override options already set on the command line}}
-\DoxyCodeLine{259                     \textcolor{keywordflow}{if}( arg.is\_set\_ )}
-\DoxyCodeLine{260                         \textcolor{keywordflow}{continue};}
-\DoxyCodeLine{261                     \textcolor{keywordflow}{while}( *bufptr == \textcolor{stringliteral}{'='} || *bufptr == \textcolor{stringliteral}{' '} || *bufptr == \textcolor{stringliteral}{'\(\backslash\)t'} )}
-\DoxyCodeLine{262                         ++bufptr;}
-\DoxyCodeLine{263                     \textcolor{keywordtype}{char} * bufend = bufptr;}
-\DoxyCodeLine{264                     \textcolor{comment}{// Find end of string}}
-\DoxyCodeLine{265                     \textcolor{keywordflow}{while}( *bufend )}
-\DoxyCodeLine{266                         ++bufend;}
-\DoxyCodeLine{267                     \textcolor{keywordflow}{while}( bufend != bufptr \&\& (*bufend == \textcolor{stringliteral}{' '} || *bufend == \textcolor{stringliteral}{'\(\backslash\)t'} || *bufend == \textcolor{stringliteral}{'\(\backslash\)0'} ))}
-\DoxyCodeLine{268                         -\/-\/bufend;}
-\DoxyCodeLine{269                     \mbox{\hyperlink{classjclib_1_1jString}{jString}} val( bufptr, bufend+1 );}
-\DoxyCodeLine{270                     \textcolor{keywordflow}{if}( arg.takes\_parameter\_) \{}
-\DoxyCodeLine{271                         arg.is\_defaulted\_ = arg.set(val);}
-\DoxyCodeLine{272                     \} \textcolor{keywordflow}{else} \{}
-\DoxyCodeLine{273                         \textcolor{keywordflow}{if}( val.len() == 0 )}
-\DoxyCodeLine{274                             arg.is\_defaulted\_ = arg.set();}
-\DoxyCodeLine{275                         \textcolor{keywordflow}{else} \{}
-\DoxyCodeLine{276                             error\_log\_ << optionName << \textcolor{stringliteral}{"{} does not accept options "{}} << linenr << \textcolor{stringliteral}{"{} of "{}} << filename << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
-\DoxyCodeLine{277                             errors\_++;}
-\DoxyCodeLine{278                             \}}
-\DoxyCodeLine{279                     \}}
-\DoxyCodeLine{280                 \}}
-\DoxyCodeLine{281             \}}
-\DoxyCodeLine{282 }
-\DoxyCodeLine{283             \textcolor{keywordtype}{bool} process\_args( \textcolor{keywordtype}{int} argc, \textcolor{keyword}{const} \textcolor{keywordtype}{char} ** argv, \textcolor{keywordtype}{int} start\_at = 1) \{}
-\DoxyCodeLine{284                 \textcolor{keywordtype}{int} argnum = start\_at;}
-\DoxyCodeLine{285                 \textcolor{keywordflow}{for}( ; argnum < argc \&\& argv[ argnum ][0] == \textcolor{stringliteral}{'-\/'}; ++argnum ) \{}
-\DoxyCodeLine{286                     \textcolor{keyword}{const} \textcolor{keywordtype}{char} * argstr=argv[argnum ];}
-\DoxyCodeLine{287                     \textcolor{keywordflow}{if}( argstr[1] == \textcolor{stringliteral}{'-\/'}) \{ \textcolor{comment}{// long arg}}
-\DoxyCodeLine{288                         \textcolor{keywordflow}{if}( argstr[2] == \textcolor{stringliteral}{'\(\backslash\)0'}) \{ \textcolor{comment}{// end of kw args}}
-\DoxyCodeLine{289                             ++argnum;}
-\DoxyCodeLine{290                             \textcolor{keywordflow}{break};}
-\DoxyCodeLine{291                         \}}
-\DoxyCodeLine{292                         std::vector<\mbox{\hyperlink{classjclib_1_1jString}{jString}}> argarray = \mbox{\hyperlink{classjclib_1_1jString}{jString}}(argstr+2).split(\textcolor{stringliteral}{"{}="{}},1);}
-\DoxyCodeLine{293                         \mbox{\hyperlink{classjclib_1_1jString}{jString}} kw=argarray[0];}
-\DoxyCodeLine{294                         \mbox{\hyperlink{classjclib_1_1jString}{jString}} val=argarray[1];}
-\DoxyCodeLine{295                         \textcolor{keywordflow}{if}( ! val.isvalid())}
-\DoxyCodeLine{296                             val = \mbox{\hyperlink{classjclib_1_1jString}{jString}}\mbox{\hyperlink{classjclib_1_1jString_a64b12d83c87606faedf066ad33c07f53}{::}}\mbox{\hyperlink{classjclib_1_1jString_a64b12d83c87606faedf066ad33c07f53}{get\_empty}}\mbox{\hyperlink{classjclib_1_1jString_a64b12d83c87606faedf066ad33c07f53}{(}}\mbox{\hyperlink{classjclib_1_1jString_a64b12d83c87606faedf066ad33c07f53}{)}};}
-\DoxyCodeLine{297                         \textcolor{keyword}{auto} found = long\_names\_.find(kw);}
-\DoxyCodeLine{298                         \textcolor{keywordflow}{if}( found == long\_names\_.end()) \{}
-\DoxyCodeLine{299                             error\_log\_<< \textcolor{stringliteral}{"{}Unknown argument "{}} << argstr << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
-\DoxyCodeLine{300                             errors\_++;}
-\DoxyCodeLine{301                             \textcolor{keywordflow}{continue};}
-\DoxyCodeLine{302                         \}\textcolor{keywordflow}{else}\{}
-\DoxyCodeLine{303                             \mbox{\hyperlink{classjclib_1_1arg__base}{arg\_base}} \& arg = \mbox{\hyperlink{classjclib_1_1CountedPointer_a8c5ecd6ea25507d0eff36724dd1bb99a}{*}} found-\/>second;}
-\DoxyCodeLine{304                             \textcolor{keywordflow}{if}( arg.is\_set\_ \&\& ! arg.multiples\_ok\_ ) \{}
-\DoxyCodeLine{305                                 error\_log\_<< \textcolor{stringliteral}{"{}Multiple use of "{}} << argstr << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
-\DoxyCodeLine{306                                 errors\_++;}
-\DoxyCodeLine{307                                 \textcolor{keywordflow}{continue};}
-\DoxyCodeLine{308                             \}}
-\DoxyCodeLine{309                             \textcolor{keywordflow}{if}( arg.takes\_parameter\_) \{}
-\DoxyCodeLine{310                                 \textcolor{keywordtype}{int} val\_len = val.len();}
-\DoxyCodeLine{311                                 \textcolor{keywordtype}{int} nextargnum=argnum + 1;}
-\DoxyCodeLine{312                                 \textcolor{keywordflow}{if}( (val\_len==0) \&\& (nextargnum < argc) \&\& (argv[nextargnum][0] != \textcolor{stringliteral}{'-\/'})) \{}
-\DoxyCodeLine{313                                     val = argv[++argnum];}
-\DoxyCodeLine{314                                 \}}
-\DoxyCodeLine{315                                 arg.is\_set\_ = arg.set(val);}
-\DoxyCodeLine{316                             \} \textcolor{keywordflow}{else} \{}
-\DoxyCodeLine{317                                 \textcolor{keywordflow}{if}( val.len() == 0 )}
-\DoxyCodeLine{318                                     arg.is\_set\_ = arg.set();}
-\DoxyCodeLine{319                                 \textcolor{keywordflow}{else} \{}
-\DoxyCodeLine{320                                     error\_log\_ << arg.long\_name\_ << \textcolor{stringliteral}{"{} does not accept options\(\backslash\)n"{}};}
-\DoxyCodeLine{321                                     errors\_++;}
-\DoxyCodeLine{322                                  \}}
-\DoxyCodeLine{323                             \}}
-\DoxyCodeLine{324                         \}}
-\DoxyCodeLine{325                     \} \textcolor{keywordflow}{else} \{}
-\DoxyCodeLine{326                         \textcolor{comment}{// args can be run together, so we have to decode the arg to know }}
-\DoxyCodeLine{327                         \textcolor{comment}{// e.g. -\/abcdef might be -\/a(=bcdef) or -\/a -\/b -\/c(=def) or ...}}
-\DoxyCodeLine{328                         \textcolor{keyword}{const} \textcolor{keywordtype}{char} * end = argstr + strlen(argstr);}
-\DoxyCodeLine{329                         \textcolor{comment}{// +1 to skip the -\/}}
-\DoxyCodeLine{330                         \textcolor{keywordflow}{for}( \textcolor{keyword}{const} \textcolor{keywordtype}{char} *chars = argstr+1; chars < end; ++ chars ) \{}
-\DoxyCodeLine{331                             \textcolor{keyword}{auto} kw=\mbox{\hyperlink{classjclib_1_1jString}{jString}}(chars,1);}
-\DoxyCodeLine{332                             \textcolor{keyword}{auto} found = short\_names\_.find(kw);}
-\DoxyCodeLine{333                             \textcolor{keywordflow}{if}( found == short\_names\_.end()) \{}
-\DoxyCodeLine{334                                 error\_log\_<< \textcolor{stringliteral}{"{}Unknown argument "{}} << argstr << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
-\DoxyCodeLine{335                                 errors\_++;}
-\DoxyCodeLine{336                             \}\textcolor{keywordflow}{else}\{}
-\DoxyCodeLine{337                                 \mbox{\hyperlink{classjclib_1_1arg__base}{arg\_base}} \& arg = \mbox{\hyperlink{classjclib_1_1CountedPointer_a8c5ecd6ea25507d0eff36724dd1bb99a}{*}} found-\/>second;}
-\DoxyCodeLine{338                                 \textcolor{keywordflow}{if}( arg.is\_set\_ \&\& ! arg.multiples\_ok\_ ) \{}
-\DoxyCodeLine{339                                     error\_log\_<< \textcolor{stringliteral}{"{}Multiple use of "{}} << argstr << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
-\DoxyCodeLine{340                                     errors\_++;}
-\DoxyCodeLine{341                                     \textcolor{keywordflow}{continue};}
-\DoxyCodeLine{342                                 \}}
-\DoxyCodeLine{343                                 \textcolor{keywordflow}{if}( arg.takes\_parameter\_) \{}
-\DoxyCodeLine{344                                     \mbox{\hyperlink{classjclib_1_1jString}{jString}} val(chars+1);}
-\DoxyCodeLine{345                                     \textcolor{keywordflow}{if}( chars[1] == \textcolor{stringliteral}{'\(\backslash\)0'} \&\& (argnum + 1) < argc \&\& argv[argnum+1][0] != \textcolor{stringliteral}{'-\/'}) \{}
-\DoxyCodeLine{346                                         val = argv[++argnum];}
-\DoxyCodeLine{347                                     \}}
-\DoxyCodeLine{348                                     arg.is\_set\_ = arg.set(val);}
-\DoxyCodeLine{349                                     \textcolor{keywordflow}{break};}
-\DoxyCodeLine{350                                 \} \textcolor{keywordflow}{else}}
-\DoxyCodeLine{351                                     arg.is\_set\_ = arg.set();}
-\DoxyCodeLine{352                             \}}
-\DoxyCodeLine{353                         \}}
-\DoxyCodeLine{354                     \}}
-\DoxyCodeLine{355                 \}}
-\DoxyCodeLine{356                 \textcolor{comment}{// Now process the remaining (positional) arguments}}
-\DoxyCodeLine{357                 \textcolor{keywordflow}{for}( ; argnum < argc; ++ argnum) \{}
-\DoxyCodeLine{358                     \textcolor{keyword}{this}-\/>positional\_args\_.push\_back(argv[argnum]);}
-\DoxyCodeLine{359                 \}}
-\DoxyCodeLine{360                 \textcolor{comment}{// Finally, scan arguments to make sure required ones are set}}
-\DoxyCodeLine{361 }
-\DoxyCodeLine{362                 \textcolor{keywordflow}{if}( ! (show\_version\_ || show\_help\_ ) )}
-\DoxyCodeLine{363                 \{}
-\DoxyCodeLine{364                     \textcolor{keywordflow}{for}( \textcolor{keyword}{auto} k : all\_options\_) \{}
-\DoxyCodeLine{365                         \textcolor{keywordflow}{if}(  k-\/>required\_ \&\&  ! ( k-\/>is\_set\_ || k-\/>is\_defaulted\_) ) \{}
-\DoxyCodeLine{366                             errors\_++;}
-\DoxyCodeLine{367                             error\_log\_ << \textcolor{stringliteral}{"{}Required option \(\backslash\)"{}"{}};}
-\DoxyCodeLine{368                             \textcolor{keywordflow}{if}( k-\/>short\_name\_.len() > 0 \&\& k-\/>long\_name\_.len() > 0 )}
-\DoxyCodeLine{369                                 error\_log\_ << \textcolor{stringliteral}{"{}-\/-\/"{}} << k-\/>long\_name\_ << \textcolor{stringliteral}{"{}\(\backslash\)"{} (\(\backslash\)"{}-\/"{}} << k-\/>short\_name\_ << \textcolor{stringliteral}{"{}\(\backslash\)"{})"{}};}
-\DoxyCodeLine{370                             \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (k-\/>short\_name\_.len() > 0)}
-\DoxyCodeLine{371                                 error\_log\_ << \textcolor{stringliteral}{"{}-\/"{}} << k-\/>short\_name\_ << \textcolor{stringliteral}{"{}\(\backslash\)"{}"{}};}
-\DoxyCodeLine{372                             \textcolor{keywordflow}{else}}
-\DoxyCodeLine{373                                 error\_log\_ << \textcolor{stringliteral}{"{}-\/-\/"{}} << k-\/>long\_name\_ << \textcolor{stringliteral}{"{}\(\backslash\)"{}"{}};}
-\DoxyCodeLine{374                             \textcolor{keywordflow}{if}( k-\/>desc\_.len() > 0 )}
-\DoxyCodeLine{375                                 error\_log\_ << \textcolor{stringliteral}{"{} ("{}} << k-\/>desc\_ << \textcolor{stringliteral}{"{})"{}};}
-\DoxyCodeLine{376                             error\_log\_ << \textcolor{stringliteral}{"{} missing\(\backslash\)n"{}};}
-\DoxyCodeLine{377                             errors\_++;}
-\DoxyCodeLine{378                         \}}
-\DoxyCodeLine{379                     \}}
-\DoxyCodeLine{380                 \}}
-\DoxyCodeLine{381                 \textcolor{comment}{// If version has been requested \& we are set-\/up to provide it.}}
-\DoxyCodeLine{382                 \textcolor{keywordflow}{if}( show\_version\_ ) \{}
-\DoxyCodeLine{383                     error\_log\_ << version\_string\_ << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};;}
-\DoxyCodeLine{384                 \}}
-\DoxyCodeLine{385                 \textcolor{comment}{// If help has been requested or a parameter error is detected \& we are set-\/up to provide it.}}
-\DoxyCodeLine{386                 \textcolor{keywordflow}{if}( show\_help\_ || ( errors\_ != 0 \&\& help\_prefix\_.len()>0 ) ) \{}
-\DoxyCodeLine{387                     error\_log\_ << help\_prefix\_ << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
-\DoxyCodeLine{388                     \textcolor{comment}{// find longest long option name}}
-\DoxyCodeLine{389                     size\_t longest = 1;}
-\DoxyCodeLine{390                     \textcolor{keywordflow}{for}( \textcolor{keyword}{auto} k : all\_options\_) \{}
-\DoxyCodeLine{391                         longest=std::max<size\_t>( longest, k-\/>long\_name\_.len() );}
-\DoxyCodeLine{392                     \}}
-\DoxyCodeLine{393                     \textcolor{comment}{// now print the lines}}
-\DoxyCodeLine{394                     longest ++;}
-\DoxyCodeLine{395                     \textcolor{keywordflow}{for}( \textcolor{keyword}{auto} k : all\_options\_) \{}
-\DoxyCodeLine{396                         \textcolor{keywordflow}{if}( k-\/>short\_name\_.len() > 0 )}
-\DoxyCodeLine{397                             error\_log\_ << \textcolor{stringliteral}{"{}  -\/"{}} << k-\/>short\_name\_ << \textcolor{stringliteral}{"{} "{}};}
-\DoxyCodeLine{398                         \textcolor{keywordflow}{else}}
-\DoxyCodeLine{399                             error\_log\_<< \textcolor{stringliteral}{"{}     "{}};}
-\DoxyCodeLine{400                         error\_log\_ << (k-\/>long\_name\_.len()==0 ? \textcolor{stringliteral}{"{}  "{}} : \textcolor{stringliteral}{"{}-\/-\/"{}})}
-\DoxyCodeLine{401                                    << k-\/>long\_name\_.pad(longest)}
-\DoxyCodeLine{402                                    << k-\/>desc\_ << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
-\DoxyCodeLine{403                     \}}
-\DoxyCodeLine{404                     error\_log\_ << help\_suffix\_ << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
-\DoxyCodeLine{405                 \}}
-\DoxyCodeLine{406                 \textcolor{keywordflow}{return} errors\_ == 0 \&\& !(show\_version\_ || show\_help\_);}
-\DoxyCodeLine{407             \}}
-\DoxyCodeLine{408 }
-\DoxyCodeLine{409             arguments(std::ostream \& error\_log=std::cerr)}
-\DoxyCodeLine{410                 : error\_log\_( error\_log)}
-\DoxyCodeLine{411             \{\}}
-\DoxyCodeLine{412     \};}
-\DoxyCodeLine{413 }
-\DoxyCodeLine{414     \textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1config}{config}} : \textcolor{keyword}{public} \mbox{\hyperlink{classjclib_1_1arg__base}{arg\_base}} \{}
-\DoxyCodeLine{415         \textcolor{keyword}{public}:}
-\DoxyCodeLine{416             \mbox{\hyperlink{classjclib_1_1arguments}{arguments}} \& processor\_;}
-\DoxyCodeLine{417             \textcolor{keyword}{virtual} \textcolor{keywordtype}{bool} set() \{ \textcolor{keywordflow}{return} \textcolor{keyword}{false};\}}
-\DoxyCodeLine{418             config( \mbox{\hyperlink{classjclib_1_1arguments}{arguments}} \& processor, \mbox{\hyperlink{classjclib_1_1jString}{jString}} short\_name, \mbox{\hyperlink{classjclib_1_1jString}{jString}} long\_name, \mbox{\hyperlink{classjclib_1_1jString}{jString}} desc )}
-\DoxyCodeLine{419             : \mbox{\hyperlink{classjclib_1_1arg__base}{arg\_base}}( short\_name, long\_name, desc, \textcolor{keyword}{true}, \textcolor{keyword}{false} )}
-\DoxyCodeLine{420             , processor\_( processor )}
-\DoxyCodeLine{421             \{}
-\DoxyCodeLine{422                 multiples\_ok\_ = \textcolor{keyword}{true};}
-\DoxyCodeLine{423             \}}
-\DoxyCodeLine{424             \textcolor{keyword}{virtual} \textcolor{keywordtype}{bool} set(\mbox{\hyperlink{classjclib_1_1jString}{jString}} \&value) \{}
-\DoxyCodeLine{425                 std::ifstream stream;}
-\DoxyCodeLine{426                 stream.open( value, std::ifstream::in);}
-\DoxyCodeLine{427                 \textcolor{keywordflow}{if}( stream.is\_open()) \{}
-\DoxyCodeLine{428                     processor\_.process\_config( stream, value);}
-\DoxyCodeLine{429                     stream.close();}
-\DoxyCodeLine{430                 \} \textcolor{keywordflow}{else} \{}
-\DoxyCodeLine{431                     processor\_.error\_log\_ << \textcolor{stringliteral}{"{}Can not open config file "{}} << value << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
-\DoxyCodeLine{432                     processor\_.errors\_++;}
-\DoxyCodeLine{433                 \}}
-\DoxyCodeLine{434                 \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
-\DoxyCodeLine{435             \}}
-\DoxyCodeLine{436     \};}
-\DoxyCodeLine{437 \}}
-\DoxyCodeLine{438 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{endif}}
+\DoxyCodeLine{34 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{include} \textcolor{preprocessor}{<}\textcolor{preprocessor}{fstream}\textcolor{preprocessor}{>}}
+\DoxyCodeLine{35 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{include} \textcolor{preprocessor}{<}\textcolor{preprocessor}{string}\textcolor{preprocessor}{>}}
+\DoxyCodeLine{36 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{include} \textcolor{preprocessor}{<}\textcolor{preprocessor}{vector}\textcolor{preprocessor}{>}}
+\DoxyCodeLine{37 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{include} \textcolor{preprocessor}{<}\textcolor{preprocessor}{map}\textcolor{preprocessor}{>}}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39 \textcolor{comment}{/**}}
+\DoxyCodeLine{40 \textcolor{comment}{ * Flexible, header only parser for command line arguments.}}
+\DoxyCodeLine{41 \textcolor{comment}{ * }}
+\DoxyCodeLine{42 \textcolor{comment}{ * Designed to support the awkccc project, but not limited to it.}}
+\DoxyCodeLine{43 \textcolor{comment}{*/}}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45 \textcolor{keyword}{namespace} \mbox{\hyperlink{namespacejclib}{jclib}} \{}
+\DoxyCodeLine{46     \textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1arg__base}{arg\_base}} : \textcolor{keyword}{public} \mbox{\hyperlink{classjclib_1_1CountedPointerTarget}{CountedPointerTarget}} \{}
+\DoxyCodeLine{47         \textcolor{keyword}{public}:}
+\DoxyCodeLine{48             \textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1arguments}{arguments}} * owner\_ = \textcolor{keywordtype}{nullptr};}
+\DoxyCodeLine{49             \mbox{\hyperlink{classjclib_1_1jString}{jString}} short\_name\_;}
+\DoxyCodeLine{50             \mbox{\hyperlink{classjclib_1_1jString}{jString}} long\_name\_;}
+\DoxyCodeLine{51             \mbox{\hyperlink{classjclib_1_1jString}{jString}} desc\_;}
+\DoxyCodeLine{52             \textcolor{keywordtype}{bool} is\_set\_ = \textcolor{keyword}{false};}
+\DoxyCodeLine{53             \textcolor{keywordtype}{bool} is\_defaulted\_ = \textcolor{keyword}{false};}
+\DoxyCodeLine{54             \textcolor{keywordtype}{bool} multiples\_ok\_=\textcolor{keyword}{false};}
+\DoxyCodeLine{55             \textcolor{keywordtype}{bool} takes\_parameter\_;}
+\DoxyCodeLine{56             \textcolor{keywordtype}{bool} required\_;}
+\DoxyCodeLine{57             \textcolor{keyword}{virtual} \textcolor{keywordtype}{bool} is\_set() \textcolor{keyword}{const} \{ \textcolor{keywordflow}{return} is\_set\_; \}}
+\DoxyCodeLine{58             \textcolor{keyword}{virtual} \textcolor{keywordtype}{bool} set() \{\textcolor{keywordflow}{return} \textcolor{keyword}{false};\}}
+\DoxyCodeLine{59             \textcolor{keyword}{virtual} \textcolor{keywordtype}{bool} set(\mbox{\hyperlink{classjclib_1_1jString}{jString}} \&value) \{\textcolor{keywordflow}{return} \textcolor{keyword}{false};\}}
+\DoxyCodeLine{60             arg\_base(\mbox{\hyperlink{classjclib_1_1jString}{jString}} short\_name, \mbox{\hyperlink{classjclib_1_1jString}{jString}} long\_name, \mbox{\hyperlink{classjclib_1_1jString}{jString}} desc, \textcolor{keywordtype}{bool} takes\_parameter, \textcolor{keywordtype}{bool} required=\textcolor{keyword}{false})}
+\DoxyCodeLine{61             : short\_name\_(short\_name)}
+\DoxyCodeLine{62             , long\_name\_(long\_name)}
+\DoxyCodeLine{63             , desc\_(desc)}
+\DoxyCodeLine{64             , takes\_parameter\_(takes\_parameter)}
+\DoxyCodeLine{65             , required\_(required)}
+\DoxyCodeLine{66             \{\}}
+\DoxyCodeLine{67     \};}
+\DoxyCodeLine{68 }
+\DoxyCodeLine{69     \textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1simple__bool}{simple\_bool}} : \textcolor{keyword}{public} \mbox{\hyperlink{classjclib_1_1arg__base}{arg\_base}} \{}
+\DoxyCodeLine{70         \textcolor{keyword}{public}:}
+\DoxyCodeLine{71             \textcolor{keywordtype}{bool} \& answer\_;}
+\DoxyCodeLine{72             \textcolor{keyword}{virtual} \textcolor{keywordtype}{bool} set() \{answer\_ = \textcolor{keyword}{true}; is\_set\_ = \textcolor{keyword}{true}; \textcolor{keywordflow}{return} \textcolor{keyword}{true};\}}
+\DoxyCodeLine{73             simple\_bool( \textcolor{keywordtype}{bool} \& answer, \mbox{\hyperlink{classjclib_1_1jString}{jString}} short\_name, \mbox{\hyperlink{classjclib_1_1jString}{jString}} long\_name, \mbox{\hyperlink{classjclib_1_1jString}{jString}} desc, \textcolor{keywordtype}{bool} takes\_parameter, \textcolor{keywordtype}{bool} required=\textcolor{keyword}{false} )}
+\DoxyCodeLine{74             : \mbox{\hyperlink{classjclib_1_1arg__base}{arg\_base}}( short\_name, long\_name, desc, takes\_parameter, required )}
+\DoxyCodeLine{75             , answer\_( answer)}
+\DoxyCodeLine{76             \{\}}
+\DoxyCodeLine{77             \textcolor{keyword}{virtual} \textcolor{keywordtype}{bool} set(\mbox{\hyperlink{classjclib_1_1jString}{jString}} \&value) \{\textcolor{keywordflow}{return} \textcolor{keyword}{false};\} \textcolor{comment}{// FIXME: Doesn't take value;}}
+\DoxyCodeLine{78     \};}
+\DoxyCodeLine{79 }
+\DoxyCodeLine{80     \textcolor{keyword}{namespace} \{ \textcolor{comment}{// Prevent link errors}}
+\DoxyCodeLine{81         \textcolor{keyword}{template}<\textcolor{keyword}{class} T> \textcolor{keyword}{class} arg\_instance : \textcolor{keyword}{public} \mbox{\hyperlink{classjclib_1_1arg__base}{arg\_base}} \{}
+\DoxyCodeLine{82             \textcolor{keyword}{public}:}
+\DoxyCodeLine{83                 T \& answer\_;}
+\DoxyCodeLine{84                 \textcolor{keyword}{virtual} \textcolor{keywordtype}{bool} set(\mbox{\hyperlink{classjclib_1_1jString}{jString}} \&value);}
+\DoxyCodeLine{85                 arg\_instance( T \& answer, \mbox{\hyperlink{classjclib_1_1jString}{jString}} short\_name, \mbox{\hyperlink{classjclib_1_1jString}{jString}} long\_name, \mbox{\hyperlink{classjclib_1_1jString}{jString}} desc, \textcolor{keywordtype}{bool} takes\_parameter, \textcolor{keywordtype}{bool} required=\textcolor{keyword}{false} )}
+\DoxyCodeLine{86                 : \mbox{\hyperlink{classjclib_1_1arg__base}{arg\_base}}( short\_name, long\_name, desc, takes\_parameter, required )}
+\DoxyCodeLine{87                 , answer\_( answer)}
+\DoxyCodeLine{88                 \{\}}
+\DoxyCodeLine{89         \};}
+\DoxyCodeLine{90 }
+\DoxyCodeLine{91         \textcolor{keyword}{template}<> \textcolor{keywordtype}{bool} arg\_instance<\textcolor{keywordtype}{short} \textcolor{keywordtype}{int}>::set(\mbox{\hyperlink{classjclib_1_1jString}{jString}} \&value) \{}
+\DoxyCodeLine{92             errno = 0;}
+\DoxyCodeLine{93             answer\_ = strtol(value.data(),\textcolor{keywordtype}{nullptr},10);}
+\DoxyCodeLine{94             \textcolor{keywordflow}{return} errno == 0;}
+\DoxyCodeLine{95         \}}
+\DoxyCodeLine{96 }
+\DoxyCodeLine{97         \textcolor{keyword}{template}<> \textcolor{keywordtype}{bool} arg\_instance<\textcolor{keywordtype}{int}>::set(\mbox{\hyperlink{classjclib_1_1jString}{jString}} \&value) \{}
+\DoxyCodeLine{98             errno = 0;}
+\DoxyCodeLine{99             answer\_ = strtol(value.data(),\textcolor{keywordtype}{nullptr},10);}
+\DoxyCodeLine{100             \textcolor{keywordflow}{return} errno == 0;}
+\DoxyCodeLine{101         \}}
+\DoxyCodeLine{102 }
+\DoxyCodeLine{103         \textcolor{keyword}{template}<> \textcolor{keywordtype}{bool} arg\_instance<\textcolor{keywordtype}{long}>::set(\mbox{\hyperlink{classjclib_1_1jString}{jString}} \&value) \{}
+\DoxyCodeLine{104             errno = 0;}
+\DoxyCodeLine{105             answer\_ = strtol(value.data(),\textcolor{keywordtype}{nullptr},10);}
+\DoxyCodeLine{106             \textcolor{keywordflow}{return} errno == 0;}
+\DoxyCodeLine{107         \}}
+\DoxyCodeLine{108 }
+\DoxyCodeLine{109         \textcolor{keyword}{template}<> \textcolor{keywordtype}{bool} arg\_instance<\textcolor{keywordtype}{long} \textcolor{keywordtype}{long}>::set(\mbox{\hyperlink{classjclib_1_1jString}{jString}} \&value) \{}
+\DoxyCodeLine{110             errno = 0;}
+\DoxyCodeLine{111             answer\_ = strtoll(value.data(),\textcolor{keywordtype}{nullptr},10);}
+\DoxyCodeLine{112             \textcolor{keywordflow}{return} errno == 0;}
+\DoxyCodeLine{113         \}}
+\DoxyCodeLine{114 }
+\DoxyCodeLine{115         \textcolor{keyword}{template}<> \textcolor{keywordtype}{bool} arg\_instance<\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} \textcolor{keywordtype}{int}>::set(\mbox{\hyperlink{classjclib_1_1jString}{jString}} \&value) \{}
+\DoxyCodeLine{116             errno = 0;}
+\DoxyCodeLine{117             answer\_ = strtoul(value.data(),\textcolor{keywordtype}{nullptr},10);}
+\DoxyCodeLine{118             \textcolor{keywordflow}{return} errno == 0;}
+\DoxyCodeLine{119         \}}
+\DoxyCodeLine{120 }
+\DoxyCodeLine{121         \textcolor{keyword}{template}<> \textcolor{keywordtype}{bool} arg\_instance<\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int}>::set(\mbox{\hyperlink{classjclib_1_1jString}{jString}} \&value) \{}
+\DoxyCodeLine{122             errno = 0;}
+\DoxyCodeLine{123             answer\_ = strtoul(value.data(),\textcolor{keywordtype}{nullptr},10);}
+\DoxyCodeLine{124             \textcolor{keywordflow}{return} errno == 0;}
+\DoxyCodeLine{125         \}}
+\DoxyCodeLine{126 }
+\DoxyCodeLine{127         \textcolor{keyword}{template}<> \textcolor{keywordtype}{bool} arg\_instance<\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long}>::set(\mbox{\hyperlink{classjclib_1_1jString}{jString}} \&value) \{}
+\DoxyCodeLine{128             errno = 0;}
+\DoxyCodeLine{129             answer\_ = strtoul(value.data(),\textcolor{keywordtype}{nullptr},10);}
+\DoxyCodeLine{130             \textcolor{keywordflow}{return} errno == 0;}
+\DoxyCodeLine{131         \}}
+\DoxyCodeLine{132 }
+\DoxyCodeLine{133         \textcolor{keyword}{template}<> \textcolor{keywordtype}{bool} arg\_instance<\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} \textcolor{keywordtype}{long}>::set(\mbox{\hyperlink{classjclib_1_1jString}{jString}} \&value) \{}
+\DoxyCodeLine{134             errno = 0;}
+\DoxyCodeLine{135             answer\_ = strtoull(value.data(),\textcolor{keywordtype}{nullptr},10);}
+\DoxyCodeLine{136             \textcolor{keywordflow}{return} errno == 0;}
+\DoxyCodeLine{137         \}}
+\DoxyCodeLine{138 }
+\DoxyCodeLine{139         \textcolor{keyword}{template}<> \textcolor{keywordtype}{bool} arg\_instance<\mbox{\hyperlink{classjclib_1_1jString}{jString}}>::set(\mbox{\hyperlink{classjclib_1_1jString}{jString}} \&value) \{}
+\DoxyCodeLine{140             answer\_ = value;}
+\DoxyCodeLine{141             \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{142         \}}
+\DoxyCodeLine{143 }
+\DoxyCodeLine{144         \textcolor{keyword}{template}<> \textcolor{keywordtype}{bool} arg\_instance<std::string>::set(\mbox{\hyperlink{classjclib_1_1jString}{jString}} \&value) \{}
+\DoxyCodeLine{145             answer\_.assign(value.data(), value.len());}
+\DoxyCodeLine{146             \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{147         \}}
+\DoxyCodeLine{148 }
+\DoxyCodeLine{149         \textcolor{keyword}{template}<> \textcolor{keywordtype}{bool} arg\_instance< std::vector<\mbox{\hyperlink{classjclib_1_1jString}{jString}}> >::set(\mbox{\hyperlink{classjclib_1_1jString}{jString}} \&value) \{}
+\DoxyCodeLine{150             errno = 0;}
+\DoxyCodeLine{151             answer\_.push\_back(value);}
+\DoxyCodeLine{152             multiples\_ok\_ = \textcolor{keyword}{true};}
+\DoxyCodeLine{153             \textcolor{keywordflow}{return} errno == 0;}
+\DoxyCodeLine{154         \}}
+\DoxyCodeLine{155 }
+\DoxyCodeLine{156         \textcolor{keyword}{template}<\textcolor{keyword}{class} T> arg\_instance<T>* arg(T\&answer, \mbox{\hyperlink{classjclib_1_1jString}{jString}} short\_name, \mbox{\hyperlink{classjclib_1_1jString}{jString}} long\_name, \mbox{\hyperlink{classjclib_1_1jString}{jString}} desc, \textcolor{keywordtype}{bool} takes\_parameter, \textcolor{keywordtype}{bool} required=\textcolor{keyword}{false} )\{}
+\DoxyCodeLine{157                 \textcolor{keywordflow}{return} \textcolor{keyword}{new} arg\_instance<T>( answer, short\_name, long\_name, desc, takes\_parameter, required );\}}
+\DoxyCodeLine{158 }
+\DoxyCodeLine{159         \mbox{\hyperlink{classjclib_1_1simple__bool}{simple\_bool}}* arg(\textcolor{keywordtype}{bool}\&answer, \mbox{\hyperlink{classjclib_1_1jString}{jString}} short\_name, \mbox{\hyperlink{classjclib_1_1jString}{jString}} long\_name, \mbox{\hyperlink{classjclib_1_1jString}{jString}} desc, \textcolor{keywordtype}{bool} takes\_parameter, \textcolor{keywordtype}{bool} required=\textcolor{keyword}{false} )\{}
+\DoxyCodeLine{160                 \textcolor{keywordflow}{return} \textcolor{keyword}{new} \mbox{\hyperlink{classjclib_1_1simple__bool}{simple\_bool}}( answer, short\_name, long\_name, desc, takes\_parameter, required );\}}
+\DoxyCodeLine{161 \}}
+\DoxyCodeLine{162     \textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1arguments}{arguments}}\{}
+\DoxyCodeLine{163         \textcolor{keyword}{public}:}
+\DoxyCodeLine{164             std::ostream \& error\_log\_;}
+\DoxyCodeLine{165             std::vector< \mbox{\hyperlink{classjclib_1_1jString}{jString}} > positional\_args\_;}
+\DoxyCodeLine{166             \textcolor{comment}{// jString end\_keywords\_ = "{}-\/-\/"{};}}
+\DoxyCodeLine{167             std::vector<\mbox{\hyperlink{classjclib_1_1CountedPointer}{CountedPointer}}< \mbox{\hyperlink{classjclib_1_1arg__base}{arg\_base}} > > all\_options\_;}
+\DoxyCodeLine{168             \textcolor{keyword}{typedef} std::map<\mbox{\hyperlink{classjclib_1_1jString}{jString}}, \mbox{\hyperlink{classjclib_1_1CountedPointer}{CountedPointer}}< \mbox{\hyperlink{classjclib_1_1arg__base}{arg\_base}} > > map\_T;}
+\DoxyCodeLine{169             map\_T short\_names\_;}
+\DoxyCodeLine{170             map\_T long\_names\_;}
+\DoxyCodeLine{171             \mbox{\hyperlink{classjclib_1_1jString}{jString}} help\_prefix\_ = \mbox{\hyperlink{namespacejclib}{jclib}}\mbox{\hyperlink{classjclib_1_1jString_a64b12d83c87606faedf066ad33c07f53}{::}}\mbox{\hyperlink{classjclib_1_1jString}{jString}}\mbox{\hyperlink{classjclib_1_1jString_a64b12d83c87606faedf066ad33c07f53}{::}}\mbox{\hyperlink{classjclib_1_1jString_a64b12d83c87606faedf066ad33c07f53}{get\_empty}}\mbox{\hyperlink{classjclib_1_1jString_a64b12d83c87606faedf066ad33c07f53}{(}}\mbox{\hyperlink{classjclib_1_1jString_a64b12d83c87606faedf066ad33c07f53}{)}};}
+\DoxyCodeLine{172             \mbox{\hyperlink{classjclib_1_1jString}{jString}} help\_suffix\_ = \mbox{\hyperlink{namespacejclib}{jclib}}\mbox{\hyperlink{classjclib_1_1jString_a64b12d83c87606faedf066ad33c07f53}{::}}\mbox{\hyperlink{classjclib_1_1jString}{jString}}\mbox{\hyperlink{classjclib_1_1jString_a64b12d83c87606faedf066ad33c07f53}{::}}\mbox{\hyperlink{classjclib_1_1jString_a64b12d83c87606faedf066ad33c07f53}{get\_empty}}\mbox{\hyperlink{classjclib_1_1jString_a64b12d83c87606faedf066ad33c07f53}{(}}\mbox{\hyperlink{classjclib_1_1jString_a64b12d83c87606faedf066ad33c07f53}{)}};}
+\DoxyCodeLine{173             \mbox{\hyperlink{classjclib_1_1jString}{jString}} version\_string\_ = \mbox{\hyperlink{namespacejclib}{jclib}}\mbox{\hyperlink{classjclib_1_1jString_a64b12d83c87606faedf066ad33c07f53}{::}}\mbox{\hyperlink{classjclib_1_1jString}{jString}}\mbox{\hyperlink{classjclib_1_1jString_a64b12d83c87606faedf066ad33c07f53}{::}}\mbox{\hyperlink{classjclib_1_1jString_a64b12d83c87606faedf066ad33c07f53}{get\_empty}}\mbox{\hyperlink{classjclib_1_1jString_a64b12d83c87606faedf066ad33c07f53}{(}}\mbox{\hyperlink{classjclib_1_1jString_a64b12d83c87606faedf066ad33c07f53}{)}};}
+\DoxyCodeLine{174             \textcolor{keywordtype}{int} errors\_ = 0;}
+\DoxyCodeLine{175             \textcolor{keywordtype}{bool} show\_help\_ = \textcolor{keyword}{false};}
+\DoxyCodeLine{176             \textcolor{keywordtype}{bool} show\_version\_ = \textcolor{keyword}{false};}
+\DoxyCodeLine{177             \textcolor{keywordtype}{void} insert(\mbox{\hyperlink{classjclib_1_1CountedPointer}{CountedPointer}}<\mbox{\hyperlink{classjclib_1_1arg__base}{arg\_base}}> input) \{}
+\DoxyCodeLine{178                 all\_options\_.push\_back( input );}
+\DoxyCodeLine{179                 \textcolor{keywordflow}{if}( input-\/>short\_name\_.len()==1) \{}
+\DoxyCodeLine{180                     \textcolor{keywordflow}{if}( short\_names\_.find(input-\/>short\_name\_) != short\_names\_.end() ) \{}
+\DoxyCodeLine{181                         error\_log\_ << \textcolor{stringliteral}{"{}Internal error: \(\backslash\)"{}"{}} << input-\/>short\_name\_ << \textcolor{stringliteral}{"{}\(\backslash\)"{} duplicated\(\backslash\)n"{}};}
+\DoxyCodeLine{182                         errors\_++;}
+\DoxyCodeLine{183                     \}}
+\DoxyCodeLine{184                     \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{185                         short\_names\_[input-\/>short\_name\_] \mbox{\hyperlink{classjclib_1_1CountedPointer_aadb8af90c4b0a7e095bf923dde4cf028}{=}} input;}
+\DoxyCodeLine{186                         input-\/>owner\_ = \textcolor{keyword}{this};}
+\DoxyCodeLine{187                     \}}
+\DoxyCodeLine{188                 \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( input-\/>short\_name\_.len() != 0 ) \{}
+\DoxyCodeLine{189                     error\_log\_ << \textcolor{stringliteral}{"{}Internal error: \(\backslash\)"{}"{}} << input-\/>short\_name\_ << \textcolor{stringliteral}{"{}\(\backslash\)"{} longer than 1 character\(\backslash\)n"{}};}
+\DoxyCodeLine{190                     errors\_++;}
+\DoxyCodeLine{191                 \}}
+\DoxyCodeLine{192                 \textcolor{keywordflow}{if}( input-\/>long\_name\_.len()>0) \{}
+\DoxyCodeLine{193                     \textcolor{keywordflow}{if}( long\_names\_.find(input-\/>long\_name\_) != long\_names\_.end() ) \{}
+\DoxyCodeLine{194                         error\_log\_ << \textcolor{stringliteral}{"{}Internal error: \(\backslash\)"{}"{}} << input-\/>long\_name\_ << \textcolor{stringliteral}{"{}\(\backslash\)"{} duplicated\(\backslash\)n"{}};}
+\DoxyCodeLine{195                         errors\_++;}
+\DoxyCodeLine{196                     \}}
+\DoxyCodeLine{197                     \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{198                         long\_names\_[input-\/>long\_name\_] \mbox{\hyperlink{classjclib_1_1CountedPointer_aadb8af90c4b0a7e095bf923dde4cf028}{=}} input;}
+\DoxyCodeLine{199                         input-\/>owner\_ = \textcolor{keyword}{this};}
+\DoxyCodeLine{200                     \}}
+\DoxyCodeLine{201                 \}}
+\DoxyCodeLine{202             \}}
+\DoxyCodeLine{203 }
+\DoxyCodeLine{204             \textcolor{keywordtype}{void} load(std::initializer\_list<\mbox{\hyperlink{classjclib_1_1arg__base}{arg\_base}} *> input) \{}
+\DoxyCodeLine{205                 \textcolor{keywordflow}{for}( \textcolor{keyword}{auto} i : input) \{}
+\DoxyCodeLine{206                     insert( i );}
+\DoxyCodeLine{207                 \}}
+\DoxyCodeLine{208             \}}
+\DoxyCodeLine{209 }
+\DoxyCodeLine{210             \textcolor{comment}{// Process a configuration file, one option per line}}
+\DoxyCodeLine{211             \textcolor{comment}{// Lines starting with \# are comments}}
+\DoxyCodeLine{212             \textcolor{comment}{// Blank lines are skipped}}
+\DoxyCodeLine{213             \textcolor{keywordtype}{void} process\_config( std::istream \& file, \mbox{\hyperlink{classjclib_1_1jString}{jString}} filename ) \{}
+\DoxyCodeLine{214                 \textcolor{keyword}{constexpr} \textcolor{keywordtype}{int} max\_line\_len = 1024;}
+\DoxyCodeLine{215                 \textcolor{keywordtype}{char} buffer[ max\_line\_len + 1];}
+\DoxyCodeLine{216                 \textcolor{keywordtype}{char} * bufptr;}
+\DoxyCodeLine{217                 \textcolor{keywordtype}{int} linenr = 0;}
+\DoxyCodeLine{218                 \mbox{\hyperlink{classjclib_1_1jString}{jString}} optionName, value;}
+\DoxyCodeLine{219                 map\_T::iterator found;}
+\DoxyCodeLine{220                 \textcolor{keywordflow}{while}( file.getline(buffer, max\_line\_len)) \{}
+\DoxyCodeLine{221                     buffer[ max\_line\_len ] = \textcolor{stringliteral}{'\(\backslash\)0'}; \textcolor{comment}{// Prevent overrun, normally there's an earlier null}}
+\DoxyCodeLine{222                     linenr++;}
+\DoxyCodeLine{223                     \textcolor{keywordtype}{char} * buf = buffer;}
+\DoxyCodeLine{224                     \textcolor{comment}{// skip leading space on the line}}
+\DoxyCodeLine{225                     \textcolor{keywordflow}{while}( *buf == \textcolor{stringliteral}{' '} || *buf == \textcolor{stringliteral}{'\(\backslash\)t'})}
+\DoxyCodeLine{226                         buf++;}
+\DoxyCodeLine{227                     \textcolor{comment}{// skip empty \& comment lines}}
+\DoxyCodeLine{228                     \textcolor{keywordflow}{if}( *buf == \textcolor{stringliteral}{'\(\backslash\)0'} || *buf == \textcolor{stringliteral}{'\#'} )}
+\DoxyCodeLine{229                         \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{230                     \textcolor{keywordflow}{if}( *buf == \textcolor{stringliteral}{'-\/'} ) \{}
+\DoxyCodeLine{231                         error\_log\_ << \textcolor{stringliteral}{"{}Error config file lines must start with option or '\#' not '-\/'. Line "{}}}
+\DoxyCodeLine{232                                   << linenr << \textcolor{stringliteral}{"{} of "{}} << filename << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{233                         errors\_++;}
+\DoxyCodeLine{234                         \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{235                     \}}
+\DoxyCodeLine{236                     bufptr = buf + 1;}
+\DoxyCodeLine{237                     \textcolor{keywordflow}{if}( *bufptr == \textcolor{stringliteral}{' '} || *bufptr == \textcolor{stringliteral}{'\(\backslash\)t'} || *bufptr == \textcolor{stringliteral}{'='} ) \{}
+\DoxyCodeLine{238                         \textcolor{comment}{// Unix style 1 character argument name}}
+\DoxyCodeLine{239                         optionName = \mbox{\hyperlink{classjclib_1_1jString}{jString}}(buf, bufptr );}
+\DoxyCodeLine{240                         found = short\_names\_.find(optionName);}
+\DoxyCodeLine{241                         \textcolor{keywordflow}{if}( found == short\_names\_.end()) \{}
+\DoxyCodeLine{242                             error\_log\_<< \textcolor{stringliteral}{"{}Unknown argument "{}} << optionName << linenr << \textcolor{stringliteral}{"{} of "{}} << filename << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{243                             errors\_++;}
+\DoxyCodeLine{244                             \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{245                         \}}
+\DoxyCodeLine{246                     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{247                         \textcolor{comment}{// GNU style long argument name}}
+\DoxyCodeLine{248                         \textcolor{keywordflow}{while} ( isalnum(*bufptr)) \{}
+\DoxyCodeLine{249                             bufptr++;}
+\DoxyCodeLine{250                         \}}
+\DoxyCodeLine{251                         optionName = \mbox{\hyperlink{classjclib_1_1jString}{jString}}(buf, bufptr );}
+\DoxyCodeLine{252                         found = long\_names\_.find(optionName);}
+\DoxyCodeLine{253                         \textcolor{keywordflow}{if}( found == long\_names\_.end()) \{}
+\DoxyCodeLine{254                             error\_log\_<< \textcolor{stringliteral}{"{}Unknown argument "{}} << optionName << linenr << \textcolor{stringliteral}{"{} of "{}} << filename << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{255                             errors\_++;}
+\DoxyCodeLine{256                             \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{257                         \}}
+\DoxyCodeLine{258                     \}}
+\DoxyCodeLine{259                     \mbox{\hyperlink{classjclib_1_1arg__base}{arg\_base}} \& arg = \mbox{\hyperlink{classjclib_1_1CountedPointer_a8c5ecd6ea25507d0eff36724dd1bb99a}{*}} found-\/>second;}
+\DoxyCodeLine{260                     \textcolor{comment}{// config does not override options already set on the command line}}
+\DoxyCodeLine{261                     \textcolor{keywordflow}{if}( arg.is\_set\_ )}
+\DoxyCodeLine{262                         \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{263                     \textcolor{keywordflow}{while}( *bufptr == \textcolor{stringliteral}{'='} || *bufptr == \textcolor{stringliteral}{' '} || *bufptr == \textcolor{stringliteral}{'\(\backslash\)t'} )}
+\DoxyCodeLine{264                         ++bufptr;}
+\DoxyCodeLine{265                     \textcolor{keywordtype}{char} * bufend = bufptr;}
+\DoxyCodeLine{266                     \textcolor{comment}{// Find end of string}}
+\DoxyCodeLine{267                     \textcolor{keywordflow}{while}( *bufend )}
+\DoxyCodeLine{268                         ++bufend;}
+\DoxyCodeLine{269                     \textcolor{keywordflow}{while}( bufend != bufptr \&\& (*bufend == \textcolor{stringliteral}{' '} || *bufend == \textcolor{stringliteral}{'\(\backslash\)t'} || *bufend == \textcolor{stringliteral}{'\(\backslash\)0'} ))}
+\DoxyCodeLine{270                         -\/-\/bufend;}
+\DoxyCodeLine{271                     \mbox{\hyperlink{classjclib_1_1jString}{jString}} val( bufptr, bufend+1 );}
+\DoxyCodeLine{272                     \textcolor{keywordflow}{if}( arg.takes\_parameter\_) \{}
+\DoxyCodeLine{273                         arg.is\_defaulted\_ = arg.set(val);}
+\DoxyCodeLine{274                     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{275                         \textcolor{keywordflow}{if}( val.len() == 0 )}
+\DoxyCodeLine{276                             arg.is\_defaulted\_ = arg.set();}
+\DoxyCodeLine{277                         \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{278                             error\_log\_ << optionName << \textcolor{stringliteral}{"{} does not accept options "{}} << linenr << \textcolor{stringliteral}{"{} of "{}} << filename << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{279                             errors\_++;}
+\DoxyCodeLine{280                             \}}
+\DoxyCodeLine{281                     \}}
+\DoxyCodeLine{282                 \}}
+\DoxyCodeLine{283             \}}
+\DoxyCodeLine{284 }
+\DoxyCodeLine{285             \textcolor{keywordtype}{bool} process\_args( \textcolor{keywordtype}{int} argc, \textcolor{keyword}{const} \textcolor{keywordtype}{char} ** argv, \textcolor{keywordtype}{int} start\_at = 1) \{}
+\DoxyCodeLine{286                 \textcolor{keywordtype}{int} argnum = start\_at;}
+\DoxyCodeLine{287                 \textcolor{keywordflow}{for}( ; argnum < argc \&\& argv[ argnum ][0] == \textcolor{stringliteral}{'-\/'}; ++argnum ) \{}
+\DoxyCodeLine{288                     \textcolor{keyword}{const} \textcolor{keywordtype}{char} * argstr=argv[argnum ];}
+\DoxyCodeLine{289                     \textcolor{keywordflow}{if}( argstr[1] == \textcolor{stringliteral}{'-\/'}) \{ \textcolor{comment}{// long arg}}
+\DoxyCodeLine{290                         \textcolor{keywordflow}{if}( argstr[2] == \textcolor{stringliteral}{'\(\backslash\)0'}) \{ \textcolor{comment}{// end of kw args}}
+\DoxyCodeLine{291                             ++argnum;}
+\DoxyCodeLine{292                             \textcolor{keywordflow}{break};}
+\DoxyCodeLine{293                         \}}
+\DoxyCodeLine{294                         std::vector<\mbox{\hyperlink{classjclib_1_1jString}{jString}}> argarray = \mbox{\hyperlink{classjclib_1_1jString}{jString}}(argstr+2).split(\textcolor{stringliteral}{"{}="{}},1);}
+\DoxyCodeLine{295                         \mbox{\hyperlink{classjclib_1_1jString}{jString}} kw=argarray[0];}
+\DoxyCodeLine{296                         \mbox{\hyperlink{classjclib_1_1jString}{jString}} val=argarray[1];}
+\DoxyCodeLine{297                         \textcolor{keywordflow}{if}( ! val.isvalid())}
+\DoxyCodeLine{298                             val = \mbox{\hyperlink{classjclib_1_1jString}{jString}}\mbox{\hyperlink{classjclib_1_1jString_a64b12d83c87606faedf066ad33c07f53}{::}}\mbox{\hyperlink{classjclib_1_1jString_a64b12d83c87606faedf066ad33c07f53}{get\_empty}}\mbox{\hyperlink{classjclib_1_1jString_a64b12d83c87606faedf066ad33c07f53}{(}}\mbox{\hyperlink{classjclib_1_1jString_a64b12d83c87606faedf066ad33c07f53}{)}};}
+\DoxyCodeLine{299                         \textcolor{keyword}{auto} found = long\_names\_.find(kw);}
+\DoxyCodeLine{300                         \textcolor{keywordflow}{if}( found == long\_names\_.end()) \{}
+\DoxyCodeLine{301                             error\_log\_<< \textcolor{stringliteral}{"{}Unknown argument "{}} << argstr << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{302                             errors\_++;}
+\DoxyCodeLine{303                             \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{304                         \}\textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{305                             \mbox{\hyperlink{classjclib_1_1arg__base}{arg\_base}} \& arg = \mbox{\hyperlink{classjclib_1_1CountedPointer_a8c5ecd6ea25507d0eff36724dd1bb99a}{*}} found-\/>second;}
+\DoxyCodeLine{306                             \textcolor{keywordflow}{if}( arg.is\_set\_ \&\& ! arg.multiples\_ok\_ ) \{}
+\DoxyCodeLine{307                                 error\_log\_<< \textcolor{stringliteral}{"{}Multiple use of "{}} << argstr << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{308                                 errors\_++;}
+\DoxyCodeLine{309                                 \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{310                             \}}
+\DoxyCodeLine{311                             \textcolor{keywordflow}{if}( arg.takes\_parameter\_) \{}
+\DoxyCodeLine{312                                 \textcolor{keywordtype}{int} val\_len = val.len();}
+\DoxyCodeLine{313                                 \textcolor{keywordtype}{int} nextargnum=argnum + 1;}
+\DoxyCodeLine{314                                 \textcolor{keywordflow}{if}( (val\_len==0) \&\& (nextargnum < argc) \&\& (argv[nextargnum][0] != \textcolor{stringliteral}{'-\/'})) \{}
+\DoxyCodeLine{315                                     val = argv[++argnum];}
+\DoxyCodeLine{316                                 \}}
+\DoxyCodeLine{317                                 arg.is\_set\_ = arg.set(val);}
+\DoxyCodeLine{318                             \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{319                                 \textcolor{keywordflow}{if}( val.len() == 0 )}
+\DoxyCodeLine{320                                     arg.is\_set\_ = arg.set();}
+\DoxyCodeLine{321                                 \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{322                                     error\_log\_ << arg.long\_name\_ << \textcolor{stringliteral}{"{} does not accept options\(\backslash\)n"{}};}
+\DoxyCodeLine{323                                     errors\_++;}
+\DoxyCodeLine{324                                  \}}
+\DoxyCodeLine{325                             \}}
+\DoxyCodeLine{326                         \}}
+\DoxyCodeLine{327                     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{328                         \textcolor{comment}{// args can be run together, so we have to decode the arg to know }}
+\DoxyCodeLine{329                         \textcolor{comment}{// e.g. -\/abcdef might be -\/a(=bcdef) or -\/a -\/b -\/c(=def) or ...}}
+\DoxyCodeLine{330                         \textcolor{keyword}{const} \textcolor{keywordtype}{char} * end = argstr + strlen(argstr);}
+\DoxyCodeLine{331                         \textcolor{comment}{// +1 to skip the -\/}}
+\DoxyCodeLine{332                         \textcolor{keywordflow}{for}( \textcolor{keyword}{const} \textcolor{keywordtype}{char} *chars = argstr+1; chars < end; ++ chars ) \{}
+\DoxyCodeLine{333                             \textcolor{keyword}{auto} kw=\mbox{\hyperlink{classjclib_1_1jString}{jString}}(chars,1);}
+\DoxyCodeLine{334                             \textcolor{keyword}{auto} found = short\_names\_.find(kw);}
+\DoxyCodeLine{335                             \textcolor{keywordflow}{if}( found == short\_names\_.end()) \{}
+\DoxyCodeLine{336                                 error\_log\_<< \textcolor{stringliteral}{"{}Unknown argument "{}} << argstr << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{337                                 errors\_++;}
+\DoxyCodeLine{338                             \}\textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{339                                 \mbox{\hyperlink{classjclib_1_1arg__base}{arg\_base}} \& arg = \mbox{\hyperlink{classjclib_1_1CountedPointer_a8c5ecd6ea25507d0eff36724dd1bb99a}{*}} found-\/>second;}
+\DoxyCodeLine{340                                 \textcolor{keywordflow}{if}( arg.is\_set\_ \&\& ! arg.multiples\_ok\_ ) \{}
+\DoxyCodeLine{341                                     error\_log\_<< \textcolor{stringliteral}{"{}Multiple use of "{}} << argstr << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{342                                     errors\_++;}
+\DoxyCodeLine{343                                     \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{344                                 \}}
+\DoxyCodeLine{345                                 \textcolor{keywordflow}{if}( arg.takes\_parameter\_) \{}
+\DoxyCodeLine{346                                     \mbox{\hyperlink{classjclib_1_1jString}{jString}} val(chars+1);}
+\DoxyCodeLine{347                                     \textcolor{keywordflow}{if}( chars[1] == \textcolor{stringliteral}{'\(\backslash\)0'} \&\& (argnum + 1) < argc \&\& argv[argnum+1][0] != \textcolor{stringliteral}{'-\/'}) \{}
+\DoxyCodeLine{348                                         val = argv[++argnum];}
+\DoxyCodeLine{349                                     \}}
+\DoxyCodeLine{350                                     arg.is\_set\_ = arg.set(val);}
+\DoxyCodeLine{351                                     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{352                                 \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{353                                     arg.is\_set\_ = arg.set();}
+\DoxyCodeLine{354                             \}}
+\DoxyCodeLine{355                         \}}
+\DoxyCodeLine{356                     \}}
+\DoxyCodeLine{357                 \}}
+\DoxyCodeLine{358                 \textcolor{comment}{// Now process the remaining (positional) arguments}}
+\DoxyCodeLine{359                 \textcolor{keywordflow}{for}( ; argnum < argc; ++ argnum) \{}
+\DoxyCodeLine{360                     \textcolor{keyword}{this}-\/>positional\_args\_.push\_back(argv[argnum]);}
+\DoxyCodeLine{361                 \}}
+\DoxyCodeLine{362                 \textcolor{comment}{// Finally, scan arguments to make sure required ones are set}}
+\DoxyCodeLine{363 }
+\DoxyCodeLine{364                 \textcolor{keywordflow}{if}( ! (show\_version\_ || show\_help\_ ) )}
+\DoxyCodeLine{365                 \{}
+\DoxyCodeLine{366                     \textcolor{keywordflow}{for}( \textcolor{keyword}{auto} k : all\_options\_) \{}
+\DoxyCodeLine{367                         \textcolor{keywordflow}{if}(  k-\/>required\_ \&\&  ! ( k-\/>is\_set\_ || k-\/>is\_defaulted\_) ) \{}
+\DoxyCodeLine{368                             errors\_++;}
+\DoxyCodeLine{369                             error\_log\_ << \textcolor{stringliteral}{"{}Required option \(\backslash\)"{}"{}};}
+\DoxyCodeLine{370                             \textcolor{keywordflow}{if}( k-\/>short\_name\_.len() > 0 \&\& k-\/>long\_name\_.len() > 0 )}
+\DoxyCodeLine{371                                 error\_log\_ << \textcolor{stringliteral}{"{}-\/-\/"{}} << k-\/>long\_name\_ << \textcolor{stringliteral}{"{}\(\backslash\)"{} (\(\backslash\)"{}-\/"{}} << k-\/>short\_name\_ << \textcolor{stringliteral}{"{}\(\backslash\)"{})"{}};}
+\DoxyCodeLine{372                             \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (k-\/>short\_name\_.len() > 0)}
+\DoxyCodeLine{373                                 error\_log\_ << \textcolor{stringliteral}{"{}-\/"{}} << k-\/>short\_name\_ << \textcolor{stringliteral}{"{}\(\backslash\)"{}"{}};}
+\DoxyCodeLine{374                             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{375                                 error\_log\_ << \textcolor{stringliteral}{"{}-\/-\/"{}} << k-\/>long\_name\_ << \textcolor{stringliteral}{"{}\(\backslash\)"{}"{}};}
+\DoxyCodeLine{376                             \textcolor{keywordflow}{if}( k-\/>desc\_.len() > 0 )}
+\DoxyCodeLine{377                                 error\_log\_ << \textcolor{stringliteral}{"{} ("{}} << k-\/>desc\_ << \textcolor{stringliteral}{"{})"{}};}
+\DoxyCodeLine{378                             error\_log\_ << \textcolor{stringliteral}{"{} missing\(\backslash\)n"{}};}
+\DoxyCodeLine{379                             errors\_++;}
+\DoxyCodeLine{380                         \}}
+\DoxyCodeLine{381                     \}}
+\DoxyCodeLine{382                 \}}
+\DoxyCodeLine{383                 \textcolor{comment}{// If version has been requested \& we are set-\/up to provide it.}}
+\DoxyCodeLine{384                 \textcolor{keywordflow}{if}( show\_version\_ ) \{}
+\DoxyCodeLine{385                     error\_log\_ << version\_string\_ << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};;}
+\DoxyCodeLine{386                 \}}
+\DoxyCodeLine{387                 \textcolor{comment}{// If help has been requested or a parameter error is detected \& we are set-\/up to provide it.}}
+\DoxyCodeLine{388                 \textcolor{keywordflow}{if}( show\_help\_ || ( errors\_ != 0 \&\& help\_prefix\_.len()>0 ) ) \{}
+\DoxyCodeLine{389                     error\_log\_ << help\_prefix\_ << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{390                     \textcolor{comment}{// find longest long option name}}
+\DoxyCodeLine{391                     size\_t longest = 1;}
+\DoxyCodeLine{392                     \textcolor{keywordflow}{for}( \textcolor{keyword}{auto} k : all\_options\_) \{}
+\DoxyCodeLine{393                         longest=std::max<size\_t>( longest, k-\/>long\_name\_.len() );}
+\DoxyCodeLine{394                     \}}
+\DoxyCodeLine{395                     \textcolor{comment}{// now print the lines}}
+\DoxyCodeLine{396                     longest ++;}
+\DoxyCodeLine{397                     \textcolor{keywordflow}{for}( \textcolor{keyword}{auto} k : all\_options\_) \{}
+\DoxyCodeLine{398                         \textcolor{keywordflow}{if}( k-\/>short\_name\_.len() > 0 )}
+\DoxyCodeLine{399                             error\_log\_ << \textcolor{stringliteral}{"{}  -\/"{}} << k-\/>short\_name\_ << \textcolor{stringliteral}{"{} "{}};}
+\DoxyCodeLine{400                         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{401                             error\_log\_<< \textcolor{stringliteral}{"{}     "{}};}
+\DoxyCodeLine{402                         error\_log\_ << (k-\/>long\_name\_.len()==0 ? \textcolor{stringliteral}{"{}  "{}} : \textcolor{stringliteral}{"{}-\/-\/"{}})}
+\DoxyCodeLine{403                                    << k-\/>long\_name\_.pad(longest)}
+\DoxyCodeLine{404                                    << k-\/>desc\_ << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{405                     \}}
+\DoxyCodeLine{406                     error\_log\_ << help\_suffix\_ << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{407                 \}}
+\DoxyCodeLine{408                 \textcolor{keywordflow}{return} errors\_ == 0 \&\& !(show\_version\_ || show\_help\_);}
+\DoxyCodeLine{409             \}}
+\DoxyCodeLine{410 }
+\DoxyCodeLine{411             arguments(std::ostream \& error\_log=std::cerr)}
+\DoxyCodeLine{412                 : error\_log\_( error\_log)}
+\DoxyCodeLine{413             \{\}}
+\DoxyCodeLine{414     \};}
+\DoxyCodeLine{415 }
+\DoxyCodeLine{416     \textcolor{keyword}{class} \mbox{\hyperlink{classjclib_1_1config}{config}} : \textcolor{keyword}{public} \mbox{\hyperlink{classjclib_1_1arg__base}{arg\_base}} \{}
+\DoxyCodeLine{417         \textcolor{keyword}{public}:}
+\DoxyCodeLine{418             \mbox{\hyperlink{classjclib_1_1arguments}{arguments}} \& processor\_;}
+\DoxyCodeLine{419             \textcolor{keyword}{virtual} \textcolor{keywordtype}{bool} set() \{ \textcolor{keywordflow}{return} \textcolor{keyword}{false};\}}
+\DoxyCodeLine{420             config( \mbox{\hyperlink{classjclib_1_1arguments}{arguments}} \& processor, \mbox{\hyperlink{classjclib_1_1jString}{jString}} short\_name, \mbox{\hyperlink{classjclib_1_1jString}{jString}} long\_name, \mbox{\hyperlink{classjclib_1_1jString}{jString}} desc )}
+\DoxyCodeLine{421             : \mbox{\hyperlink{classjclib_1_1arg__base}{arg\_base}}( short\_name, long\_name, desc, \textcolor{keyword}{true}, \textcolor{keyword}{false} )}
+\DoxyCodeLine{422             , processor\_( processor )}
+\DoxyCodeLine{423             \{}
+\DoxyCodeLine{424                 multiples\_ok\_ = \textcolor{keyword}{true};}
+\DoxyCodeLine{425             \}}
+\DoxyCodeLine{426             \textcolor{keyword}{virtual} \textcolor{keywordtype}{bool} set(\mbox{\hyperlink{classjclib_1_1jString}{jString}} \&value) \{}
+\DoxyCodeLine{427                 std::ifstream stream;}
+\DoxyCodeLine{428                 stream.open( value, std::ifstream::in);}
+\DoxyCodeLine{429                 \textcolor{keywordflow}{if}( stream.is\_open()) \{}
+\DoxyCodeLine{430                     processor\_.process\_config( stream, value);}
+\DoxyCodeLine{431                     stream.close();}
+\DoxyCodeLine{432                 \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{433                     processor\_.error\_log\_ << \textcolor{stringliteral}{"{}Can not open config file "{}} << value << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{434                     processor\_.errors\_++;}
+\DoxyCodeLine{435                 \}}
+\DoxyCodeLine{436                 \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{437             \}}
+\DoxyCodeLine{438     \};}
+\DoxyCodeLine{439 \}}
+\DoxyCodeLine{440 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{endif}}
 
 \end{DoxyCode}

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['next_0',['next',['../classintSequence.html#ab624bfe357dcb3b34cb7091e4a254d4e',1,'intSequence::next()'],['../classpiDigits.html#a3957780a86699d5b112cb2de9d465e84',1,'piDigits::next()'],['../classpiChars.html#adc00b73e9ec09756b81d6da657ad5170',1,'piChars::next()'],['../classmaoTestIteratorYielder.html#a88aff5d153ff1dfdd54710706da7eeec',1,'maoTestIteratorYielder::next()'],['../classjclib_1_1yieldingIteratorHelper.html#a620c17e7eb8ed695e3fb9add01da576d',1,'jclib::yieldingIteratorHelper::next()']]]
+  ['maybeclone_0',['maybeClone',['../classpiChars.html#aa00ac4fac7f66690557ae7fc891c34c9',1,'piChars::maybeClone()'],['../classmaoTestIteratorYielder.html#a4b91ce0d2a4d2ec28b0459b149bce2b0',1,'maoTestIteratorYielder::maybeClone()'],['../classjclib_1_1yieldingIteratorHelper.html#a8f5911d2f94b9ca84b3a737c5d485219',1,'jclib::yieldingIteratorHelper::maybeClone()']]]
 ];

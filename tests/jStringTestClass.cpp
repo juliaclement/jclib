@@ -116,6 +116,12 @@ private:
         jString a2(sd.a);
         CPPUNIT_ASSERT(a2==sd.a);
     }
+    // Check compare()
+    void TestCompare() {
+        CPPUNIT_ASSERT( sd.a.compare(sd.b) == 0 );
+        CPPUNIT_ASSERT( sd.a.compare(sd.c) < 0 );
+        CPPUNIT_ASSERT( sd.c.compare(sd.a) > 0 );
+    }
     // Check comparison operators
     void testEqualityCompare(){
         CPPUNIT_ASSERT(sd.a==sd.b);
@@ -205,6 +211,7 @@ private:
         CPPUNIT_TEST(testNullStringReturnsDefault);
         CPPUNIT_TEST(testcopyConstructor);
         CPPUNIT_TEST(testInitialisers);
+        CPPUNIT_TEST(TestCompare);
         CPPUNIT_TEST(testEqualityCompare);
         CPPUNIT_TEST(testLessCompare);
         CPPUNIT_TEST(testLessEqualCompare);

@@ -213,6 +213,7 @@ namespace jclib {
                 {}
 #ifdef __cpp_lib_string_view
             // Create from std::string_view
+            // std::string_view was added by C++-17 standard so should always be in modern std libs
             // NB: Same as previous, really
             jString( const std::string_view & view ):
                 CountedPointer<jStringBase>(jStringBase::create(view.begin(), view.length()))
@@ -378,6 +379,11 @@ namespace jclib {
                 }
                 *out='\0';
                 return answer;
+            }
+
+            /** Comparison operator, provides C strcmp on strings*/
+            int compare( const jString &rhs) const {
+                return strcmp( get()->data_, rhs->data_ );
             }
 
             bool operator < (const jString &rhs) const {

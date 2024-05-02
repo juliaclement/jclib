@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['set_0',['set',['../classjclib_1_1CountedPointer.html#a11f97ba1153ce2caabe2e44990b54807',1,'jclib::CountedPointer::set(T *const ptr)'],['../classjclib_1_1CountedPointer.html#a93e060e76df8f3ac8d20478b128d4514',1,'jclib::CountedPointer::set(const CountedPointer&lt; T &gt; &amp;old)'],['../classjclib_1_1WeakPointer.html#a7de963c695578295c0c1b545b664d405',1,'jclib::WeakPointer::set()']]],
-  ['set_5fbegin_1',['set_begin',['../classjclib_1_1yieldingIterator.html#af6051397c336c96df0a31895b2f125ab',1,'jclib::yieldingIterator']]],
-  ['set_5fend_2',['set_end',['../classjclib_1_1yieldingIterator.html#ab824de9cf3585fe0e24d4efef9eb78d6',1,'jclib::yieldingIterator']]]
+  ['operator_2a_0',['operator*',['../classjclib_1_1CountedPointer.html#a8c5ecd6ea25507d0eff36724dd1bb99a',1,'jclib::CountedPointer::operator*()'],['../classjclib_1_1WeakPointer.html#ab8b56be03e941fbfd7fdc845abcb49b4',1,'jclib::WeakPointer::operator*() const']]],
+  ['operator_2d_3e_1',['operator-&gt;',['../classjclib_1_1WeakPointer.html#ad0801509c2683663ca06f99cc59771bc',1,'jclib::WeakPointer']]],
+  ['operator_3d_2',['operator=',['../classjclib_1_1CountedPointer.html#a723e34d68ef31f93cf7730301c0938a5',1,'jclib::CountedPointer::operator=(T *const ptr)'],['../classjclib_1_1CountedPointer.html#aadb8af90c4b0a7e095bf923dde4cf028',1,'jclib::CountedPointer::operator=(const CountedPointer&lt; T &gt; &amp;ptr)'],['../classjclib_1_1WeakPointer.html#a033882ff5448b187fa2c4435ba2c272e',1,'jclib::WeakPointer::operator=()'],['../classjclib_1_1yieldingIterator.html#a6c5013cbb0700beacee6a3bd63dd4a1a',1,'jclib::yieldingIterator::operator=()'],['../classjclib_1_1yieldingContainer.html#aa4fb2046e3c969038fb5a1797af6fbd0',1,'jclib::yieldingContainer::operator=()']]]
 ];
