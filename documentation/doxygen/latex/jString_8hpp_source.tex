@@ -384,41 +384,46 @@
 \DoxyCodeLine{381                 \textcolor{keywordflow}{return} answer;}
 \DoxyCodeLine{382             \}}
 \DoxyCodeLine{383 }
-\DoxyCodeLine{384             \textcolor{comment}{/** Comparison operator, provides C strcmp on strings*/}}
-\DoxyCodeLine{385             \textcolor{keywordtype}{int} \mbox{\hyperlink{classjclib_1_1jString_acdff73b23041ade42bada788c90f1941}{compare}}( \textcolor{keyword}{const} \mbox{\hyperlink{classjclib_1_1jString}{jString}} \&rhs) \textcolor{keyword}{const} \{}
+\DoxyCodeLine{384             \textcolor{comment}{/** Comparison function, provides C strcmp on strings*/}}
+\DoxyCodeLine{385             \textcolor{keyword}{inline} \textcolor{keywordtype}{int} \mbox{\hyperlink{classjclib_1_1jString_acdff73b23041ade42bada788c90f1941}{compare}}( \textcolor{keyword}{const} \mbox{\hyperlink{classjclib_1_1jString}{jString}} \&rhs) \textcolor{keyword}{const} \{}
 \DoxyCodeLine{386                 \textcolor{keywordflow}{return} strcmp( \mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{)}}-\/>data\_, rhs-\/>data\_ );}
 \DoxyCodeLine{387             \}}
 \DoxyCodeLine{388 }
-\DoxyCodeLine{389             \textcolor{keywordtype}{bool} operator < (\textcolor{keyword}{const} \mbox{\hyperlink{classjclib_1_1jString}{jString}} \&rhs) \textcolor{keyword}{const} \{}
-\DoxyCodeLine{390                 \textcolor{keywordflow}{return} strcmp(\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{)}}-\/>data\_, rhs-\/>data\_) < 0;}
-\DoxyCodeLine{391             \}}
-\DoxyCodeLine{392             \textcolor{keywordtype}{bool} operator <= (\textcolor{keyword}{const} \mbox{\hyperlink{classjclib_1_1jString}{jString}} \&rhs) \textcolor{keyword}{const} \{}
-\DoxyCodeLine{393                 \textcolor{keywordflow}{return} strcmp(\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{)}}-\/>data\_, rhs-\/>data\_) <= 0;}
-\DoxyCodeLine{394             \}}
-\DoxyCodeLine{395             \textcolor{keywordtype}{bool} operator > (\textcolor{keyword}{const} \mbox{\hyperlink{classjclib_1_1jString}{jString}} \&rhs) \textcolor{keyword}{const} \{}
-\DoxyCodeLine{396                 \textcolor{keywordflow}{return} strcmp(\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{)}}-\/>data\_, rhs-\/>data\_) > 0;}
-\DoxyCodeLine{397             \}}
-\DoxyCodeLine{398             \textcolor{keywordtype}{bool} operator >= (\textcolor{keyword}{const} \mbox{\hyperlink{classjclib_1_1jString}{jString}} \&rhs) \textcolor{keyword}{const} \{}
-\DoxyCodeLine{399                 \textcolor{keywordflow}{return} strcmp(\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{)}}-\/>data\_, rhs-\/>data\_) >= 0;}
-\DoxyCodeLine{400             \}}
-\DoxyCodeLine{401             \textcolor{keywordtype}{bool} operator == (\textcolor{keyword}{const} \mbox{\hyperlink{classjclib_1_1jString}{jString}} \&rhs) \textcolor{keyword}{const} \{}
-\DoxyCodeLine{402                 \textcolor{keywordflow}{return} strcmp(\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{)}}-\/>data\_, rhs-\/>data\_) == 0;}
-\DoxyCodeLine{403             \}}
-\DoxyCodeLine{404             \textcolor{keywordtype}{bool} operator == (\textcolor{keyword}{const} \textcolor{keywordtype}{char} *rhs) \textcolor{keyword}{const} \{}
-\DoxyCodeLine{405                 \textcolor{keywordflow}{return} strcmp(\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{)}}-\/>data\_, \mbox{\hyperlink{classjclib_1_1jString}{jString}}(rhs)-\/>data\_) == 0;}
-\DoxyCodeLine{406             \}}
-\DoxyCodeLine{407             \textcolor{keywordtype}{bool} operator != (\textcolor{keyword}{const} \mbox{\hyperlink{classjclib_1_1jString}{jString}} \&rhs) \textcolor{keyword}{const} \{}
-\DoxyCodeLine{408                 \textcolor{keywordflow}{return} strcmp(\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{)}}-\/>data\_, rhs-\/>data\_) != 0;}
-\DoxyCodeLine{409             \}}
-\DoxyCodeLine{410     \};}
-\DoxyCodeLine{411 }
-\DoxyCodeLine{412 }
-\DoxyCodeLine{413     \textcolor{keyword}{inline} std::ostream\& operator<<(std::ostream\& os, \textcolor{keyword}{const} \mbox{\hyperlink{classjclib_1_1jString}{jString}} \& string) \{}
-\DoxyCodeLine{414         os << string.data();}
-\DoxyCodeLine{415         \textcolor{keywordflow}{return} os;}
-\DoxyCodeLine{416     \}}
-\DoxyCodeLine{417 \};}
-\DoxyCodeLine{418 }
-\DoxyCodeLine{419 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{endif}}
+\DoxyCodeLine{389             \textcolor{comment}{/** Comparison function, provides C strcoll on strings*/}}
+\DoxyCodeLine{390             \textcolor{keyword}{inline} \textcolor{keywordtype}{int} \mbox{\hyperlink{classjclib_1_1jString_aef72a3e29dea2ff3ad2b6509578b212e}{compare\_locale}}( \textcolor{keyword}{const} \mbox{\hyperlink{classjclib_1_1jString}{jString}} \&rhs) \textcolor{keyword}{const} \{}
+\DoxyCodeLine{391                 \textcolor{keywordflow}{return} strcoll( \mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{)}}-\/>data\_, rhs-\/>data\_ );}
+\DoxyCodeLine{392             \}}
+\DoxyCodeLine{393 }
+\DoxyCodeLine{394             \textcolor{keywordtype}{bool} operator < (\textcolor{keyword}{const} \mbox{\hyperlink{classjclib_1_1jString}{jString}} \&rhs) \textcolor{keyword}{const} \{}
+\DoxyCodeLine{395                 \textcolor{keywordflow}{return} strcmp(\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{)}}-\/>data\_, rhs-\/>data\_) < 0;}
+\DoxyCodeLine{396             \}}
+\DoxyCodeLine{397             \textcolor{keywordtype}{bool} operator <= (\textcolor{keyword}{const} \mbox{\hyperlink{classjclib_1_1jString}{jString}} \&rhs) \textcolor{keyword}{const} \{}
+\DoxyCodeLine{398                 \textcolor{keywordflow}{return} strcmp(\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{)}}-\/>data\_, rhs-\/>data\_) <= 0;}
+\DoxyCodeLine{399             \}}
+\DoxyCodeLine{400             \textcolor{keywordtype}{bool} operator > (\textcolor{keyword}{const} \mbox{\hyperlink{classjclib_1_1jString}{jString}} \&rhs) \textcolor{keyword}{const} \{}
+\DoxyCodeLine{401                 \textcolor{keywordflow}{return} strcmp(\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{)}}-\/>data\_, rhs-\/>data\_) > 0;}
+\DoxyCodeLine{402             \}}
+\DoxyCodeLine{403             \textcolor{keywordtype}{bool} operator >= (\textcolor{keyword}{const} \mbox{\hyperlink{classjclib_1_1jString}{jString}} \&rhs) \textcolor{keyword}{const} \{}
+\DoxyCodeLine{404                 \textcolor{keywordflow}{return} strcmp(\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{)}}-\/>data\_, rhs-\/>data\_) >= 0;}
+\DoxyCodeLine{405             \}}
+\DoxyCodeLine{406             \textcolor{keywordtype}{bool} operator == (\textcolor{keyword}{const} \mbox{\hyperlink{classjclib_1_1jString}{jString}} \&rhs) \textcolor{keyword}{const} \{}
+\DoxyCodeLine{407                 \textcolor{keywordflow}{return} strcmp(\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{)}}-\/>data\_, rhs-\/>data\_) == 0;}
+\DoxyCodeLine{408             \}}
+\DoxyCodeLine{409             \textcolor{keywordtype}{bool} operator == (\textcolor{keyword}{const} \textcolor{keywordtype}{char} *rhs) \textcolor{keyword}{const} \{}
+\DoxyCodeLine{410                 \textcolor{keywordflow}{return} strcmp(\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{)}}-\/>data\_, \mbox{\hyperlink{classjclib_1_1jString}{jString}}(rhs)-\/>data\_) == 0;}
+\DoxyCodeLine{411             \}}
+\DoxyCodeLine{412             \textcolor{keywordtype}{bool} operator != (\textcolor{keyword}{const} \mbox{\hyperlink{classjclib_1_1jString}{jString}} \&rhs) \textcolor{keyword}{const} \{}
+\DoxyCodeLine{413                 \textcolor{keywordflow}{return} strcmp(\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{get}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{(}}\mbox{\hyperlink{classjclib_1_1CountedPointer_a141b33afc3d099c221036d874d73095e}{)}}-\/>data\_, rhs-\/>data\_) != 0;}
+\DoxyCodeLine{414             \}}
+\DoxyCodeLine{415     \};}
+\DoxyCodeLine{416 }
+\DoxyCodeLine{417 }
+\DoxyCodeLine{418     \textcolor{keyword}{inline} std::ostream\& operator<<(std::ostream\& os, \textcolor{keyword}{const} \mbox{\hyperlink{classjclib_1_1jString}{jString}} \& string) \{}
+\DoxyCodeLine{419         os << string.data();}
+\DoxyCodeLine{420         \textcolor{keywordflow}{return} os;}
+\DoxyCodeLine{421     \}}
+\DoxyCodeLine{422 \};}
+\DoxyCodeLine{423 }
+\DoxyCodeLine{424 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{endif}}
 
 \end{DoxyCode}

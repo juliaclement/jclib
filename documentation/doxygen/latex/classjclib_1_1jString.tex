@@ -75,6 +75,8 @@ bool \mbox{\hyperlink{classjclib_1_1jString_ae9c51457a9e150c838de713183783814}{i
 \item 
 int \mbox{\hyperlink{classjclib_1_1jString_acdff73b23041ade42bada788c90f1941}{compare}} (const \mbox{\hyperlink{classjclib_1_1jString}{j\+String}} \&rhs) const
 \item 
+int \mbox{\hyperlink{classjclib_1_1jString_aef72a3e29dea2ff3ad2b6509578b212e}{compare\+\_\+locale}} (const \mbox{\hyperlink{classjclib_1_1jString}{j\+String}} \&rhs) const
+\item 
 \mbox{\Hypertarget{classjclib_1_1jString_aac1073792f5fb0c9dd6bd3366532a727}\label{classjclib_1_1jString_aac1073792f5fb0c9dd6bd3366532a727}} 
 bool {\bfseries operator$<$} (const \mbox{\hyperlink{classjclib_1_1jString}{j\+String}} \&rhs) const
 \item 
@@ -116,7 +118,13 @@ std\+::ostream \& {\bfseries operator$<$$<$} (std\+::ostream \&os, const class \
 \doxysubsubsection{\texorpdfstring{compare()}{compare()}}
 {\footnotesize\ttfamily int jclib\+::j\+String\+::compare (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classjclib_1_1jString}{j\+String}} \&}]{rhs }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
 
-Comparison operator, provides C strcmp on strings \mbox{\Hypertarget{classjclib_1_1jString_ad1d51cf9e884aabcbf0387edc40a9eb2}\label{classjclib_1_1jString_ad1d51cf9e884aabcbf0387edc40a9eb2}} 
+Comparison function, provides C strcmp on strings \mbox{\Hypertarget{classjclib_1_1jString_aef72a3e29dea2ff3ad2b6509578b212e}\label{classjclib_1_1jString_aef72a3e29dea2ff3ad2b6509578b212e}} 
+\index{jclib::jString@{jclib::jString}!compare\_locale@{compare\_locale}}
+\index{compare\_locale@{compare\_locale}!jclib::jString@{jclib::jString}}
+\doxysubsubsection{\texorpdfstring{compare\_locale()}{compare\_locale()}}
+{\footnotesize\ttfamily int jclib\+::j\+String\+::compare\+\_\+locale (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classjclib_1_1jString}{j\+String}} \&}]{rhs }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Comparison function, provides C strcoll on strings \mbox{\Hypertarget{classjclib_1_1jString_ad1d51cf9e884aabcbf0387edc40a9eb2}\label{classjclib_1_1jString_ad1d51cf9e884aabcbf0387edc40a9eb2}} 
 \index{jclib::jString@{jclib::jString}!find@{find}}
 \index{find@{find}!jclib::jString@{jclib::jString}}
 \doxysubsubsection{\texorpdfstring{find()}{find()}}

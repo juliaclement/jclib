@@ -381,9 +381,14 @@ namespace jclib {
                 return answer;
             }
 
-            /** Comparison operator, provides C strcmp on strings*/
-            int compare( const jString &rhs) const {
+            /** Comparison function, provides C strcmp on strings*/
+            inline int compare( const jString &rhs) const {
                 return strcmp( get()->data_, rhs->data_ );
+            }
+
+            /** Comparison function, provides C strcoll on strings*/
+            inline int compare_locale( const jString &rhs) const {
+                return strcoll( get()->data_, rhs->data_ );
             }
 
             bool operator < (const jString &rhs) const {

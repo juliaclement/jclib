@@ -122,6 +122,14 @@ private:
         CPPUNIT_ASSERT( sd.a.compare(sd.c) < 0 );
         CPPUNIT_ASSERT( sd.c.compare(sd.a) > 0 );
     }
+    // Check compare_locale()
+    void TestCompareLocale() {
+        // A bit pointless as only "" & "C" are guaranteed to exist
+        setlocale( LC_ALL, "C");
+        CPPUNIT_ASSERT( sd.a.compare_locale(sd.b) == 0 );
+        CPPUNIT_ASSERT( sd.a.compare_locale(sd.c) < 0 );
+        CPPUNIT_ASSERT( sd.c.compare_locale(sd.a) > 0 );
+    }
     // Check comparison operators
     void testEqualityCompare(){
         CPPUNIT_ASSERT(sd.a==sd.b);
@@ -212,6 +220,7 @@ private:
         CPPUNIT_TEST(testcopyConstructor);
         CPPUNIT_TEST(testInitialisers);
         CPPUNIT_TEST(TestCompare);
+        CPPUNIT_TEST(TestCompareLocale);
         CPPUNIT_TEST(testEqualityCompare);
         CPPUNIT_TEST(testLessCompare);
         CPPUNIT_TEST(testLessEqualCompare);

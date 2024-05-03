@@ -7,3 +7,4 @@ tests/jcArgsTestRunner
 tests/jStringTestClass
 tests/jStringTestRunner
 tests/SaveTestClass
+dist/Debug/GNU-Linux/libjclib.a
